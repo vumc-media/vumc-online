@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VUMC Online</title>
+  <style>
+    :root{
+      --bg:#f4f6f8;
+      --card:#ffffff;
+      --text:#1f2933;
+      --muted:#5b6875;
+      --accent:#305f72;
+      --accent2:#b57f50;
+      --border:#d8e0e6;
+      --shadow:0 10px 30px rgba(24,39,52,.08);
+      --radius:20px;
+      --max:1180px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:Arial,Helvetica,sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.5;
+    }
+    a{text-decoration:none;color:inherit}
+    .topbar{
+      background:#17313d;
+      color:#fff;
+      padding:14px 20px;
+      text-align:center;
+      font-size:14px;
+    }
+    .hero{
+      background:
+        linear-gradient(rgba(18,31,39,.60),rgba(18,31,39,.78)),
+        url('https://images.unsplash.com/photo-1504052434569-70ad5836ab65?auto=format&fit=crop&w=1600&q=80') center/cover;
+      color:#fff;
+      padding:34px 20px 70px;
+    }
+    .wrap{max-width:var(--max);margin:0 auto}
+    .nav{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:20px;
+      flex-wrap:wrap;
+      margin-bottom:50px;
+    }
+    .brand{
+      font-size:24px;
+      font-weight:700;
+    }
+    .nav-links{
+      display:flex;
+      gap:18px;
+      flex-wrap:wrap;
+      font-size:15px;
+    }
+    .hero-grid{
+      display:grid;
+      grid-template-columns:1.2fr .95fr;
+      gap:28px;
+      align-items:center;
+    }
+    h1{
+      margin:0 0 14px;
+      font-size:clamp(34px,6vw,62px);
+      line-height:1.05;
+    }
+    .hero p{
+      margin:0 0 24px;
+      font-size:18px;
+      color:rgba(255,255,255,.92);
+      max-width:700px;
+    }
+    .btns{
+      display:flex;
+      gap:14px;
+      flex-wrap:wrap;
+      margin-bottom:16px;
+    }
+    .btn{
+      display:inline-block;
+      padding:14px 20px;
+      border-radius:999px;
+      font-weight:700;
+      font-size:15px;
+    }
+    .btn-primary{
+      background:#fff;
+      color:#17313d;
+    }
+    .btn-secondary{
+      background:rgba(255,255,255,.12);
+      color:#fff;
+      border:1px solid rgba(255,255,255,.25);
+    }
+    .hero-card{
+      background:rgba(255,255,255,.12);
+      border:1px solid rgba(255,255,255,.18);
+      backdrop-filter:blur(10px);
+      border-radius:26px;
+      padding:22px;
+      box-shadow:0 14px 34px rgba(0,0,0,.18);
+    }
+    .live-label{
+      font-size:13px;
+      font-weight:700;
+      text-transform:uppercase;
+      margin-bottom:14px;
+    }
+    .video-box{
+      width:100%;
+      aspect-ratio:16/9;
+      overflow:hidden;
+      border-radius:18px;
+      background:#000;
+      margin-bottom:16px;
+    }
+    .video-box iframe{
+      width:100%;
+      height:100%;
+      border:0;
+    }
+    .service-row{
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:14px;
+      padding:12px 14px;
+      margin-bottom:10px;
+      font-size:14px;
+    }
+    .cards{
+      max-width:var(--max);
+      margin:-35px auto 0;
+      padding:0 20px 30px;
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:18px;
+      position:relative;
+      z-index:2;
+    }
+    .card,.panel,.cta{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+    }
+    .card{
+      padding:22px;
+    }
+    .eyebrow{
+      font-size:12px;
+      text-transform:uppercase;
+      letter-spacing:.8px;
+      color:var(--accent);
+      font-weight:700;
+      margin-bottom:10px;
+    }
+    .card h3,.panel h3{
+      margin:0 0 8px;
+      font-size:22px;
+    }
+    .card p,.panel p{
+      margin:0 0 16px;
+      color:var(--muted);
+      font-size:15px;
+    }
+    .link{
+      color:var(--accent);
+      font-weight:700;
+    }
+    .section{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:10px 20px 28px;
+    }
+    .two-col{
+      display:grid;
+      grid-template-columns:1.2fr .8fr;
+      gap:22px;
+    }
+    .panel{
+      padding:26px;
+    }
+    .feed-item{
+      border-top:1px solid var(--border);
+      padding:16px 0;
+    }
+    .feed-item:first-of-type{
+      border-top:0;
+      padding-top:0;
+    }
+    .feed-tag{
+      display:inline-block;
+      padding:5px 10px;
+      border-radius:999px;
+      background:#eef4f6;
+      color:var(--accent);
+      font-size:12px;
+      font-weight:700;
+      margin-bottom:8px;
+    }
+    .feed-title{
+      font-size:18px;
+      font-weight:700;
+      margin-bottom:6px;
+    }
+    .prayer-form{
+      display:grid;
+      gap:12px;
+    }
+    .prayer-form input,.prayer-form select,.prayer-form textarea{
+      width:100%;
+      padding:14px 15px;
+      border:1px solid var(--border);
+      border-radius:14px;
+      font:inherit;
+    }
+    .prayer-form textarea{
+      min-height:130px;
+      resize:vertical;
+    }
+    .prayer-form button{
+      border:0;
+      border-radius:999px;
+      padding:14px 18px;
+      font:inherit;
+      font-weight:700;
+      background:var(--accent);
+      color:#fff;
+      cursor:pointer;
+    }
+    .cta{
+      max-width:var(--max);
+      margin:0 auto 30px;
+      padding:28px 20px;
+      display:flex;
+      justify-content:space-between;
+      gap:18px;
+      align-items:center;
+      flex-wrap:wrap;
+    }
+    .footer{
+      background:#17313d;
+      color:#fff;
+      padding:34px 20px;
+    }
+    .footer .wrap{
+      display:flex;
+      justify-content:space-between;
+      gap:16px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+    @media (max-width:1080px){
+      .hero-grid,.two-col{grid-template-columns:1fr}
+      .cards{grid-template-columns:repeat(2,1fr)}
+    }
+    @media (max-width:700px){
+      .cards{grid-template-columns:1fr;margin-top:-20px}
+      .hero p{font-size:16px}
+      .brand{font-size:20px}
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar">A Church Striving to Love Like Jesus — Wherever You Are</div>
+
+  <header class="hero">
+    <div class="wrap">
+      <div class="nav">
+        <div class="brand">VUMC Online</div>
+        <div class="nav-links">
+          <a href="#watch">Watch</a>
+          <a href="#community">Community</a>
+          <a href="#prayer">Prayer</a>
+          <a href="#support">Support</a>
+        </div>
+      </div>
+
+      <div class="hero-grid">
+        <div>
+          <h1>Worship Anywhere.<br>Belong Everywhere.</h1>
+          <p>Welcome to VUMC Online — a digital front door for worship, prayer, encouragement, and real connection. You do not have to live near our building to be part of what God is doing here.</p>
+          <div class="btns">
+            <a class="btn btn-primary" href="#watch">Watch Worship</a>
+            <a class="btn btn-secondary" href="#prayer">Share a Prayer Request</a>
+          </div>
+          <div>Join us Sundays at 9:30 AM for Traditional Worship and 10:30 AM for Contemporary Worship.</div>
+        </div>
+
+        <div class="hero-card">
+          <div class="live-label">Live + Latest Worship</div>
+          <div class="video-box">
+            <iframe src="https://watch.versaillesumc.org/" title="VUMC Live"></iframe>
+          </div>
+          <div class="service-row"><strong>Traditional Worship</strong><span>Sunday • 9:30 AM</span></div>
+          <div class="service-row"><strong>Contemporary Worship</strong><span>Sunday • 10:30 AM</span></div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section class="cards">
+    <a class="card" id="watch" href="#">
+      <div class="eyebrow">Watch</div>
+      <h3>Join worship online</h3>
+      <p>Watch live on Sundays or catch up anytime with recent services and messages.</p>
+      <div class="link">Open worship →</div>
+    </a>
+
+    <a class="card" id="community" href="#">
+      <div class="eyebrow">Belong</div>
+      <h3>Check in and connect</h3>
+      <p>Tell us you joined, share where you are watching from, and take your next step.</p>
+      <div class="link">Connect now →</div>
+    </a>
+
+    <a class="card" id="prayer" href="#">
+      <div class="eyebrow">Prayer</div>
+      <h3>Share a prayer need</h3>
+      <p>Whether your request is public or private, we want to walk with you in prayer.</p>
+      <div class="link">Send request →</div>
+    </a>
+
+    <a class="card" id="support" href="#">
+      <div class="eyebrow">Support</div>
+      <h3>Invest in the mission</h3>
+      <p>Support local ministry, digital outreach, and practical care for our community.</p>
+      <div class="link">Support ministry →</div>
+    </a>
+  </section>
+
+  <section class="section">
+    <div class="two-col">
+      <div class="panel">
+        <div class="eyebrow">Community Feed Preview</div>
+        <h3>A calmer kind of online community</h3>
+        <p>This could become the heartbeat of the site — a simple, church-centered feed for encouragement, ministry updates, testimonies, prayer prompts, and ways to engage.</p>
+
+        <div class="feed-item">
+          <div class="feed-tag">Ministry Update</div>
+          <div class="feed-title">This week at VUMC</div>
+          <div>Join us in worship this Sunday and remember to check in if you are watching from home or afar.</div>
+        </div>
+
+        <div class="feed-item">
+          <div class="feed-tag">Prayer Prompt</div>
+          <div class="feed-title">How can we pray for you this week?</div>
+          <div>Drop a prayer request and let us know if it is okay to share with the broader community.</div>
+        </div>
+
+        <div class="feed-item">
+          <div class="feed-tag">Mission Story</div>
+          <div class="feed-title">Your support helps us serve beyond Sunday</div>
+          <div>From online worship to local outreach, every act of generosity helps us keep serving in real ways.</div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="eyebrow">Prayer Request Preview</div>
+        <h3>Let us pray with you</h3>
+        <p>This section can later connect to your Apps Script backend.</p>
+        <form class="prayer-form">
+          <input type="text" placeholder="Your name">
+          <input type="email" placeholder="Your email">
+          <select>
+            <option>Share with prayer team only</option>
+            <option>Share publicly on prayer wall</option>
+            <option>Pastoral follow-up requested</option>
+          </select>
+          <textarea placeholder="How can we pray for you?"></textarea>
+          <button type="button">Submit Prayer Request</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <div class="cta">
+    <div>
+      <h3 style="margin:0 0 8px;">Be part of what God is doing through VUMC.</h3>
+      <div style="color:var(--muted);">A future version of this section can point directly to your PayPal giving categories.</div>
+    </div>
+    <a class="btn" style="background:var(--accent2);color:#fff;" href="#">Support the Mission</a>
+  </div>
+
+  <footer class="footer">
+    <div class="wrap">
+      <div>
+        <strong style="display:block;font-size:20px;margin-bottom:6px;">VUMC Online</strong>
+        <div style="color:rgba(255,255,255,.85);font-size:14px;">A digital front door for worship, prayer, and belonging.</div>
+      </div>
+      <div>Watch • Community • Prayer • Support</div>
+    </div>
+  </footer>
+</body>
+</html>
