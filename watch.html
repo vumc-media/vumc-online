@@ -212,7 +212,8 @@
     overflow: hidden;
   }
 
-  #vumcNotesCard {
+  #vumcNotesCard,
+  #vumcChatCard {
     min-height: 560px;
     display: flex;
     align-items: stretch;
@@ -220,7 +221,8 @@
     background: #262a33;
   }
 
-  #vumcNotesFrame {
+  #vumcNotesFrame,
+  #vumcChatFrame {
     width: 100%;
     height: 560px;
     border: 0;
@@ -228,7 +230,8 @@
     display: none;
   }
 
-  #vumcNotesPlaceholder {
+  #vumcNotesPlaceholder,
+  #vumcChatPlaceholder {
     width: 100%;
     min-height: 560px;
     display: flex;
@@ -264,6 +267,7 @@
     display: flex;
     gap: 8px;
     margin-bottom: 10px;
+    flex-wrap: wrap;
   }
 
   .vumcTabBtn {
@@ -276,12 +280,17 @@
     font-size: 14px;
     font-weight: 700;
     cursor: pointer;
+    min-width: 0;
   }
 
   .vumcTabBtn.active {
     background: #d4af37;
     color: #111;
     border-color: transparent;
+  }
+
+  .vumcTabBtn.vumcHiddenTab {
+    display: none !important;
   }
 
   .vumcTabPane {
@@ -520,6 +529,7 @@
         <div class="vumcPanel">
           <div class="vumcTabs">
             <button class="vumcTabBtn active" data-tab="notes">Sermon Notes</button>
+            <button id="chatTabBtn" class="vumcTabBtn vumcHiddenTab" data-tab="chat">Live Chat</button>
             <button class="vumcTabBtn" data-tab="checkin">Check In</button>
             <button class="vumcTabBtn" data-tab="prayer">Prayer</button>
           </div>
@@ -544,6 +554,31 @@
                 id="vumcNotesFrame"
                 src=""
                 title="Sermon Notes">
+              </iframe>
+
+            </div>
+          </div>
+        </div>
+
+        <div id="tab-chat" class="vumcTabPane">
+          <div class="vumcPanel">
+            <div class="vumcPanelTitle">Live Chat</div>
+            <div class="vumcCard" id="vumcChatCard">
+
+              <div id="vumcChatPlaceholder">
+                <div class="vumcPlaceholderInner">
+                  <div class="vumcPlaceholderTitle">Live Chat</div>
+                  <div class="vumcPlaceholderText">
+                    Live chat becomes available during an active livestream on desktop and tablet.<br><br>
+                    When worship is live, this tab will open automatically.
+                  </div>
+                </div>
+              </div>
+
+              <iframe
+                id="vumcChatFrame"
+                src=""
+                title="YouTube Live Chat">
               </iframe>
 
             </div>
@@ -645,14 +680,21 @@
 
 <script>
 (async function () {
+ const CHAT_EMBED_DOMAIN = window.location.hostname;
 
   const endpoint = "https://script.google.com/macros/s/AKfycbxClNiX6jIT7ykEIox3Qw-dzynO4TgGhqbdTTzOzESS9C8ZxCRNiLLAuc3bSYFKVbg/exec";
   const formsEndpoint = "https://script.google.com/macros/s/AKfycbxyOSYQ7HjJlCWKuquZ47TpWvHfHwmLSqXPaDI9IIdvwkQgXp3ClDXd6U1UzdePOOGU/exec";
+
+  const CHAT_EMBED_DOMAIN = window.location.hostname;
+  const MOBILE_BREAKPOINT = 980;
 
   const frame = document.getElementById("vumcLiveFrame");
   const offline = document.getElementById("vumcOffline");
   const notesFrame = document.getElementById("vumcNotesFrame");
   const notesPlaceholder = document.getElementById("vumcNotesPlaceholder");
+  const chatFrame = document.getElementById("vumcChatFrame");
+  const chatPlaceholder = document.getElementById("vumcChatPlaceholder");
+  const chatTabBtn = document.getElementById("chatTabBtn");
 
   let currentVideo = "";
 
@@ -660,6 +702,10 @@
     traditional: "https://sermon.versaillesumc.org",
     contemporary: "https://sermon.versaillesumc.org"
   };
+
+  function isDesktopOrTablet() {
+    return window.innerWidth > MOBILE_BREAKPOINT;
+  }
 
   function getNextServiceDate() {
     const now = new Date();
@@ -736,6 +782,47 @@
     notesPlaceholder.style.display = "flex";
   }
 
+  function activateTab(tabName) {
+    document.querySelectorAll(".vumcTabBtn").forEach(b => b.classList.remove("active"));
+    document.querySelectorAll(".vumcTabPane").forEach(p => p.classList.remove("active"));
+
+    const btn = document.querySelector('.vumcTabBtn[data-tab="' + tabName + '"]');
+    const pane = document.getElementById("tab-" + tabName);
+
+    if (btn) btn.classList.add("active");
+    if (pane) pane.classList.add("active");
+  }
+
+  function showChat(videoId) {
+    if (!isDesktopOrTablet()) {
+      hideChat();
+      return;
+    }
+
+    const chatUrl = "https://www.youtube.com/live_chat?v=" + encodeURIComponent(videoId) +
+      "&embed_domain=" + encodeURIComponent(CHAT_EMBED_DOMAIN);
+
+    chatTabBtn.classList.remove("vumcHiddenTab");
+    chatPlaceholder.style.display = "none";
+    chatFrame.style.display = "block";
+
+    if (chatFrame.src !== chatUrl) {
+      chatFrame.src = chatUrl;
+    }
+  }
+
+  function hideChat() {
+    chatTabBtn.classList.add("vumcHiddenTab");
+    chatFrame.style.display = "none";
+    chatFrame.src = "";
+    chatPlaceholder.style.display = "flex";
+
+    const activeChatPane = document.getElementById("tab-chat").classList.contains("active");
+    if (activeChatPane) {
+      activateTab("notes");
+    }
+  }
+
   async function checkLive() {
     try {
       const res = await fetch(endpoint + "?t=" + Date.now(), {
@@ -759,6 +846,7 @@
         const serviceKey = data.serviceKey || getLikelyLiveServiceKey();
         const notesUrl = data.notesUrl || NOTES_URLS[serviceKey] || NOTES_URLS.traditional;
         showNotes(notesUrl);
+        showChat(data.videoId);
 
       } else {
         currentVideo = "";
@@ -766,6 +854,7 @@
         frame.style.display = "none";
         offline.style.display = "flex";
         hideNotes();
+        hideChat();
       }
 
     } catch (e) {
@@ -774,6 +863,7 @@
       frame.style.display = "none";
       offline.style.display = "flex";
       hideNotes();
+      hideChat();
     }
   }
 
@@ -805,11 +895,17 @@
 
   document.querySelectorAll(".vumcTabBtn").forEach(btn => {
     btn.addEventListener("click", function () {
-      document.querySelectorAll(".vumcTabBtn").forEach(b => b.classList.remove("active"));
-      document.querySelectorAll(".vumcTabPane").forEach(p => p.classList.remove("active"));
-      this.classList.add("active");
-      document.getElementById("tab-" + this.dataset.tab).classList.add("active");
+      if (this.classList.contains("vumcHiddenTab")) return;
+      activateTab(this.dataset.tab);
     });
+  });
+
+  window.addEventListener("resize", function () {
+    if (!isDesktopOrTablet()) {
+      hideChat();
+    } else if (currentVideo) {
+      showChat(currentVideo);
+    }
   });
 
   const checkinForm = document.getElementById("checkinForm");
@@ -901,6 +997,7 @@
   setInterval(tick, 1000);
 
   hideNotes();
+  hideChat();
   await checkLive();
   setInterval(checkLive, 30000);
 
