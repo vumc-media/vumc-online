@@ -1,181 +1,219 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Admin Post | VUMC Online</title>
-  <style>
-    :root{
-      --bg:#f4f6f8;--card:#ffffff;--text:#1f2933;--muted:#5b6875;--accent:#305f72;--border:#d8e0e6;--shadow:0 10px 30px rgba(24,39,52,.08);--radius:20px;--max:820px;
-    }
-    *{box-sizing:border-box}
-    body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text);line-height:1.5}
-    .topbar{background:#17313d;color:#fff;padding:14px 20px;text-align:center;font-size:14px}
-    .wrap{max-width:var(--max);margin:0 auto;padding:28px 20px}
-    .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:26px}
-    h1{margin:0 0 10px}
-    p{color:var(--muted)}
-    .field{margin-bottom:14px}
-    label{display:block;font-size:13px;font-weight:700;margin-bottom:6px}
-    input, select, textarea{
-      width:100%;
-      border:1px solid var(--border);
-      border-radius:14px;
-      padding:14px 15px;
-      font:inherit;
-      background:#fff;
-      color:var(--text);
-    }
-    textarea{min-height:180px;resize:vertical}
-    .row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-    .btn{
-      border:0;
-      border-radius:999px;
-      padding:14px 20px;
-      font:inherit;
-      font-weight:700;
-      background:var(--accent);
-      color:#fff;
-      cursor:pointer;
-    }
-    .status{display:none;margin-top:14px;padding:12px 14px;border-radius:14px;font-size:14px}
-    .status.success{display:block;background:#e7f6ee;color:#1d5e3a;border:1px solid #b9dfc8}
-    .status.error{display:block;background:#fdeeee;color:#8a2b2b;border:1px solid #efc5c5}
-    @media (max-width:700px){.row{grid-template-columns:1fr}}
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Admin Post | VUMC Online</title>
+
+<style>
+  body {
+    margin:0;
+    font-family: Arial, Helvetica, sans-serif;
+    background:#f4f6f8;
+    color:#1f2933;
+  }
+
+  .wrap {
+    max-width:700px;
+    margin:40px auto;
+    padding:20px;
+  }
+
+  .card {
+    background:#fff;
+    border-radius:18px;
+    padding:24px;
+    box-shadow:0 10px 30px rgba(0,0,0,.08);
+  }
+
+  h1 {
+    margin-top:0;
+  }
+
+  .field {
+    margin-bottom:14px;
+  }
+
+  label {
+    display:block;
+    font-weight:700;
+    margin-bottom:6px;
+    font-size:14px;
+  }
+
+  input, select, textarea {
+    width:100%;
+    padding:12px;
+    border-radius:10px;
+    border:1px solid #d8e0e6;
+    font-size:14px;
+  }
+
+  textarea {
+    min-height:120px;
+  }
+
+  button {
+    width:100%;
+    padding:14px;
+    border-radius:999px;
+    border:none;
+    background:#305f72;
+    color:#fff;
+    font-weight:700;
+    font-size:15px;
+    cursor:pointer;
+  }
+
+  .status {
+    margin-top:12px;
+    padding:12px;
+    border-radius:10px;
+    display:none;
+  }
+
+  .success {
+    background:#e6f7ef;
+    color:#1b7a46;
+  }
+
+  .error {
+    background:#fdecea;
+    color:#a33a3a;
+  }
+
+</style>
 </head>
 <body>
-  <div class="topbar">VUMC Online Admin</div>
 
-  <div class="wrap">
-    <div class="card">
-      <h1>Create Community Post</h1>
-      <p>This form writes directly to your Community Feed sheet.</p>
+<div class="wrap">
+  <div class="card">
 
-      <form id="postForm">
-        <div class="row">
-          <div class="field">
-            <label for="status">Status</label>
-            <select id="status" name="status">
-              <option value="publish">Publish now</option>
-              <option value="draft">Save as draft</option>
-            </select>
-          </div>
+    <h1>Create Community Post</h1>
 
-          <div class="field">
-            <label for="type">Type</label>
-            <select id="type" name="type">
-              <option value="update">Update</option>
-              <option value="prayer">Prayer</option>
-              <option value="story">Story</option>
-              <option value="event">Event</option>
-              <option value="next step">Next Step</option>
-            </select>
-          </div>
-        </div>
+    <form id="postForm">
 
-        <div class="row">
-          <div class="field">
-            <label for="author">Author</label>
-            <input id="author" name="author" type="text" value="VUMC" />
-          </div>
+      <div class="field">
+        <label>Status</label>
+        <select id="status">
+          <option value="publish">Publish Now</option>
+          <option value="scheduled">Schedule</option>
+          <option value="draft">Save Draft</option>
+        </select>
+      </div>
 
-          <div class="field">
-            <label for="date">Date</label>
-            <input id="date" name="date" type="date" />
-          </div>
-        </div>
+      <div class="field" id="scheduleField" style="display:none;">
+        <label>Schedule Date & Time</label>
+        <input type="datetime-local" id="publish_at">
+      </div>
 
-        <div class="field">
-          <label for="title">Title</label>
-          <input id="title" name="title" type="text" required />
-        </div>
+      <div class="field">
+        <label>Title</label>
+        <input type="text" id="title" required>
+      </div>
 
-        <div class="field">
-          <label for="content">Content</label>
-          <textarea id="content" name="content" required></textarea>
-        </div>
+      <div class="field">
+        <label>Content</label>
+        <textarea id="content" required></textarea>
+      </div>
 
-        <div class="field">
-          <label for="link">Optional Link</label>
-          <input id="link" name="link" type="text" placeholder="watch.html or https://..." />
-        </div>
+      <div class="field">
+        <label>Type</label>
+        <select id="type">
+          <option value="update">Update</option>
+          <option value="prayer">Prayer Prompt</option>
+          <option value="event">Event</option>
+          <option value="story">Story</option>
+        </select>
+      </div>
 
-        <div class="field">
-          <label for="image">Optional Image URL</label>
-          <input id="image" name="image" type="text" />
-        </div>
+      <div class="field">
+        <label>Author</label>
+        <input type="text" id="author" value="VUMC Online">
+      </div>
 
-        <button id="submitBtn" class="btn" type="submit">Post to Community Feed</button>
-        <div id="formStatus" class="status"></div>
-      </form>
-    </div>
+      <div class="field">
+        <label>Image URL (optional)</label>
+        <input type="text" id="image">
+      </div>
+
+      <div class="field">
+        <label>Link (optional)</label>
+        <input type="text" id="link">
+      </div>
+
+      <button type="submit">Post</button>
+
+      <div id="statusMsg" class="status"></div>
+
+    </form>
+
   </div>
+</div>
 
-  <script>
-    const API_URL = "https://script.google.com/macros/s/AKfycbwDGjG3nxgmxnGhxB-q26WShFmBXGkxQI-9pT6q7UzcgLI5Xi6oet2CPkXlu0feZpWX/exec";
-    const form = document.getElementById("postForm");
-    const submitBtn = document.getElementById("submitBtn");
-    const formStatus = document.getElementById("formStatus");
+<script>
 
-    function setStatus(type, message) {
-      formStatus.className = "status " + type;
-      formStatus.textContent = message;
-    }
+const endpoint = "https://script.google.com/macros/s/AKfycbwDGjG3nxgmxnGhxB-q26WShFmBXGkxQI-9pT6q7UzcgLI5Xi6oet2CPkXlu0feZpWX/exec";
 
-    function clearStatus() {
-      formStatus.className = "status";
-      formStatus.textContent = "";
-    }
+const form = document.getElementById("postForm");
+const statusSelect = document.getElementById("status");
+const scheduleField = document.getElementById("scheduleField");
+const statusMsg = document.getElementById("statusMsg");
 
-    form.addEventListener("submit", async function (e) {
-      e.preventDefault();
-      clearStatus();
+statusSelect.addEventListener("change", () => {
+  if (statusSelect.value === "scheduled") {
+    scheduleField.style.display = "block";
+  } else {
+    scheduleField.style.display = "none";
+  }
+});
 
-      const payload = {
-        status: form.status.value,
-        type: form.type.value,
-        author: form.author.value.trim(),
-        date: form.date.value || "",
-        title: form.title.value.trim(),
-        content: form.content.value.trim(),
-        link: form.link.value.trim(),
-        image: form.image.value.trim()
-      };
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
 
-      if (!payload.title || !payload.content) {
-        setStatus("error", "Please complete the title and content.");
-        return;
-      }
+  statusMsg.style.display = "none";
 
-      submitBtn.disabled = true;
-      submitBtn.textContent = "Submitting...";
+  const payload = {
+    status: document.getElementById("status").value,
+    date: new Date(), // AUTO DATE
+    publish_at: document.getElementById("publish_at").value,
+    title: document.getElementById("title").value,
+    content: document.getElementById("content").value,
+    type: document.getElementById("type").value,
+    author: document.getElementById("author").value,
+    image: document.getElementById("image").value,
+    link: document.getElementById("link").value
+  };
 
-      try {
-        const res = await fetch(API_URL, {
-          method: "POST",
-          headers: { "Content-Type": "text/plain;charset=utf-8" },
-          body: JSON.stringify(payload)
-        });
-
-        if (!res.ok) throw new Error("Request failed: " + res.status);
-
-        const result = await res.json();
-
-        if (result && result.ok) {
-          form.reset();
-          form.author.value = "VUMC";
-          setStatus("success", "Community post saved successfully.");
-        } else {
-          throw new Error((result && result.error) || "Unknown error");
-        }
-      } catch (err) {
-        setStatus("error", "The post could not be saved right now.");
-      } finally {
-        submitBtn.disabled = false;
-        submitBtn.textContent = "Post to Community Feed";
-      }
+  try {
+    const res = await fetch(endpoint, {
+      method: "POST",
+      headers: {
+        "Content-Type": "text/plain;charset=utf-8"
+      },
+      body: JSON.stringify(payload)
     });
-  </script>
+
+    const data = await res.json();
+
+    if (data.ok) {
+      form.reset();
+      statusMsg.className = "status success";
+      statusMsg.innerText = "Post submitted successfully!";
+      statusMsg.style.display = "block";
+    } else {
+      throw new Error(data.error || "Error");
+    }
+
+  } catch (err) {
+    statusMsg.className = "status error";
+    statusMsg.innerText = "Something went wrong. Try again.";
+    statusMsg.style.display = "block";
+  }
+
+});
+
+</script>
+
 </body>
 </html>
