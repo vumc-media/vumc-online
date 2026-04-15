@@ -60,6 +60,39 @@
     display: block;
   }
 
+  .vumcQuickNav {
+    position: fixed;
+    top: 14px;
+    right: 14px;
+    z-index: 9999;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+
+  .vumcQuickNav a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 14px;
+    border-radius: 999px;
+    background: rgba(15,17,21,.78);
+    border: 1px solid rgba(255,255,255,.12);
+    color: #fff;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 700;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 8px 20px rgba(0,0,0,.24);
+    transition: background .2s ease, transform .2s ease;
+  }
+
+  .vumcQuickNav a:hover {
+    background: rgba(15,17,21,.95);
+    transform: translateY(-1px);
+  }
+
   #vumcApp {
     width: 100%;
     min-height: 100vh;
@@ -428,6 +461,22 @@
       height: 24px;
     }
 
+    .vumcQuickNav {
+      top: auto;
+      right: 10px;
+      bottom: 10px;
+      left: 10px;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .vumcQuickNav a {
+      flex: 1;
+      min-width: 0;
+      padding: 10px 12px;
+      font-size: 12px;
+    }
+
     #vumcInner {
       padding: 20px 14px;
     }
@@ -459,6 +508,12 @@
     />
     <span>Home</span>
   </a>
+</div>
+
+<div class="vumcQuickNav">
+  <a href="check-in.html">Check In</a>
+  <a href="prayer.html">Prayer</a>
+  <a href="support.html">Give</a>
 </div>
 
 <div id="vumcApp">
