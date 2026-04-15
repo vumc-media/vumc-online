@@ -33,6 +33,8 @@
     .feed-tag{display:inline-block;padding:5px 10px;border-radius:999px;background:#eef4f6;color:var(--accent);font-size:12px;font-weight:700;margin-bottom:8px}
     .feed-title{font-size:19px;font-weight:700;margin-bottom:6px}
     .meta{font-size:13px;color:var(--muted);margin-bottom:8px}
+    .feed-content{color:var(--text);white-space:pre-line}
+    .feed-link{display:inline-block;margin-top:12px;padding:10px 14px;border-radius:999px;background:var(--accent2);color:#111;font-weight:700}
     .mini-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
     .mini-card{background:#f8fafb;border:1px solid var(--border);border-radius:16px;padding:18px}
     .mini-card h3{margin:0 0 8px;font-size:18px}
@@ -41,6 +43,8 @@
     .btn-primary{background:var(--accent);color:#fff}
     .btn-secondary{background:#fff;color:var(--accent);border:1px solid var(--border)}
     .quote{background:linear-gradient(180deg,#ffffff 0%, #f8fafb 100%)}
+    .empty-state{padding:10px 0 0;color:var(--muted)}
+    .loading{color:var(--muted)}
     .footer{background:#17313d;color:#fff;padding:34px 20px;margin-top:8px}
     .footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:center}
     @media (max-width:950px){.grid{grid-template-columns:1fr}.mini-grid{grid-template-columns:1fr}}
@@ -54,11 +58,11 @@
     <div class="wrap nav">
       <div class="brand"><a href="index.html">VUMC Online</a></div>
       <div class="nav-links">
-       <a href="watch.html">Worship</a>
-<a href="check-in.html">Check In</a>
-<a href="prayer.html">Prayer</a>
-<a href="community.html">Community</a>
-<a class="active" href="support.html">Give</a>
+        <a href="watch.html">Worship</a>
+        <a href="check-in.html">Check In</a>
+        <a href="prayer.html">Prayer</a>
+        <a class="active" href="community.html">Community</a>
+        <a href="support.html">Give</a>
       </div>
     </div>
   </div>
@@ -68,8 +72,8 @@
       <div class="eyebrow">Community</div>
       <h1>You belong here.</h1>
       <p>
-        Community is more than a comment section. This is a place to stay connected,
-        see what is happening, respond to ministry updates, and take your next step with VUMC Online.
+        This is a place to stay connected, see ministry updates, read encouragement,
+        and take your next step with VUMC Online.
       </p>
     </div>
   </section>
@@ -77,72 +81,47 @@
   <section class="section">
     <div class="grid">
       <div class="card">
-        <div class="eyebrow">Community Feed Preview</div>
+        <div class="eyebrow">Community Feed</div>
         <h2>A calmer kind of digital community</h2>
         <p>
-          Instead of endless noise, this page can become a focused space for worship updates,
-          ministry stories, prayer prompts, and encouragement.
+          Instead of endless noise, this page shares ministry updates, prayer prompts,
+          stories, and encouragement from VUMC.
         </p>
 
-        <div class="feed-item">
-          <div class="feed-tag">This Week</div>
-          <div class="feed-title">Join us this Sunday online</div>
-          <div class="meta">Posted by VUMC Online</div>
-          <div>Worship with us live at 9:30am or 10:30am, then check in and let us know you joined us.</div>
-        </div>
-
-        <div class="feed-item">
-          <div class="feed-tag">Prayer Prompt</div>
-          <div class="feed-title">How can we pray for you this week?</div>
-          <div class="meta">Posted by Prayer Team</div>
-          <div>Visit the prayer page and submit a request. Private and follow-up options are available.</div>
-        </div>
-
-        <div class="feed-item">
-          <div class="feed-tag">Ministry Story</div>
-          <div class="feed-title">Your support helps us serve beyond Sunday</div>
-          <div class="meta">Posted by VUMC Online</div>
-          <div>From local outreach to digital ministry, every act of generosity helps extend the mission.</div>
-        </div>
-
-        <div class="feed-item">
-          <div class="feed-tag">Next Step</div>
-          <div class="feed-title">New here? Start with worship, prayer, and check-in</div>
-          <div class="meta">Posted by Welcome Team</div>
-          <div>You do not have to live in Versailles to belong to what God is doing through this ministry.</div>
-        </div>
+        <div id="communityFeed" class="loading">Loading community posts...</div>
       </div>
 
       <div class="card quote">
-        <div class="eyebrow">What this page can become</div>
+        <div class="eyebrow">What this page is for</div>
         <h2>Built for connection, not clutter</h2>
         <p>
-          This page can eventually be powered by a simple feed from Google Sheets or Apps Script.
-          For now, it gives you a strong public-facing structure.
+          This community page is a simple public wall for ministry updates and encouragement.
+          It is meant to feel warm, useful, and easy to follow.
         </p>
 
         <div class="mini-grid">
           <div class="mini-card">
             <h3>Ministry Updates</h3>
-            <p>Weekly reminders, special events, and short encouragement posts.</p>
+            <p>Weekly reminders, church news, and important announcements.</p>
           </div>
           <div class="mini-card">
             <h3>Prayer Prompts</h3>
-            <p>Short guided prompts that move people toward the prayer page.</p>
+            <p>Encouragement that leads people naturally toward the prayer page.</p>
           </div>
           <div class="mini-card">
             <h3>Stories</h3>
-            <p>Testimonies, mission moments, and ways people can celebrate what God is doing.</p>
+            <p>Ways to highlight impact, testimony, and what God is doing.</p>
           </div>
           <div class="mini-card">
             <h3>Next Steps</h3>
-            <p>Links to worship, prayer, check-in, and partnership opportunities.</p>
+            <p>Point people toward worship, prayer, check-in, and giving.</p>
           </div>
         </div>
 
         <div class="btn-row">
           <a class="btn btn-primary" href="watch.html">Join Worship</a>
           <a class="btn btn-secondary" href="prayer.html">Go to Prayer</a>
+          <a class="btn btn-secondary" href="check-in.html">Check In</a>
         </div>
       </div>
     </div>
@@ -154,8 +133,74 @@
         <strong style="display:block;font-size:20px;margin-bottom:6px;">VUMC Online</strong>
         <div style="color:rgba(255,255,255,.85);font-size:14px;">A digital front door for worship, prayer, and belonging.</div>
       </div>
-      <div>Worship • Community • Prayer • Partner With Us</div>
+      <div>Worship • Community • Prayer • Check In • Give</div>
     </div>
   </footer>
+
+  <script>
+    const COMMUNITY_API = "https://script.google.com/macros/s/AKfycbwDGjG3nxgmxnGhxB-q26WShFmBXGkxQI-9pT6q7UzcgLI5Xi6oet2CPkXlu0feZpWX/exec";
+
+    function escapeHtml(str) {
+      return String(str ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+    }
+
+    function formatType(type) {
+      const value = String(type || "update").trim();
+      return value ? value.charAt(0).toUpperCase() + value.slice(1) : "Update";
+    }
+
+    async function loadCommunityFeed() {
+      const feed = document.getElementById("communityFeed");
+
+      try {
+        const res = await fetch(COMMUNITY_API + (COMMUNITY_API.includes("?") ? "&" : "?") + "t=" + Date.now(), {
+          cache: "no-store"
+        });
+
+        if (!res.ok) {
+          throw new Error("HTTP " + res.status);
+        }
+
+        const posts = await res.json();
+
+        if (!Array.isArray(posts) || posts.length === 0) {
+          feed.className = "empty-state";
+          feed.textContent = "No community posts have been published yet.";
+          return;
+        }
+
+        feed.className = "";
+        feed.innerHTML = posts.map((post, index) => {
+          const type = escapeHtml(formatType(post.type));
+          const title = escapeHtml(post.title || "");
+          const content = escapeHtml(post.content || "");
+          const author = escapeHtml(post.author || "VUMC");
+          const date = escapeHtml(post.date || "");
+          const link = post.link ? String(post.link) : "";
+          const safeLink = /^https?:\/\//i.test(link) || /^[\w./-]+\.html$/i.test(link) ? link : "";
+
+          return `
+            <div class="feed-item${index === 0 ? " first" : ""}">
+              <div class="feed-tag">${type}</div>
+              <div class="feed-title">${title}</div>
+              <div class="meta">Posted by ${author}${date ? " • " + date : ""}</div>
+              <div class="feed-content">${content}</div>
+              ${safeLink ? `<a class="feed-link" href="${escapeHtml(safeLink)}" target="${/^https?:\/\//i.test(safeLink) ? "_blank" : "_self"}" rel="noopener">Learn More</a>` : ""}
+            </div>
+          `;
+        }).join("");
+      } catch (err) {
+        feed.className = "empty-state";
+        feed.textContent = "The community feed could not be loaded right now.";
+      }
+    }
+
+    loadCommunityFeed();
+  </script>
 </body>
 </html>
