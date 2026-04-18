@@ -288,6 +288,7 @@
       right:0;
       width:var(--drawer-width);
       z-index:30;
+      overflow:visible;
     }
 
     .side-card{
@@ -300,7 +301,7 @@
       transition:transform .3s ease;
       max-height:calc(100vh - 150px);
       overflow-y:auto;
-      overflow-x:visible;
+      overflow-x:hidden;
     }
 
     body.drawer-open .side-card{
@@ -311,14 +312,14 @@
       transform:translateX(calc(var(--drawer-width) - var(--drawer-closed-space)));
     }
 
-    /* FIXED HANDLE */
+    /* HANDLE OUTSIDE THE BOX */
     .drawer-toggle{
       position:absolute;
-      left:-54px;
+      left:-58px;
       top:50%;
       transform:translateY(-50%);
-      width:54px;
-      height:150px;
+      width:58px;
+      height:154px;
       border:none;
       border-radius:18px 0 0 18px;
       background:#17313d;
@@ -327,11 +328,10 @@
       flex-direction:column;
       align-items:center;
       justify-content:center;
+      gap:8px;
       cursor:pointer;
       box-shadow:0 12px 28px rgba(0,0,0,.35);
       z-index:9999;
-      opacity:1;
-      visibility:visible;
     }
 
     .drawer-toggle:hover{
@@ -346,11 +346,8 @@
       transition:transform .3s ease;
     }
 
-    .drawer-toggle::after{
-      content:"⇆";
-      display:block;
-      margin-top:8px;
-      font-size:16px;
+    .drawer-toggle .hint{
+      font-size:15px;
       font-weight:700;
       line-height:1;
       opacity:.95;
@@ -519,11 +516,12 @@
     </div>
 
     <aside class="side-drawer">
-      <div class="side-card">
-        <button class="drawer-toggle" id="drawerToggle" aria-label="Toggle sidebar">
-          <span class="arrow">❮</span>
-        </button>
+      <button class="drawer-toggle" id="drawerToggle" aria-label="Toggle sidebar">
+        <span class="arrow">❮</span>
+        <span class="hint">⇆</span>
+      </button>
 
+      <div class="side-card">
         <div class="eyebrow" style="color:var(--accent);">What this page is for</div>
         <h2>Built for connection, not clutter</h2>
         <p>This page is designed to feel like a gentle midweek conversation space. You may see updates, pastor questions, prayer prompts, and simple ways to respond.</p>
@@ -634,7 +632,7 @@
       const type = escapeHtml(post.type || "Update");
       const author = escapeHtml(post.author || "VUMC");
       const title = escapeHtml(post.title || "");
-      const content = escapeHtml(post.content || "").replace(/\\n/g, "<br>");
+      const content = escapeHtml(post.content || "").replace(/\n/g, "<br>");
       const formattedDate = formatDate(post.date);
       const metaLine = formattedDate ? `Posted ${formattedDate}` : `Posted by ${author}`;
       const prompt = escapeHtml(post.prompt || "");
