@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>eCampus Admin Login | VUMC</title>
+
+<style>
+body {
+  margin:0;
+  font-family:Arial, Helvetica, sans-serif;
+  background:#0f1115;
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-height:100vh;
+}
+
+/* LOGIN CARD */
+.loginCard {
+  background:#1a1f27;
+  padding:30px;
+  border-radius:16px;
+  width:100%;
+  max-width:400px;
+  text-align:center;
+  box-shadow:0 10px 30px rgba(0,0,0,.4);
+}
+
+.loginCard h1 {
+  margin-bottom:10px;
+  font-size:22px;
+}
+
+.loginCard p {
+  font-size:14px;
+  color:#bbb;
+  margin-bottom:20px;
+}
+
+input {
+  width:100%;
+  padding:12px;
+  border-radius:8px;
+  border:none;
+  margin-bottom:15px;
+  font-size:16px;
+}
+
+button {
+  width:100%;
+  padding:12px;
+  border:none;
+  border-radius:8px;
+  background:#bb8c3f;
+  color:#000;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+button:hover {
+  opacity:.9;
+}
+
+.error {
+  color:#ff6b6b;
+  font-size:13px;
+  margin-top:10px;
+}
+
+/* ADMIN DASHBOARD (HIDDEN INITIALLY) */
+#adminPanel {
+  display:none;
+  max-width:900px;
+  width:100%;
+  margin:auto;
+  padding:20px;
+}
+
+.card {
+  background:#1a1f27;
+  padding:20px;
+  border-radius:14px;
+  margin-bottom:20px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- LOGIN -->
+<div class="loginCard" id="loginBox">
+  <h1>eCampus Admin Login</h1>
+  <p>Staff access only</p>
+
+  <input type="password" id="password" placeholder="Enter password">
+  <button onclick="login()">Login</button>
+
+  <div class="error" id="errorMsg"></div>
+</div>
+
+<!-- ADMIN PANEL -->
+<div id="adminPanel">
+
+  <div class="card">
+    <h2>Post to Community Feed</h2>
+
+    <input type="text" id="title" placeholder="Post Title">
+    <textarea id="content" placeholder="Write your post..." style="width:100%;padding:12px;border-radius:8px;margin-top:10px;"></textarea>
+
+    <button style="margin-top:10px;" onclick="submitPost()">Submit Post</button>
+  </div>
+
+  <div class="card">
+    <h2>Quick Links</h2>
+    <p><a href="https://versaillesumc.churchcenter.com" target="_blank">Church Center</a></p>
+    <p><a href="https://www.youtube.com/@versaillesumc/live" target="_blank">YouTube Live</a></p>
+  </div>
+
+</div>
+
+<script>
+// 🔗 YOUR GOOGLE APPS SCRIPT URL
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzJjFgPvDAiuRusNyYkW5ShO35QWsnIOBcku3lgeJK1-OQp3i70ZXjfxGiE5_M39S0YSg/exec";
+
+function login() {
+  const password = document.getElementById("password").value;
+
+  fetch(SCRIPT_URL, {
+    method: "POST",
+    body: JSON.stringify({
+      action: "login",
+      password: password
+    })
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.success) {
+      document.getElementById("loginBox").style.display = "none";
+      document.getElementById("adminPanel").style.display = "block";
+    } else {
+      document.getElementById("errorMsg").innerText = "Incorrect password";
+    }
+  });
+}
+
+function submitPost() {
+  const title = document.getElementById("title").value;
+  const content = document.getElementById("content").value;
+
+  fetch(SCRIPT_URL, {
+    method: "POST",
+    body: JSON.stringify({
+      action: "post",
+      title: title,
+      content: content
+    })
+  })
+  .then(res => res.json())
+  .then(data => {
+    alert("Post submitted!");
+  });
+}
+</script>
+
+</body>
+</html>
