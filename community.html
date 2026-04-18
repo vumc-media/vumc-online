@@ -311,39 +311,47 @@
       transform:translateX(calc(var(--drawer-width) - var(--drawer-closed-space)));
     }
 
-    /* BIG OBVIOUS HANDLE */
+    /* BIG HANDLE ONLY */
     .drawer-toggle{
       position:absolute;
-      left:-64px;
+      left:-85px;
       top:50%;
       transform:translateY(-50%);
-      width:64px;
-      height:168px;
+      width:85px;
+      height:180px;
       border:none;
-      border-radius:20px 0 0 20px;
+      border-radius:24px 0 0 24px;
       background:linear-gradient(180deg, #305f72 0%, #1f3a44 100%);
       color:#fff;
       display:flex;
+      flex-direction:column;
       align-items:center;
       justify-content:center;
+      gap:10px;
       cursor:pointer;
-      box-shadow:0 14px 30px rgba(0,0,0,.30);
+      box-shadow:0 18px 40px rgba(0,0,0,.35);
       z-index:999;
-      transition:transform .2s ease, box-shadow .2s ease, filter .2s ease;
+      transition:all .2s ease;
     }
 
     .drawer-toggle:hover{
-      transform:translateY(-50%) scale(1.05);
-      box-shadow:0 18px 36px rgba(0,0,0,.36);
+      transform:translateY(-50%) scale(1.08);
       filter:brightness(1.05);
     }
 
     .drawer-toggle .arrow{
-      font-size:36px;
-      line-height:1;
+      font-size:40px;
       font-weight:700;
-      display:block;
+      line-height:1;
       transition:transform .3s ease;
+    }
+
+    .drawer-toggle::after{
+      content:"MENU";
+      font-size:12px;
+      font-weight:700;
+      letter-spacing:1px;
+      opacity:.85;
     }
 
     body.drawer-open .drawer-toggle .arrow{
@@ -624,7 +632,7 @@
       const type = escapeHtml(post.type || "Update");
       const author = escapeHtml(post.author || "VUMC");
       const title = escapeHtml(post.title || "");
-      const content = escapeHtml(post.content || "").replace(/\\n/g, "<br>");
+      const content = escapeHtml(post.content || "").replace(/\n/g, "<br>");
       const formattedDate = formatDate(post.date);
       const metaLine = formattedDate ? `Posted ${formattedDate}` : `Posted by ${author}`;
       const prompt = escapeHtml(post.prompt || "");
