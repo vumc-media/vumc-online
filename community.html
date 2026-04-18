@@ -313,26 +313,48 @@
 
     /* BIG HANDLE ONLY */
     .drawer-toggle{
-      position:absolute;
-      left:-85px;
-      top:50%;
-      transform:translateY(-50%);
-      width:85px;
-      height:180px;
-      border:none;
-      border-radius:24px 0 0 24px;
-      background:linear-gradient(180deg, #305f72 0%, #1f3a44 100%);
-      color:#fff;
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      justify-content:center;
-      gap:10px;
-      cursor:pointer;
-      box-shadow:0 18px 40px rgba(0,0,0,.35);
-      z-index:999;
-      transition:all .2s ease;
-    }
+  position:absolute;
+  left:-70px; /* sticks out clearly */
+  top:50%;
+  transform:translateY(-50%);
+
+  width:70px;
+  height:160px;
+
+  border:none;
+  border-radius:20px 0 0 20px;
+
+  background:#17313d; /* 🔥 SOLID DARK COLOR */
+  color:#ffffff;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  cursor:pointer;
+
+  box-shadow:0 12px 28px rgba(0,0,0,.35);
+  z-index:999;
+
+  transition:all .2s ease;
+}
+
+.drawer-toggle:hover{
+  transform:translateY(-50%) scale(1.05);
+  background:#1f3f4c; /* slight hover change */
+}
+
+/* BIG clear arrow */
+.drawer-toggle .arrow{
+  font-size:34px;
+  font-weight:700;
+  transition:transform .3s ease;
+}
+
+/* Flip direction when open */
+body.drawer-open .drawer-toggle .arrow{
+  transform:rotate(180deg);
+}
 
     .drawer-toggle:hover{
       transform:translateY(-50%) scale(1.08);
