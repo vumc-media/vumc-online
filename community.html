@@ -282,6 +282,7 @@
       border:1px solid rgba(48,95,114,.12);
     }
 
+    /* Drawer wrapper now moves */
     .side-drawer{
       position:fixed;
       top:118px;
@@ -289,6 +290,15 @@
       width:var(--drawer-width);
       z-index:30;
       overflow:visible;
+      transition:transform .3s ease;
+    }
+
+    body.drawer-open .side-drawer{
+      transform:translateX(0);
+    }
+
+    body.drawer-closed .side-drawer{
+      transform:translateX(calc(var(--drawer-width) - var(--drawer-closed-space)));
     }
 
     .side-card{
@@ -298,21 +308,12 @@
       border-radius:22px 0 0 22px;
       box-shadow:var(--shadow-strong);
       padding:26px 22px 24px;
-      transition:transform .3s ease;
       max-height:calc(100vh - 150px);
       overflow-y:auto;
       overflow-x:hidden;
     }
 
-    body.drawer-open .side-card{
-      transform:translateX(0);
-    }
-
-    body.drawer-closed .side-card{
-      transform:translateX(calc(var(--drawer-width) - var(--drawer-closed-space)));
-    }
-
-    /* HANDLE OUTSIDE THE BOX */
+    /* Handle stays attached to drawer */
     .drawer-toggle{
       position:absolute;
       left:-58px;
@@ -441,12 +442,10 @@
         margin:18px auto 0;
         max-width:var(--max);
         padding:0 20px;
+        transform:none !important;
       }
 
-      .side-card,
-      body.drawer-open .side-card,
-      body.drawer-closed .side-card{
-        transform:none;
+      .side-card{
         border-radius:20px;
         max-height:none;
       }
