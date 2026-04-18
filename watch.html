@@ -6,6 +6,11 @@
 <title>VUMC Watch Live</title>
 
 <style>
+  :root{
+    --border:#d8e0e6;
+    --accent:#305f72;
+  }
+
   * { box-sizing: border-box; }
 
   html, body {
@@ -21,54 +26,68 @@
     background: #0f1115;
   }
 
-  a { color: inherit; }
+  a { color: inherit; text-decoration: none; }
 
-  .vumcBackWrap {
-    position: fixed;
-    top: 14px;
-    left: 14px;
-    z-index: 9999;
+  .topbar{
+    background:#17313d;
+    color:#fff;
+    padding:14px;
+    text-align:center;
+    font-size:14px;
+    font-weight:700;
   }
 
-  .vumcBackBtn {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 10px 14px;
-    border-radius: 999px;
-    background: rgba(15,17,21,.78);
-    border: 1px solid rgba(255,255,255,.12);
-    color: #fff;
-    text-decoration: none;
-    font-size: 14px;
-    font-weight: 700;
-    backdrop-filter: blur(8px);
-    box-shadow: 0 8px 20px rgba(0,0,0,.24);
-    transition: background .2s ease, transform .2s ease;
+  .wrap{
+    max-width:1180px;
+    margin:auto;
   }
 
-  .vumcBackBtn:hover {
-    background: rgba(15,17,21,.92);
-    transform: translateY(-1px);
+  .nav-shell{
+    background:rgba(255,255,255,.92);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--border);
   }
 
-  .vumcBackThumb {
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    object-fit: cover;
-    display: block;
+  .nav{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:20px;
+    flex-wrap:wrap;
+    padding:18px 20px;
+  }
+
+  .brand{
+    font-size:24px;
+    font-weight:700;
+    color:#1f2933;
+  }
+
+  .nav-links{
+    display:flex;
+    gap:18px;
+    flex-wrap:wrap;
+    font-size:15px;
+  }
+
+  .nav-links a{
+    color:var(--accent);
+    font-weight:700;
+  }
+
+  .nav-links a.active{
+    color:#17313d;
   }
 
   #vumcApp {
     width: 100%;
-    min-height: 100vh;
+    min-height: calc(100vh - 95px);
   }
 
   #vumcShell {
     display: grid;
     grid-template-columns: minmax(0, 1fr) 420px;
-    min-height: 100vh;
+    min-height: calc(100vh - 95px);
   }
 
   #vumcMain {
@@ -83,7 +102,7 @@
   #vumcFrame {
     position: relative;
     width: 100%;
-    min-height: 100vh;
+    min-height: calc(100vh - 95px);
     overflow: hidden;
     background: #000;
   }
@@ -185,7 +204,7 @@
   #vumcSidebar {
     background: #15181f;
     border-left: 1px solid rgba(255,255,255,.08);
-    min-height: 100vh;
+    min-height: calc(100vh - 95px);
   }
 
   #vumcSidebarInner {
@@ -410,24 +429,13 @@
       min-height: auto;
       aspect-ratio: 16 / 9;
     }
+
+    #vumcApp {
+      min-height: auto;
+    }
   }
 
   @media (max-width: 767px) {
-    .vumcBackWrap {
-      top: 10px;
-      left: 10px;
-    }
-
-    .vumcBackBtn {
-      padding: 9px 12px;
-      font-size: 13px;
-    }
-
-    .vumcBackThumb {
-      width: 24px;
-      height: 24px;
-    }
-
     #vumcInner {
       padding: 20px 14px;
     }
@@ -450,15 +458,19 @@
 </head>
 <body>
 
-<div class="vumcBackWrap">
-  <a href="index.html" class="vumcBackBtn" aria-label="Back to VUMC Online home">
-    <img
-      src="https://yt3.googleusercontent.com/0VzY1FMygvH9BmYV_gu_hNyZsW1kY5VPDdeRtHxyzfcXtqM5Rc6Kongrr_dw3v5I_hwJv63vIQ=s900-c-k-c0x00ffffff-no-rj"
-      alt="VUMC"
-      class="vumcBackThumb"
-    />
-    <span>Home</span>
-  </a>
+<div class="topbar">VUMC Online is an extension of the ministry and community of Versailles United Methodist Church</div>
+
+<div class="nav-shell">
+  <div class="wrap nav">
+    <div class="brand"><a href="index.html">VUMC Online</a></div>
+    <div class="nav-links">
+      <a class="active" href="watch.html">Worship</a>
+      <a href="check-in.html">Check In</a>
+      <a href="prayer.html">Prayer</a>
+      <a href="community.html">Community</a>
+      <a href="support.html">Give</a>
+    </div>
+  </div>
 </div>
 
 <div id="vumcApp">
