@@ -19,7 +19,7 @@
       --max:1320px;
       --drawer-width:360px;
       --drawer-open-space:330px;
-      --drawer-closed-space:46px;
+      --drawer-closed-space:64px;
     }
 
     *{box-sizing:border-box}
@@ -45,7 +45,7 @@
     }
 
     body.drawer-closed{
-      --main-right-gap:calc(var(--drawer-closed-space) + 18px);
+      --main-right-gap:calc(var(--drawer-closed-space) + 20px);
     }
 
     a{text-decoration:none;color:inherit}
@@ -282,7 +282,6 @@
       border:1px solid rgba(48,95,114,.12);
     }
 
-    /* RIGHT DRAWER AREA */
     .side-drawer{
       position:fixed;
       top:118px;
@@ -291,7 +290,6 @@
       z-index:30;
     }
 
-    /* KEEP BOX DESIGN */
     .side-card{
       position:relative;
       width:100%;
@@ -313,35 +311,35 @@
       transform:translateX(calc(var(--drawer-width) - var(--drawer-closed-space)));
     }
 
-    /* VERY OBVIOUS HANDLE */
+    /* BIG OBVIOUS HANDLE */
     .drawer-toggle{
       position:absolute;
-      left:-46px;
+      left:-64px;
       top:50%;
       transform:translateY(-50%);
-      width:46px;
-      height:132px;
+      width:64px;
+      height:168px;
       border:none;
-      border-radius:18px 0 0 18px;
-      background:linear-gradient(180deg, #2f5d6b 0%, #1f3a44 100%);
+      border-radius:20px 0 0 20px;
+      background:linear-gradient(180deg, #305f72 0%, #1f3a44 100%);
       color:#fff;
       display:flex;
       align-items:center;
       justify-content:center;
       cursor:pointer;
-      box-shadow:0 10px 24px rgba(0,0,0,.22);
+      box-shadow:0 14px 30px rgba(0,0,0,.30);
       z-index:999;
-      transition:transform .2s ease, box-shadow .2s ease, background .2s ease;
+      transition:transform .2s ease, box-shadow .2s ease, filter .2s ease;
     }
 
     .drawer-toggle:hover{
-      background:linear-gradient(180deg, #376d83 0%, #244857 100%);
       transform:translateY(-50%) scale(1.05);
-      box-shadow:0 14px 30px rgba(0,0,0,.28);
+      box-shadow:0 18px 36px rgba(0,0,0,.36);
+      filter:brightness(1.05);
     }
 
     .drawer-toggle .arrow{
-      font-size:28px;
+      font-size:36px;
       line-height:1;
       font-weight:700;
       display:block;
@@ -626,7 +624,7 @@
       const type = escapeHtml(post.type || "Update");
       const author = escapeHtml(post.author || "VUMC");
       const title = escapeHtml(post.title || "");
-      const content = escapeHtml(post.content || "").replace(/\n/g, "<br>");
+      const content = escapeHtml(post.content || "").replace(/\\n/g, "<br>");
       const formattedDate = formatDate(post.date);
       const metaLine = formattedDate ? `Posted ${formattedDate}` : `Posted by ${author}`;
       const prompt = escapeHtml(post.prompt || "");
