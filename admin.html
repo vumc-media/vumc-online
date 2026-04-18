@@ -309,11 +309,11 @@
   });
 
   logoutBtn.addEventListener("click", () => {
-    sessionStorage.removeItem("vumcAdminLoggedIn");
-    adminPanel.style.display = "none";
-    loginCard.style.display = "block";
-    document.getElementById("adminPassword").value = "";
-  });
+  sessionStorage.removeItem("vumcAdminLoggedIn");
+
+  // Redirect to Online Campus homepage
+  window.location.href = "https://online.versaillesumc.org/";
+});
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
