@@ -13,8 +13,12 @@
       --accent2:#c79a63;
       --border:#d8e0e6;
       --shadow:0 14px 34px rgba(24,39,52,.08);
+      --shadow-strong:0 18px 40px rgba(24,39,52,.16);
       --radius:20px;
       --max:1320px;
+      --drawer-width:360px;
+      --drawer-visible:320px;
+      --drawer-hidden:52px;
     }
 
     *{box-sizing:border-box}
@@ -32,6 +36,15 @@
         );
       color:var(--text);
       line-height:1.6;
+      overflow-x:hidden;
+    }
+
+    body.drawer-open{
+      --main-right-gap:calc(var(--drawer-visible) + 28px);
+    }
+
+    body.drawer-closed{
+      --main-right-gap:calc(var(--drawer-hidden) + 18px);
     }
 
     a{text-decoration:none;color:inherit}
@@ -95,6 +108,8 @@
       max-width:var(--max);
       margin:0 auto;
       padding:56px 28px;
+      padding-right:calc(var(--main-right-gap, 28px) + 20px);
+      transition:padding-right .28s ease;
     }
 
     .hero-copy{
@@ -131,11 +146,16 @@
 
     .section{padding:24px 20px 28px}
 
-    .grid{
+    .main-shell{
       max-width:var(--max);
       margin:0 auto;
+      padding-right:var(--main-right-gap, calc(var(--drawer-visible) + 28px));
+      transition:padding-right .28s ease;
+    }
+
+    .grid{
       display:grid;
-      grid-template-columns:minmax(0, 1.7fr) minmax(300px, .72fr);
+      grid-template-columns:minmax(0, 1fr);
       gap:18px;
       align-items:start;
     }
@@ -241,10 +261,66 @@
       border:1px solid rgba(48,95,114,.12);
     }
 
-    .side-card{
-      position:sticky;
-      top:18px;
+    .side-drawer{
+      position:fixed;
+      top:138px;
+      right:0;
+      width:var(--drawer-width);
+      max-height:calc(100vh - 158px);
+      z-index:25;
+      display:flex;
+      align-items:center;
+      pointer-events:none;
     }
+
+    .drawer-panel{
+      position:relative;
+      width:100%;
+      background:var(--card);
+      border-radius:22px 0 0 22px;
+      box-shadow:var(--shadow-strong);
+      padding:26px 22px 24px;
+      transform:translateX(calc(var(--drawer-width) - var(--drawer-visible)));
+      transition:transform .28s ease;
+      pointer-events:auto;
+      overflow:auto;
+      max-height:calc(100vh - 158px);
+    }
+
+    body.drawer-closed .drawer-panel{
+      transform:translateX(calc(var(--drawer-width) - var(--drawer-hidden)));
+    }
+
+    .drawer-toggle{
+      position:absolute;
+      left:-22px;
+      top:50%;
+      transform:translateY(-50%);
+      width:22px;
+      height:90px;
+      border:none;
+      border-radius:14px 0 0 14px;
+      background:#ffffff;
+      box-shadow:-4px 10px 22px rgba(24,39,52,.12);
+      color:var(--accent);
+      font-size:18px;
+      font-weight:700;
+      cursor:pointer;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .drawer-toggle span{
+      display:block;
+      transition:transform .28s ease;
+    }
+
+    body.drawer-closed .drawer-toggle span{
+      transform:rotate(180deg);
+    }
+
+    .side-card h2{margin-bottom:10px}
 
     .mini-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 
@@ -288,10 +364,47 @@
       gap:14px;
     }
 
+    @media (max-width:1100px){
+      :root{
+        --drawer-width:330px;
+        --drawer-visible:290px;
+      }
+    }
+
     @media (max-width:950px){
+      body.drawer-open,
+      body.drawer-closed{
+        --main-right-gap:0px;
+      }
+
       .hero{min-height:320px}
-      .grid{grid-template-columns:1fr}
-      .side-card{position:static}
+
+      .hero-inner{
+        padding-right:28px;
+      }
+
+      .main-shell{
+        padding-right:0;
+      }
+
+      .side-drawer{
+        position:static;
+        width:auto;
+        max-height:none;
+        margin-top:18px;
+        pointer-events:auto;
+      }
+
+      .drawer-panel,
+      body.drawer-closed .drawer-panel{
+        transform:none;
+        border-radius:20px;
+        max-height:none;
+      }
+
+      .drawer-toggle{
+        display:none;
+      }
     }
 
     @media (max-width:700px){
@@ -302,7 +415,7 @@
     }
   </style>
 </head>
-<body>
+<body class="drawer-open">
 
 <div class="topbar">A Church Striving to Love Like Jesus — Wherever You Are</div>
 
@@ -330,17 +443,22 @@
 </section>
 
 <section class="section">
-  <div class="grid">
+  <div class="main-shell">
+    <div class="grid">
+      <div class="card feed-card">
+        <div class="eyebrow" style="color:var(--accent);">Community Feed</div>
+        <h2>A calmer kind of digital community</h2>
+        <p class="intro-copy">This feed is more than announcements. It is a place for ministry updates, reflection prompts, encouragement, and next steps throughout the week.</p>
 
-    <div class="card feed-card">
-      <div class="eyebrow" style="color:var(--accent);">Community Feed</div>
-      <h2>A calmer kind of digital community</h2>
-      <p class="intro-copy">This feed is more than announcements. It is a place for ministry updates, reflection prompts, encouragement, and next steps throughout the week.</p>
-
-      <div id="communityFeed">Loading community posts...</div>
+        <div id="communityFeed">Loading community posts...</div>
+      </div>
     </div>
+  </div>
 
-    <div class="card side-card">
+  <aside class="side-drawer">
+    <div class="drawer-panel card side-card">
+      <button class="drawer-toggle" id="drawerToggle" aria-label="Toggle sidebar"><span>›</span></button>
+
       <div class="eyebrow" style="color:var(--accent);">What this page is for</div>
       <h2>Built for connection, not clutter</h2>
       <p>This page is designed to feel like a gentle midweek conversation space. You may see updates, pastor questions, prayer prompts, and simple ways to respond.</p>
@@ -370,8 +488,7 @@
         <a class="btn btn-secondary" href="check-in.html">Check In</a>
       </div>
     </div>
-
-  </div>
+  </aside>
 </section>
 
 <footer class="footer">
@@ -387,6 +504,13 @@
 <script>
   const endpoint = "https://script.google.com/macros/s/AKfycbwDGjG3nxgmxnGhxB-q26WShFmBXGkxQI-9pT6q7UzcgLI5Xi6oet2CPkXlu0feZpWX/exec";
   const feedContainer = document.getElementById("communityFeed");
+  const drawerToggle = document.getElementById("drawerToggle");
+
+  drawerToggle.addEventListener("click", () => {
+    if (window.innerWidth <= 950) return;
+    document.body.classList.toggle("drawer-open");
+    document.body.classList.toggle("drawer-closed");
+  });
 
   function escapeHtml(str) {
     return String(str ?? "")
