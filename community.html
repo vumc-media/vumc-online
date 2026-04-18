@@ -1,266 +1,700 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>VUMC Online Community</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Community | VUMC Online</title>
+  <style>
+    :root{
+      --card:#ffffff;
+      --text:#1f2933;
+      --muted:#5b6875;
+      --accent:#305f72;
+      --accent-dark:#1f3a44;
+      --accent2:#c79a63;
+      --border:#d8e0e6;
+      --shadow:0 14px 34px rgba(24,39,52,.08);
+      --shadow-strong:0 18px 40px rgba(24,39,52,.16);
+      --radius:20px;
+      --max:1320px;
+      --drawer-width:360px;
+      --drawer-open-space:330px;
+      --drawer-closed-space:46px;
+    }
 
-<style>
-:root{
-  --accent:#305f72;
-  --accent-dark:#1f3a44;
-  --gold:#c79a63;
-  --bg:#f4f6f8;
-}
+    *{box-sizing:border-box}
 
-/* BASE */
-body{
-  margin:0;
-  font-family:Arial, Helvetica, sans-serif;
-  background:linear-gradient(135deg,#142a33,#305f72,#c79a63,#f4efe7);
-  color:#1f2933;
-}
+    body{
+      margin:0;
+      font-family:Arial,Helvetica,sans-serif;
+      background:
+        linear-gradient(135deg,
+          #142a33 0%,
+          #1f3a44 20%,
+          #305f72 45%,
+          #c79a63 75%,
+          #f4efe7 100%
+        );
+      color:var(--text);
+      line-height:1.6;
+      overflow-x:hidden;
+    }
 
-/* HEADER */
-.topbar{
-  background:#17313d;
-  color:#fff;
-  text-align:center;
-  padding:10px;
-  font-size:14px;
-}
+    body.drawer-open{
+      --main-right-gap:calc(var(--drawer-open-space) + 24px);
+    }
 
-.nav{
-  display:flex;
-  justify-content:space-between;
-  padding:16px 20px;
-  background:#fff;
-}
+    body.drawer-closed{
+      --main-right-gap:calc(var(--drawer-closed-space) + 18px);
+    }
 
-.nav a{
-  margin-left:15px;
-  font-weight:700;
-  color:var(--accent);
-}
+    a{text-decoration:none;color:inherit}
 
-/* HERO */
-.hero{
-  height:320px;
-  display:flex;
-  align-items:center;
-  padding:40px;
-  color:#fff;
-  background:
-    linear-gradient(rgba(0,0,0,.65),rgba(0,0,0,.65)),
-    url('https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&w=1800&q=80')
-    center/cover;
-}
+    .topbar{
+      background:#17313d;
+      color:#fff;
+      padding:12px 20px;
+      text-align:center;
+      font-size:14px;
+      font-weight:700;
+    }
 
-.hero h1{
-  font-size:56px;
-  margin:0;
-}
+    .wrap{
+      max-width:var(--max);
+      margin:0 auto;
+    }
 
-.hero p{
-  max-width:600px;
-  font-size:20px;
-}
+    .nav-shell{
+      background:rgba(255,255,255,.92);
+      backdrop-filter:blur(10px);
+      border-bottom:1px solid var(--border);
+    }
 
-/* MAIN */
-.main{
-  max-width:1100px;
-  margin:auto;
-  padding:20px;
-  padding-right:360px;
-  transition:.3s;
-}
+    .nav{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:20px;
+      flex-wrap:wrap;
+      padding:18px 20px;
+    }
 
-body.closed .main{
-  padding-right:80px;
-}
+    .brand{
+      font-size:24px;
+      font-weight:700;
+      color:#1f2933;
+    }
 
-/* CARD */
-.card{
-  background:#fff;
-  border-radius:20px;
-  padding:24px;
-  box-shadow:0 10px 30px rgba(0,0,0,.1);
-}
+    .nav-links{
+      display:flex;
+      gap:18px;
+      flex-wrap:wrap;
+      font-size:15px;
+    }
 
-/* FEED */
-.feed-tag{
-  background:#eef4f6;
-  padding:5px 10px;
-  border-radius:999px;
-  font-size:12px;
-}
+    .nav-links a{
+      color:var(--accent);
+      font-weight:700;
+    }
 
-.btn{
-  padding:10px 14px;
-  border-radius:999px;
-  font-weight:700;
-  display:inline-block;
-  margin-top:10px;
-}
+    .nav-links a.active{
+      color:#17313d;
+    }
 
-.btn-primary{
-  background:var(--gold);
-}
+    .hero{
+      position:relative;
+      min-height:340px;
+      display:flex;
+      align-items:center;
+      background:
+        linear-gradient(180deg, rgba(10,23,30,.72) 0%, rgba(18,41,52,.72) 42%, rgba(33,63,76,.58) 100%),
+        url('https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&w=1800&q=80') center center/cover no-repeat;
+      overflow:hidden;
+    }
 
-.btn-secondary{
-  background:#eef4f6;
-  color:var(--accent);
-}
+    .hero::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:linear-gradient(135deg, rgba(199,154,99,.12) 0%, rgba(199,154,99,0) 38%, rgba(255,255,255,0) 100%);
+      pointer-events:none;
+    }
 
-/* DRAWER */
-.drawer{
-  position:fixed;
-  right:0;
-  top:120px;
-  width:320px;
-  transition:.3s;
-}
+    .hero-inner{
+      position:relative;
+      z-index:1;
+      width:100%;
+      max-width:var(--max);
+      margin:0 auto;
+      padding:56px 28px;
+      padding-right:calc(var(--main-right-gap, 24px) + 24px);
+      transition:padding-right .3s ease;
+    }
 
-.drawer.closed{
-  transform:translateX(280px);
-}
+    .hero-copy{
+      max-width:760px;
+      color:#fff;
+    }
 
-/* PANEL */
-.drawer-content{
-  background:#fff;
-  padding:20px;
-  border-radius:20px 0 0 20px;
-  box-shadow:0 10px 30px rgba(0,0,0,.2);
-  position:relative;
-  overflow:visible;
-}
+    .eyebrow{
+      font-size:12px;
+      text-transform:uppercase;
+      letter-spacing:1px;
+      color:#d5e8f0;
+      font-weight:700;
+      margin-bottom:12px;
+    }
 
-/* 🔥 NEW HANDLE */
-.drawer-toggle{
-  position:absolute;
-  left:-50px;
-  top:50%;
-  transform:translateY(-50%);
-  
-  width:50px;
-  height:120px;
+    .hero h1{
+      margin:0 0 16px;
+      font-size:clamp(40px,5vw,66px);
+      line-height:1.02;
+      letter-spacing:-1.4px;
+      color:#fff;
+      text-shadow:0 4px 18px rgba(0,0,0,.22);
+    }
 
-  border:none;
-  border-radius:16px 0 0 16px;
+    .hero p{
+      margin:0;
+      font-size:21px;
+      line-height:1.6;
+      max-width:700px;
+      color:rgba(255,255,255,.92);
+      text-shadow:0 2px 10px rgba(0,0,0,.18);
+    }
 
-  background:linear-gradient(180deg,var(--accent),var(--accent-dark));
-  color:#fff;
+    .section{
+      padding:24px 20px 28px;
+    }
 
-  display:flex;
-  align-items:center;
-  justify-content:center;
+    .main-shell{
+      max-width:var(--max);
+      margin:0 auto;
+      padding-right:var(--main-right-gap, calc(var(--drawer-open-space) + 24px));
+      transition:padding-right .3s ease;
+    }
 
-  cursor:pointer;
+    .grid{
+      display:grid;
+      grid-template-columns:minmax(0, 1fr);
+      gap:18px;
+      align-items:start;
+    }
 
-  box-shadow:0 10px 25px rgba(0,0,0,.25);
-  z-index:1000;
+    .card{
+      background:var(--card);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:26px;
+    }
 
-  transition:.2s;
-}
+    .feed-card h2,
+    .side-card h2,
+    .side-card h3{
+      margin-top:0;
+    }
 
-.drawer-toggle:hover{
-  transform:translateY(-50%) scale(1.08);
-}
+    .intro-copy{
+      color:var(--muted);
+      margin-bottom:6px;
+    }
 
-/* ARROW */
-.arrow{
-  font-size:28px;
-  font-weight:700;
-  transition:.3s;
-}
+    .feed-item{
+      padding:18px 0;
+      border-bottom:1px solid #eef2f5;
+      transition:transform .15s ease;
+    }
 
-.drawer.closed .arrow{
-  transform:rotate(180deg);
-}
+    .feed-item:last-child{
+      border-bottom:0;
+      padding-bottom:0;
+    }
 
-/* MOBILE */
-@media(max-width:900px){
-  .main{
-    padding-right:20px;
-  }
+    .feed-item:hover{
+      transform:translateY(-1px);
+    }
 
-  .drawer{
-    position:static;
-    transform:none!important;
-    width:auto;
-    margin-top:20px;
-  }
+    .feed-tag{
+      display:inline-block;
+      padding:5px 10px;
+      border-radius:999px;
+      background:#eef4f6;
+      color:var(--accent);
+      font-size:12px;
+      font-weight:700;
+      margin-bottom:8px;
+    }
 
-  .drawer-toggle{
-    display:none;
-  }
-}
-</style>
+    .feed-title{
+      font-size:22px;
+      font-weight:700;
+      margin-bottom:6px;
+    }
+
+    .meta{
+      font-size:13px;
+      color:var(--muted);
+      margin-bottom:8px;
+    }
+
+    .prompt-box{
+      margin-top:14px;
+      padding:14px 16px;
+      border-radius:14px;
+      background:linear-gradient(180deg, rgba(48,95,114,.06) 0%, rgba(48,95,114,.03) 100%);
+      border:1px solid rgba(48,95,114,.10);
+    }
+
+    .prompt-label{
+      display:block;
+      font-size:12px;
+      font-weight:700;
+      text-transform:uppercase;
+      letter-spacing:.8px;
+      color:var(--accent);
+      margin-bottom:6px;
+    }
+
+    .action-row{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:14px;
+    }
+
+    .feed-link,
+    .feed-action{
+      display:inline-block;
+      padding:10px 14px;
+      border-radius:999px;
+      font-weight:700;
+      font-size:14px;
+    }
+
+    .feed-link{
+      background:var(--accent2);
+      color:#111;
+    }
+
+    .feed-action{
+      background:#eef4f6;
+      color:var(--accent);
+      border:1px solid rgba(48,95,114,.12);
+    }
+
+    /* RIGHT DRAWER AREA */
+    .side-drawer{
+      position:fixed;
+      top:118px;
+      right:0;
+      width:var(--drawer-width);
+      z-index:30;
+    }
+
+    /* KEEP BOX DESIGN */
+    .side-card{
+      position:relative;
+      width:100%;
+      background:var(--card);
+      border-radius:22px 0 0 22px;
+      box-shadow:var(--shadow-strong);
+      padding:26px 22px 24px;
+      transition:transform .3s ease;
+      max-height:calc(100vh - 150px);
+      overflow-y:auto;
+      overflow-x:visible;
+    }
+
+    body.drawer-open .side-card{
+      transform:translateX(0);
+    }
+
+    body.drawer-closed .side-card{
+      transform:translateX(calc(var(--drawer-width) - var(--drawer-closed-space)));
+    }
+
+    /* VERY OBVIOUS HANDLE */
+    .drawer-toggle{
+      position:absolute;
+      left:-46px;
+      top:50%;
+      transform:translateY(-50%);
+      width:46px;
+      height:132px;
+      border:none;
+      border-radius:18px 0 0 18px;
+      background:linear-gradient(180deg, #2f5d6b 0%, #1f3a44 100%);
+      color:#fff;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      cursor:pointer;
+      box-shadow:0 10px 24px rgba(0,0,0,.22);
+      z-index:999;
+      transition:transform .2s ease, box-shadow .2s ease, background .2s ease;
+    }
+
+    .drawer-toggle:hover{
+      background:linear-gradient(180deg, #376d83 0%, #244857 100%);
+      transform:translateY(-50%) scale(1.05);
+      box-shadow:0 14px 30px rgba(0,0,0,.28);
+    }
+
+    .drawer-toggle .arrow{
+      font-size:28px;
+      line-height:1;
+      font-weight:700;
+      display:block;
+      transition:transform .3s ease;
+    }
+
+    body.drawer-open .drawer-toggle .arrow{
+      transform:rotate(180deg);
+    }
+
+    .mini-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:16px;
+    }
+
+    .mini-card{
+      background:#f8fafb;
+      border-radius:16px;
+      padding:18px;
+      border:1px solid rgba(216,224,230,.9);
+    }
+
+    .mini-card h3{
+      margin:0 0 8px;
+      font-size:18px;
+    }
+
+    .btn-row{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-top:18px;
+    }
+
+    .btn{
+      padding:14px 20px;
+      border-radius:999px;
+      font-weight:700;
+      font-size:15px;
+      display:inline-block;
+    }
+
+    .btn-primary{
+      background:var(--accent);
+      color:#fff;
+    }
+
+    .btn-secondary{
+      background:#fff;
+      color:var(--accent);
+      border:1px solid var(--border);
+    }
+
+    .footer{
+      background:#17313d;
+      color:#fff;
+      padding:34px 20px;
+      margin-top:20px;
+    }
+
+    .footer .wrap{
+      display:flex;
+      justify-content:space-between;
+      flex-wrap:wrap;
+      gap:14px;
+    }
+
+    @media (max-width:1100px){
+      :root{
+        --drawer-width:330px;
+        --drawer-open-space:300px;
+      }
+    }
+
+    @media (max-width:950px){
+      .hero{
+        min-height:320px;
+      }
+
+      .hero-inner{
+        padding-right:28px;
+      }
+
+      .main-shell{
+        padding-right:0;
+      }
+
+      .side-drawer{
+        position:static;
+        width:auto;
+        margin:18px auto 0;
+        max-width:var(--max);
+        padding:0 20px;
+      }
+
+      .side-card,
+      body.drawer-open .side-card,
+      body.drawer-closed .side-card{
+        transform:none;
+        border-radius:20px;
+        max-height:none;
+      }
+
+      .drawer-toggle{
+        display:none;
+      }
+    }
+
+    @media (max-width:700px){
+      .hero-inner{
+        padding:46px 20px;
+      }
+
+      .hero h1{
+        font-size:42px;
+      }
+
+      .hero p{
+        font-size:18px;
+      }
+
+      .mini-grid{
+        grid-template-columns:1fr;
+      }
+    }
+  </style>
 </head>
+<body class="drawer-open">
 
-<body>
+  <div class="topbar">A Church Striving to Love Like Jesus — Wherever You Are</div>
 
-<div class="topbar">A Church Striving to Love Like Jesus — Wherever You Are</div>
-
-<div class="nav">
-  <div><strong>VUMC Online</strong></div>
-  <div>
-    <a href="#">Worship</a>
-    <a href="#">Check In</a>
-    <a href="#">Prayer</a>
-    <a href="#">Community</a>
-    <a href="#">Give</a>
-  </div>
-</div>
-
-<!-- HERO -->
-<section class="hero">
-  <div>
-    <h1>You belong here.</h1>
-    <p>This is a place to stay connected, reflect together, and respond to what God is doing in everyday life.</p>
-  </div>
-</section>
-
-<!-- MAIN -->
-<div class="main">
-  <div class="card">
-    <h3>COMMUNITY FEED</h3>
-    <h2>A calmer kind of digital community</h2>
-    <p>This feed is more than announcements. It is a place for ministry updates, reflection prompts, encouragement, and next steps.</p>
-
-    <div class="feed-tag">story</div>
-    <h3>Welcome!</h3>
-    <p>Welcome to VUMC Online Community!</p>
-
-    <div>
-      <span class="btn btn-secondary">Share a Response</span>
-      <span class="btn btn-primary">Take a Next Step</span>
+  <div class="nav-shell">
+    <div class="wrap nav">
+      <div class="brand"><a href="index.html">VUMC Online</a></div>
+      <div class="nav-links">
+        <a href="watch.html">Worship</a>
+        <a href="check-in.html">Check In</a>
+        <a href="prayer.html">Prayer</a>
+        <a class="active" href="community.html">Community</a>
+        <a href="support.html">Give</a>
+      </div>
     </div>
   </div>
-</div>
 
-<!-- DRAWER -->
-<div class="drawer" id="drawer">
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-copy">
+        <div class="eyebrow">Community</div>
+        <h1>You belong here.</h1>
+        <p>This is a place to stay connected, reflect together, and respond to what God is doing in everyday life.</p>
+      </div>
+    </div>
+  </section>
 
-  <div class="drawer-content">
+  <section class="section">
+    <div class="main-shell">
+      <div class="grid">
+        <div class="card feed-card">
+          <div class="eyebrow" style="color:var(--accent);">Community Feed</div>
+          <h2>A calmer kind of digital community</h2>
+          <p class="intro-copy">This feed is more than announcements. It is a place for ministry updates, reflection prompts, encouragement, and next steps throughout the week.</p>
 
-    <button class="drawer-toggle" onclick="toggleDrawer()">
-      <div class="arrow">❮</div>
-    </button>
+          <div id="communityFeed">Loading community posts...</div>
+        </div>
+      </div>
+    </div>
 
-    <h3>Built for connection, not clutter</h3>
-    <p>This page is designed to feel like a gentle midweek conversation space.</p>
+    <aside class="side-drawer">
+      <div class="side-card">
+        <button class="drawer-toggle" id="drawerToggle" aria-label="Toggle sidebar">
+          <span class="arrow">❮</span>
+        </button>
 
-  </div>
+        <div class="eyebrow" style="color:var(--accent);">What this page is for</div>
+        <h2>Built for connection, not clutter</h2>
+        <p>This page is designed to feel like a gentle midweek conversation space. You may see updates, pastor questions, prayer prompts, and simple ways to respond.</p>
 
-</div>
+        <div class="mini-grid">
+          <div class="mini-card">
+            <h3>Ministry Updates</h3>
+            <p>Weekly reminders, church news, and important announcements.</p>
+          </div>
+          <div class="mini-card">
+            <h3>Pastor Questions</h3>
+            <p>Simple reflection prompts that help people engage during the week.</p>
+          </div>
+          <div class="mini-card">
+            <h3>Prayer Prompts</h3>
+            <p>Encouragement that gently leads people toward prayer and care.</p>
+          </div>
+          <div class="mini-card">
+            <h3>Next Steps</h3>
+            <p>Point people toward worship, prayer, check-in, and the next faithful step.</p>
+          </div>
+        </div>
 
-<script>
-function toggleDrawer(){
-  document.getElementById("drawer").classList.toggle("closed");
-  document.body.classList.toggle("closed");
-}
-</script>
+        <div class="btn-row">
+          <a class="btn btn-primary" href="watch.html">Join Worship</a>
+          <a class="btn btn-secondary" href="prayer.html">Go to Prayer</a>
+          <a class="btn btn-secondary" href="check-in.html">Check In</a>
+        </div>
+      </div>
+    </aside>
+  </section>
 
+  <footer class="footer">
+    <div class="wrap">
+      <div>
+        <strong style="display:block;font-size:20px;margin-bottom:6px;">VUMC Online</strong>
+        <div style="color:rgba(255,255,255,.85);font-size:14px;">A digital front door for worship, prayer, and belonging.</div>
+      </div>
+      <div>Worship • Community • Prayer • Check In • Give</div>
+    </div>
+  </footer>
+
+  <script>
+    const endpoint = "https://script.google.com/macros/s/AKfycbwDGjG3nxgmxnGhxB-q26WShFmBXGkxQI-9pT6q7UzcgLI5Xi6oet2CPkXlu0feZpWX/exec";
+    const feedContainer = document.getElementById("communityFeed");
+    const drawerToggle = document.getElementById("drawerToggle");
+
+    if (drawerToggle) {
+      drawerToggle.addEventListener("click", function () {
+        if (window.innerWidth <= 950) return;
+        document.body.classList.toggle("drawer-open");
+        document.body.classList.toggle("drawer-closed");
+      });
+    }
+
+    function escapeHtml(str) {
+      return String(str ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/\"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+    }
+
+    function formatDate(dateString) {
+      if (!dateString) return "";
+      const date = new Date(dateString);
+      if (isNaN(date.getTime())) return "";
+      return date.toLocaleString("en-US", {
+        month: "long",
+        day: "numeric",
+        hour: "numeric",
+        minute: "2-digit"
+      });
+    }
+
+    function getActionButtons(post) {
+      const type = String(post.type || "").toLowerCase();
+      const responseUrl = post.responseLink || "prayer.html";
+      const nextStepUrl = post.nextStepLink || post.link || "watch.html";
+
+      if (type.includes("prayer")) {
+        return `
+          <div class="action-row">
+            <a class="feed-action" href="${escapeHtml(responseUrl)}">Request Prayer</a>
+            <a class="feed-link" href="${escapeHtml(nextStepUrl)}">Go to Prayer</a>
+          </div>
+        `;
+      }
+
+      if (type.includes("story") || type.includes("reflection") || type.includes("question")) {
+        return `
+          <div class="action-row">
+            <a class="feed-action" href="${escapeHtml(responseUrl)}">Share a Response</a>
+            <a class="feed-link" href="${escapeHtml(nextStepUrl)}">Take a Next Step</a>
+          </div>
+        `;
+      }
+
+      return `
+        <div class="action-row">
+          <a class="feed-link" href="${escapeHtml(nextStepUrl)}">Learn More</a>
+        </div>
+      `;
+    }
+
+    function renderPost(post) {
+      const type = escapeHtml(post.type || "Update");
+      const author = escapeHtml(post.author || "VUMC");
+      const title = escapeHtml(post.title || "");
+      const content = escapeHtml(post.content || "").replace(/\n/g, "<br>");
+      const formattedDate = formatDate(post.date);
+      const metaLine = formattedDate ? `Posted ${formattedDate}` : `Posted by ${author}`;
+      const prompt = escapeHtml(post.prompt || "");
+
+      return `
+        <div class="feed-item">
+          <div class="feed-tag">${type}</div>
+          <div class="feed-title">${title}</div>
+          <div class="meta">${metaLine}</div>
+          <div>${content}</div>
+          ${prompt ? `
+            <div class="prompt-box">
+              <span class="prompt-label">Reflection Prompt</span>
+              <div>${prompt}</div>
+            </div>
+          ` : ""}
+          ${getActionButtons(post)}
+        </div>
+      `;
+    }
+
+    async function loadFeed() {
+      try {
+        const res = await fetch(endpoint + "?t=" + Date.now(), { cache: "no-store" });
+        if (!res.ok) throw new Error("HTTP " + res.status);
+
+        const posts = await res.json();
+
+        if (!Array.isArray(posts) || posts.length === 0) {
+          feedContainer.innerHTML = "<p>No posts yet. Check back soon.</p>";
+          return;
+        }
+
+        feedContainer.innerHTML = posts.map(renderPost).join("");
+      } catch (err) {
+        const samplePosts = [
+          {
+            type: "Story",
+            title: "What scripture has stayed with you this week?",
+            date: new Date().toISOString(),
+            content: "As you walk through this week, what verse has stayed with you, strengthened you, or spoken to you in a meaningful way?",
+            prompt: "Share a verse that has encouraged your daily walk with Christ.",
+            responseLink: "prayer.html",
+            nextStepLink: "watch.html"
+          },
+          {
+            type: "Prayer Prompt",
+            title: "Pray for peace in your home",
+            date: new Date().toISOString(),
+            content: "Take a moment today to pray for God's peace to rest over your relationships, your home, and your mind.",
+            prompt: "Where do you need God's peace the most right now?",
+            responseLink: "prayer.html",
+            nextStepLink: "prayer.html"
+          },
+          {
+            type: "Update",
+            title: "Join us for worship this Sunday",
+            date: new Date().toISOString(),
+            content: "Traditional Worship begins at 9:30 AM and Contemporary Worship begins at 10:30 AM. We would love for you to join us online or in person.",
+            nextStepLink: "watch.html"
+          }
+        ];
+
+        feedContainer.innerHTML = samplePosts.map(renderPost).join("");
+      }
+    }
+
+    loadFeed();
+  </script>
 </body>
 </html>
