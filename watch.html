@@ -8,170 +8,164 @@
 <script src="https://js.churchcenter.com/modal/v1"></script>
 
 <style>
-  :root{
-    --border:#d8e0e6;
-    --accent:#305f72;
+:root{
+  --border:#d8e0e6;
+  --accent:#305f72;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: #0f1115;
+  color: #fff;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.topbar{
+  background:#17313d;
+  color:#fff;
+  padding:14px;
+  text-align:center;
+  font-size:14px;
+  font-weight:700;
+}
+
+.wrap{
+  max-width:1180px;
+  margin:auto;
+}
+
+.nav-shell{
+  background:rgba(255,255,255,.92);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--border);
+}
+
+.nav{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:18px 20px;
+}
+
+.brand{
+  font-size:24px;
+  font-weight:700;
+  color:#1f2933;
+}
+
+.brand a{
+  text-decoration:none;
+  color:inherit;
+}
+
+.nav-links{
+  display:flex;
+  gap:18px;
+}
+
+.nav-links a{
+  color:var(--accent);
+  font-weight:700;
+  text-decoration:none;
+}
+
+#vumcShell {
+  display:grid;
+  grid-template-columns:1fr 420px;
+  min-height:calc(100vh - 95px);
+}
+
+#playerWrap{
+  width:100%;
+  aspect-ratio:16/9;
+  background:#000;
+}
+
+iframe{
+  width:100%;
+  height:100%;
+  border:0;
+}
+
+#vumcSidebar{
+  background:#15181f;
+  border-left:1px solid rgba(255,255,255,.08);
+}
+
+#vumcSidebarInner{
+  padding:16px;
+}
+
+.vumcTabs{
+  display:flex;
+  gap:8px;
+  margin-bottom:12px;
+}
+
+.vumcTabBtn{
+  flex:1;
+  background:#262a33;
+  border:1px solid rgba(255,255,255,.08);
+  color:#fff;
+  padding:12px;
+  border-radius:12px;
+  font-weight:700;
+  cursor:pointer;
+}
+
+.vumcTabBtn.active{
+  background:#d4af37;
+  color:#111;
+}
+
+.vumcTabPane{
+  display:none;
+}
+
+.vumcTabPane.active{
+  display:block;
+}
+
+.vumcCard{
+  background:#262a33;
+  border-radius:16px;
+  overflow:hidden;
+}
+
+#vumcNotesFrame{
+  width:100%;
+  height:600px;
+  background:#fff;
+}
+
+.vumcFormCard{
+  padding:16px;
+  background:#262a33;
+  border-radius:16px;
+}
+
+.vumcSubmitBtn{
+  width:100%;
+  background:#d4af37;
+  color:#111;
+  padding:12px;
+  border-radius:12px;
+  font-weight:800;
+  border:0;
+  cursor:pointer;
+}
+
+@media (max-width:980px){
+  #vumcShell{
+    grid-template-columns:1fr;
   }
-
-  * { box-sizing: border-box; }
-
-  html, body {
-    margin: 0;
-    padding: 0;
-    background: #0f1115;
-    color: #fff;
-    font-family: Arial, Helvetica, sans-serif;
-  }
-
-  .topbar{
-    background:#17313d;
-    color:#fff;
-    padding:14px;
-    text-align:center;
-    font-size:14px;
-    font-weight:700;
-  }
-
-  .wrap{
-    max-width:1180px;
-    margin:auto;
-  }
-
-  .nav-shell{
-    background:rgba(255,255,255,.92);
-    backdrop-filter:blur(10px);
-    border-bottom:1px solid var(--border);
-  }
-
-  .nav{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:18px 20px;
-  }
-
-  .brand{
-    font-size:24px;
-    font-weight:700;
-    color:#1f2933;
-  }
-
-  .nav-links{
-    display:flex;
-    gap:18px;
-    font-size:15px;
-  }
-
-  .nav-links a{
-    color:var(--accent);
-    font-weight:700;
-    text-decoration:none;
-  }
-
-  .nav-links a.active{
-    color:#17313d;
-  }
-
-  #vumcShell {
-    display: grid;
-    grid-template-columns: 1fr 420px;
-    min-height: calc(100vh - 95px);
-  }
-
-  #vumcMain {
-    background:#000;
-  }
-
-  #playerWrap {
-    width:100%;
-    aspect-ratio:16/9;
-    background:#000;
-  }
-
-  iframe {
-    width:100%;
-    height:100%;
-    border:0;
-  }
-
-  #vumcSidebar {
-    background:#15181f;
-    border-left:1px solid rgba(255,255,255,.08);
-  }
-
-  #vumcSidebarInner {
-    padding:16px;
-  }
-
-  .vumcTabs {
-    display:flex;
-    gap:8px;
-    margin-bottom:12px;
-  }
-
-  .vumcTabBtn {
-    flex:1;
-    background:#262a33;
-    border:1px solid rgba(255,255,255,.08);
-    color:#fff;
-    padding:12px;
-    border-radius:12px;
-    font-weight:700;
-    cursor:pointer;
-  }
-
-  .vumcTabBtn.active {
-    background:#d4af37;
-    color:#111;
-  }
-
-  .vumcTabPane {
+  #vumcSidebar{
     display:none;
   }
-
-  .vumcTabPane.active {
-    display:block;
-  }
-
-  .vumcCard {
-    background:#262a33;
-    border-radius:16px;
-    overflow:hidden;
-  }
-
-  #vumcNotesFrame {
-    width:100%;
-    height:600px;
-    border:0;
-    background:#fff;
-  }
-
-  .vumcFormCard {
-    padding:16px;
-    background:#262a33;
-    border-radius:16px;
-  }
-
-  .vumcSubmitBtn {
-    width:100%;
-    background:#d4af37;
-    color:#111;
-    padding:12px;
-    border-radius:12px;
-    font-weight:800;
-    border:0;
-    cursor:pointer;
-  }
-
-  @media (max-width:980px){
-    #vumcShell {
-      grid-template-columns:1fr;
-    }
-
-    #vumcSidebar {
-      display:none;
-    }
-  }
+}
 </style>
 </head>
 
@@ -185,7 +179,7 @@
   <div class="wrap nav">
     <div class="brand"><a href="/">VUMC Online</a></div>
     <div class="nav-links">
-      <a class="active" href="/watch">Worship</a>
+      <a href="/watch">Worship</a>
       <a href="/prayer">Prayer</a>
       <a href="/community">Community</a>
       <a href="/support">Give</a>
@@ -195,86 +189,19 @@
 
 <div id="vumcShell">
 
-  <!-- LEFT: PLAYER -->
-  <main id="vumcMain">
+  <!-- PLAYER -->
+  <main>
     <div id="playerWrap">
       <iframe
         src="https://www.youtube.com/embed/live_stream?channel=UC_svgodM3blLqWEBQ5yNjmA&autoplay=1&mute=1&rel=0&playsinline=1"
-        title="Versailles UMC Live"
-        allow="autoplay; encrypted-media; picture-in-picture; web-share"
         allowfullscreen>
       </iframe>
     </div>
   </main>
 
-  <!-- RIGHT: SIDEBAR -->
+  <!-- SIDEBAR -->
   <aside id="vumcSidebar">
     <div id="vumcSidebarInner">
 
       <div class="vumcTabs">
-        <button class="vumcTabBtn active" data-tab="notes">Sermon Notes</button>
-        <button class="vumcTabBtn" data-tab="checkin">Check In</button>
-        <button class="vumcTabBtn" data-tab="prayer">Prayer</button>
-      </div>
-
-      <!-- NOTES -->
-      <div id="tab-notes" class="vumcTabPane active">
-        <div class="vumcCard">
-          <iframe
-            id="vumcNotesFrame"
-            src="https://sermon.versaillesumc.org"
-            title="Sermon Notes">
-          </iframe>
-        </div>
-      </div>
-
-      <!-- CHECK IN -->
-      <div id="tab-checkin" class="vumcTabPane">
-        <div class="vumcFormCard" style="text-align:center;">
-          <h3>Check In for Worship</h3>
-          <p>Let us know you're here through Church Center.</p>
-
-          <a
-            href="https://versaillesumc.churchcenter.com/people/forms/859778"
-            data-open-in-church-center-modal="true"
-            class="vumcSubmitBtn"
-            style="display:inline-block;text-decoration:none;">
-            Check In Now
-          </a>
-        </div>
-      </div>
-
-      <!-- PRAYER -->
-      <div id="tab-prayer" class="vumcTabPane">
-        <div class="vumcFormCard">
-          <h3>Prayer Request</h3>
-          <p>You can share your prayer requests with us anytime.</p>
-
-          <a
-            href="/prayer"
-            class="vumcSubmitBtn"
-            style="text-decoration:none;">
-            Submit Prayer Request
-          </a>
-        </div>
-      </div>
-
-    </div>
-  </aside>
-
-</div>
-
-<script>
-document.querySelectorAll(".vumcTabBtn").forEach(btn => {
-  btn.addEventListener("click", function () {
-    document.querySelectorAll(".vumcTabBtn").forEach(b => b.classList.remove("active"));
-    document.querySelectorAll(".vumcTabPane").forEach(p => p.classList.remove("active"));
-
-    this.classList.add("active");
-    document.getElementById("tab-" + this.dataset.tab).classList.add("active");
-  });
-});
-</script>
-
-</body>
-</html>
+        <button class="vum
