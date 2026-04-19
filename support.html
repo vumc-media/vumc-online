@@ -29,9 +29,13 @@
       margin:0;
       font-family:Arial,Helvetica,sans-serif;
       background:
-        radial-gradient(circle at top left, rgba(48,95,114,.10), transparent 26%),
-        radial-gradient(circle at top right, rgba(181,127,80,.08), transparent 24%),
-        linear-gradient(180deg,#eef4f6 0%, #f4f6f8 34%, #f7f9fb 100%);
+        linear-gradient(135deg,
+          #183643 0%,
+          #2f5e71 28%,
+          #587180 50%,
+          #b89668 78%,
+          #f4efe7 100%
+        );
       color:var(--text);
       line-height:1.6;
     }
@@ -91,23 +95,70 @@
     }
 
     .hero{
-      padding:54px 20px 28px;
+      position:relative;
+      min-height:340px;
+      display:flex;
+      align-items:center;
       background:
-        radial-gradient(circle at top left, rgba(48,95,114,.12), transparent 28%),
-        linear-gradient(180deg,#edf3f5 0%, rgba(244,246,248,0.88) 100%);
+        linear-gradient(180deg, rgba(10,23,30,.70) 0%, rgba(18,41,52,.70) 42%, rgba(33,63,76,.56) 100%),
+        url('https://images.unsplash.com/photo-1509099836639-18ba1795216d?auto=format&fit=crop&w=1800&q=80') center center/cover no-repeat;
+      overflow:hidden;
+    }
+
+    .hero::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:linear-gradient(
+        135deg,
+        rgba(199,154,99,.18) 0%,
+        rgba(199,154,99,0) 40%,
+        rgba(255,255,255,0) 100%
+      );
+      pointer-events:none;
+    }
+
+    .hero-inner{
+      position:relative;
+      z-index:1;
+      width:100%;
+      max-width:var(--max);
+      margin:0 auto;
+      padding:56px 20px;
+    }
+
+    .hero-copy{
+      max-width:760px;
+      color:#fff;
+    }
+
+    .eyebrow{
+      font-size:12px;
+      text-transform:uppercase;
+      letter-spacing:.8px;
+      color:var(--accent);
+      font-weight:700;
+      margin-bottom:10px;
+    }
+
+    .hero .eyebrow{
+      color:#d5e8f0;
     }
 
     .hero h1{
       margin:0 0 14px;
       font-size:clamp(34px,5vw,58px);
       line-height:1.05;
+      color:#fff;
+      text-shadow:0 4px 18px rgba(0,0,0,.25);
     }
 
     .hero p{
       margin:0;
       max-width:760px;
-      color:var(--muted);
+      color:rgba(255,255,255,.92);
       font-size:18px;
+      text-shadow:0 2px 10px rgba(0,0,0,.20);
     }
 
     .section{
@@ -123,21 +174,12 @@
     }
 
     .card{
-      background:rgba(255,255,255,.92);
+      background:rgba(255,255,255,.94);
       border:1px solid var(--border);
       border-radius:var(--radius);
       box-shadow:var(--shadow);
       padding:26px;
       backdrop-filter:blur(6px);
-    }
-
-    .eyebrow{
-      font-size:12px;
-      text-transform:uppercase;
-      letter-spacing:.8px;
-      color:var(--accent);
-      font-weight:700;
-      margin-bottom:10px;
     }
 
     .card h2,.card h3{
@@ -226,6 +268,10 @@
         font-size:20px;
       }
 
+      .hero{
+        min-height:300px;
+      }
+
       .hero p{
         font-size:16px;
       }
@@ -248,13 +294,14 @@
   </div>
 
   <section class="hero">
-    <div class="wrap">
-      <div class="eyebrow">Partner With Us</div>
-      <h1>Invest in the mission.</h1>
-      <p>
-        You do not have to live here to help make ministry happen here. Your generosity helps VUMC worship faithfully,
-        serve locally, support ministry online, and stay connected through secure giving with Planning Center.
-      </p>
+    <div class="hero-inner">
+      <div class="hero-copy">
+        <div class="eyebrow">Partner With Us</div>
+        <h1>Invest in the mission.</h1>
+        <p>
+          Your generosity helps VUMC worship faithfully, serve locally, support ministry online, and stay connected through secure giving with Planning Center.
+        </p>
+      </div>
     </div>
   </section>
 
