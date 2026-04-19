@@ -464,12 +464,12 @@
 
 <div class="nav-shell">
   <div class="wrap nav">
-    <div class="brand"><a href="index.html">VUMC Online</a></div>
+    <div class="brand"><a href="/">VUMC Online</a></div>
     <div class="nav-links">
-      <a class="active" href="watch.html">Worship</a>
-      <a href="prayer.html">Prayer</a>
-      <a href="community.html">Community</a>
-      <a href="support.html">Give</a>
+      <a class="active" href="/watch">Worship</a>
+      <a href="/prayer">Prayer</a>
+      <a href="/community">Community</a>
+      <a href="/support">Give</a>
     </div>
   </div>
 </div>
@@ -676,6 +676,7 @@
 
   const CHAT_EMBED_DOMAIN = window.location.hostname;
   const MOBILE_BREAKPOINT = 980;
+  const YOUTUBE_CHANNEL_ID = "UC_svgodM3blLqWEBQ5yNjmA";
 
   const frame = document.getElementById("vumcLiveFrame");
   const offline = document.getElementById("vumcOffline");
@@ -736,6 +737,19 @@
     return "traditional";
   }
 
+  function isWithinFallbackServiceWindow() {
+    const now = new Date();
+    const day = now.getDay();
+    if (day !== 0) return false;
+
+    const minutes = now.getHours() * 60 + now.getMinutes();
+
+    const traditionalWindow = minutes >= (9 * 60 + 10) && minutes <= (10 * 60 + 20);
+    const contemporaryWindow = minutes >= (10 * 60 + 20) && minutes <= (12 * 60);
+
+    return traditionalWindow || contemporaryWindow;
+  }
+
   function tick() {
     const now = new Date();
     const target = getNextServiceDate();
@@ -782,7 +796,7 @@
   }
 
   function showChat(videoId) {
-    if (!isDesktopOrTablet()) {
+    if (!isDesktopOrTablet() || !videoId) {
       hideChat();
       return;
     }
@@ -804,6 +818,36 @@
     chatPlaceholder.style.display = "flex";
   }
 
+  function showLiveEmbed(src) {
+    if (frame.src !== src) {
+      frame.src = src;
+    }
+    frame.style.display = "block";
+    offline.style.display = "none";
+  }
+
+  function showOfflineState() {
+    currentVideo = "";
+    frame.src = "";
+    frame.style.display = "none";
+    offline.style.display = "flex";
+    hideNotes();
+    hideChat();
+  }
+
+  function showFallbackLiveState() {
+    const serviceKey = getLikelyLiveServiceKey();
+    const notesUrl = NOTES_URLS[serviceKey] || NOTES_URLS.traditional;
+    const liveFallbackUrl =
+      "https://www.youtube.com/embed/live_stream?channel=" +
+      encodeURIComponent(YOUTUBE_CHANNEL_ID) +
+      "&autoplay=1&mute=1&rel=0";
+
+    showLiveEmbed(liveFallbackUrl);
+    showNotes(notesUrl);
+    hideChat();
+  }
+
   async function checkLive() {
     try {
       const res = await fetch(endpoint + "?t=" + Date.now(), {
@@ -816,35 +860,34 @@
       const data = await res.json();
 
       if (data && data.ok && data.live && data.videoId) {
-        if (currentVideo !== data.videoId) {
-          currentVideo = data.videoId;
-          frame.src = "https://www.youtube.com/embed/" + data.videoId + "?autoplay=1&mute=1&rel=0";
-        }
+        currentVideo = data.videoId;
 
-        frame.style.display = "block";
-        offline.style.display = "none";
+        showLiveEmbed(
+          "https://www.youtube.com/embed/" +
+          data.videoId +
+          "?autoplay=1&mute=1&rel=0"
+        );
 
         const serviceKey = data.serviceKey || getLikelyLiveServiceKey();
         const notesUrl = data.notesUrl || NOTES_URLS[serviceKey] || NOTES_URLS.traditional;
+
         showNotes(notesUrl);
         showChat(data.videoId);
+        return;
+      }
 
+      if (isWithinFallbackServiceWindow()) {
+        showFallbackLiveState();
       } else {
-        currentVideo = "";
-        frame.src = "";
-        frame.style.display = "none";
-        offline.style.display = "flex";
-        hideNotes();
-        hideChat();
+        showOfflineState();
       }
 
     } catch (e) {
-      currentVideo = "";
-      frame.src = "";
-      frame.style.display = "none";
-      offline.style.display = "flex";
-      hideNotes();
-      hideChat();
+      if (isWithinFallbackServiceWindow()) {
+        showFallbackLiveState();
+      } else {
+        showOfflineState();
+      }
     }
   }
 
