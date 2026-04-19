@@ -4,216 +4,346 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Prayer | VUMC Online</title>
+
   <style>
     :root{
-      --bg:#f4f6f8;--card:#ffffff;--text:#1f2933;--muted:#5b6875;--accent:#305f72;--accent2:#b57f50;--border:#d8e0e6;--shadow:0 10px 30px rgba(24,39,52,.08);--radius:20px;--max:1180px;
+      --card:#ffffff;
+      --text:#1f2933;
+      --muted:#5b6875;
+      --accent:#305f72;
+      --accent-dark:#1f3a44;
+      --accent2:#c79a63;
+      --border:#d8e0e6;
+      --shadow:0 12px 30px rgba(24,39,52,.08);
+      --radius:20px;
+      --max:1180px;
     }
+
     *{box-sizing:border-box}
-    body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+
+    body{
+      margin:0;
+      font-family:Arial,Helvetica,sans-serif;
+      background:
+        linear-gradient(135deg,
+          #142a33 0%,
+          #1f3a44 20%,
+          #305f72 45%,
+          #c79a63 75%,
+          #f4efe7 100%
+        );
+      color:var(--text);
+      line-height:1.6;
+    }
+
     a{text-decoration:none;color:inherit}
-    .topbar{background:#17313d;color:#fff;padding:14px 20px;text-align:center;font-size:14px}
-    .wrap{max-width:var(--max);margin:0 auto}
-    .nav-shell{background:#fff;border-bottom:1px solid var(--border)}
-    .nav{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;padding:18px 20px}
-    .brand{font-size:24px;font-weight:700}
-    .nav-links{display:flex;gap:18px;flex-wrap:wrap;font-size:15px}
-    .nav-links a{color:var(--accent);font-weight:700}
-    .nav-links a.active{color:#17313d}
-    .hero{padding:54px 20px 28px;background:linear-gradient(180deg,#eef4f6 0%, #f4f6f8 100%)}
-    .hero h1{margin:0 0 14px;font-size:clamp(34px,5vw,58px);line-height:1.05}
-    .hero p{margin:0;max-width:760px;color:var(--muted);font-size:18px}
-    .section{padding:18px 20px 34px}
-    .grid{max-width:var(--max);margin:0 auto;display:grid;grid-template-columns:1fr .85fr;gap:22px}
-    .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:26px}
-    .eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:.8px;color:var(--accent);font-weight:700;margin-bottom:10px}
-    .card h2,.card h3{margin:0 0 10px}
-    .card p{margin:0 0 16px;color:var(--muted)}
+
+    .topbar{
+      background:#17313d;
+      color:#fff;
+      padding:14px 20px;
+      text-align:center;
+      font-size:14px;
+      font-weight:700;
+    }
+
+    .wrap{
+      max-width:var(--max);
+      margin:0 auto;
+    }
+
+    .nav-shell{
+      background:rgba(255,255,255,.92);
+      backdrop-filter:blur(10px);
+      border-bottom:1px solid var(--border);
+    }
+
+    .nav{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:20px;
+      flex-wrap:wrap;
+      padding:18px 20px;
+    }
+
+    .brand{
+      font-size:24px;
+      font-weight:700;
+      color:#1f2933;
+    }
+
+    .nav-links{
+      display:flex;
+      gap:18px;
+      flex-wrap:wrap;
+      font-size:15px;
+    }
+
+    .nav-links a{
+      color:var(--accent);
+      font-weight:700;
+    }
+
+    .nav-links a.active{
+      color:#17313d;
+    }
+
+    /* HERO */
+    .hero{
+      position:relative;
+      min-height:340px;
+      display:flex;
+      align-items:center;
+      background:
+        linear-gradient(180deg, rgba(10,23,30,.82) 0%, rgba(18,41,52,.78) 50%, rgba(33,63,76,.65) 100%),
+        url('https://images.unsplash.com/photo-1504052434569-70ad5836ab65?auto=format&fit=crop&w=1800&q=80') center/cover no-repeat;
+    }
+
+    .hero-inner{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:56px 28px;
+      color:#fff;
+    }
+
+    .eyebrow{
+      font-size:12px;
+      text-transform:uppercase;
+      letter-spacing:1px;
+      color:#d5e8f0;
+      font-weight:700;
+      margin-bottom:12px;
+    }
+
+    .hero h1{
+      margin:0 0 16px;
+      font-size:clamp(40px,5vw,64px);
+      line-height:1.05;
+    }
+
+    .hero p{
+      margin:0;
+      font-size:20px;
+      max-width:700px;
+      color:rgba(255,255,255,.92);
+    }
+
+    /* CONTENT */
+    .section{
+      padding:24px 20px 34px;
+    }
+
+    .grid{
+      max-width:var(--max);
+      margin:0 auto;
+      display:grid;
+      grid-template-columns:1fr .85fr;
+      gap:22px;
+    }
+
+    .card{
+      background:var(--card);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:26px;
+    }
+
+    .card h2,
+    .card h3{
+      margin:0 0 10px;
+    }
+
+    .card p{
+      margin:0 0 16px;
+      color:var(--muted);
+    }
+
     .field{margin-bottom:14px}
-    .field label{display:block;font-size:13px;font-weight:700;margin-bottom:6px}
-    .input,.select,.textarea{width:100%;border:1px solid var(--border);border-radius:14px;padding:14px 15px;font:inherit;background:#fff;color:var(--text)}
-    .textarea{min-height:150px;resize:vertical}
-    .check-row{display:flex;align-items:center;gap:10px;margin-bottom:12px;color:var(--muted)}
-    .btn{display:inline-block;padding:14px 20px;border-radius:999px;font-weight:700;font-size:15px;border:0;cursor:pointer}
-    .btn-primary{background:var(--accent);color:#fff}
-    .btn-secondary{background:#fff;color:var(--accent);border:1px solid var(--border)}
-    .status{display:none;margin-top:14px;padding:12px 14px;border-radius:14px;font-size:14px}
-    .status.success{display:block;background:#e7f6ee;color:#1d5e3a;border:1px solid #b9dfc8}
-    .status.error{display:block;background:#fdeeee;color:#8a2b2b;border:1px solid #efc5c5}
-    .quote{background:linear-gradient(180deg,#ffffff 0%, #f8fafb 100%)}
-    .prayer-box{background:#f8fafb;border:1px solid var(--border);border-radius:16px;padding:18px;margin-bottom:14px}
-    .footer{background:#17313d;color:#fff;padding:34px 20px;margin-top:8px}
-    .footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:center}
-    @media (max-width:950px){.grid{grid-template-columns:1fr}}
-    @media (max-width:700px){.brand{font-size:20px}.hero p{font-size:16px}}
+
+    .field label{
+      display:block;
+      font-size:13px;
+      font-weight:700;
+      margin-bottom:6px;
+    }
+
+    .input,.textarea{
+      width:100%;
+      border:1px solid var(--border);
+      border-radius:14px;
+      padding:14px;
+      font:inherit;
+    }
+
+    .textarea{
+      min-height:150px;
+    }
+
+    .check-row{
+      display:flex;
+      gap:10px;
+      margin-bottom:12px;
+      color:var(--muted);
+    }
+
+    .btn{
+      padding:14px 20px;
+      border-radius:999px;
+      font-weight:700;
+      border:none;
+      cursor:pointer;
+    }
+
+    .btn-primary{
+      background:var(--accent);
+      color:#fff;
+    }
+
+    .btn-secondary{
+      background:#fff;
+      border:1px solid var(--border);
+      color:var(--accent);
+    }
+
+    .status{
+      display:none;
+      margin-top:14px;
+      padding:12px;
+      border-radius:12px;
+    }
+
+    .status.success{display:block;background:#e7f6ee;color:#1d5e3a}
+    .status.error{display:block;background:#fdeeee;color:#8a2b2b}
+
+    .quote{
+      background:#f8fafb;
+    }
+
+    .prayer-box{
+      background:#f4f7f9;
+      border-radius:14px;
+      padding:16px;
+      margin-bottom:12px;
+    }
+
+    .footer{
+      background:#17313d;
+      color:#fff;
+      padding:34px 20px;
+      margin-top:10px;
+    }
+
+    .footer .wrap{
+      display:flex;
+      justify-content:space-between;
+      flex-wrap:wrap;
+      gap:16px;
+    }
+
+    @media (max-width:950px){
+      .grid{grid-template-columns:1fr}
+    }
   </style>
 </head>
-<body>
-  <div class="topbar">A Church Striving to Love Like Jesus — Wherever You Are</div>
 
-  <div class="nav-shell">
-    <div class="wrap nav">
-      <div class="brand"><a href="index.html">VUMC Online</a></div>
-      <div class="nav-links">
-        <a href="watch.html">Worship</a>
-<a href="prayer.html">Prayer</a>
-<a href="community.html">Community</a>
-<a class="active" href="support.html">Give</a>
-      </div>
+<body>
+
+<div class="topbar">A Church Striving to Love Like Jesus — Wherever You Are</div>
+
+<div class="nav-shell">
+  <div class="wrap nav">
+    <div class="brand"><a href="/">VUMC Online</a></div>
+    <div class="nav-links">
+      <a href="/watch">Worship</a>
+      <a class="active" href="/prayer">Prayer</a>
+      <a href="/community">Community</a>
+      <a href="/support">Give</a>
     </div>
   </div>
+</div>
 
-  <section class="hero">
-    <div class="wrap">
-      <div class="eyebrow">Prayer</div>
-      <h1>Let us pray with you.</h1>
-      <p>
-        Whether your request is urgent, private, or simply heavy on your heart, you do not have to carry it alone.
-        We would be honored to pray with you.
-      </p>
-    </div>
-  </section>
+<section class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow">Prayer</div>
+    <h1>Let us pray with you.</h1>
+    <p>
+      Whether your request is urgent, private, or simply heavy on your heart,
+      you do not have to carry it alone. We would be honored to pray with you.
+    </p>
+  </div>
+</section>
 
-  <section class="section">
-    <div class="grid">
-      <div class="card">
-        <div class="eyebrow">Prayer Request Form</div>
-        <h2>Share your request</h2>
+<section class="section">
+  <div class="grid">
 
-        <form id="prayerPageForm">
-          <div class="field">
-            <label for="prayerName">Name</label>
-            <input id="prayerName" name="name" class="input" type="text" />
-          </div>
+    <div class="card">
+      <div class="eyebrow" style="color:var(--accent);">Prayer Request Form</div>
+      <h2>Share your request</h2>
 
-          <div class="field">
-            <label for="prayerContact">Email or Phone</label>
-            <input id="prayerContact" name="contact" class="input" type="text" />
-          </div>
-
-          <div class="field">
-            <label for="prayerRequest">Prayer Request</label>
-            <textarea id="prayerRequest" name="request" class="textarea" required></textarea>
-          </div>
-
-          <div class="check-row">
-            <input id="prayerPrivate" name="privateOnly" type="checkbox" />
-            <label for="prayerPrivate">Keep this private</label>
-          </div>
-
-          <div class="check-row">
-            <input id="prayerFollowUp" name="followUp" type="checkbox" />
-            <label for="prayerFollowUp">I would like follow-up</label>
-          </div>
-
-          <input type="text" name="website" style="display:none" tabindex="-1" autocomplete="off" />
-
-          <button id="prayerSubmit" class="btn btn-primary" type="submit">Submit Prayer Request</button>
-          <div id="prayerStatus" class="status"></div>
-        </form>
-      </div>
-
-      <div class="card quote">
-        <div class="eyebrow">Encouragement</div>
-        <h2>You are not praying alone</h2>
-        <p>Prayer is not just a feature on a page. It is part of how we care for people across distance and circumstance.</p>
-
-        <div class="prayer-box">
-          <h3 style="margin-top:0;">Private requests</h3>
-          <p>Private requests can go only to pastoral leadership or a designated prayer team.</p>
+      <form id="prayerPageForm">
+        <div class="field">
+          <label>Name</label>
+          <input name="name" class="input">
         </div>
 
-        <div class="prayer-box">
-          <h3 style="margin-top:0;">Follow-up</h3>
-          <p>If requested, someone from the church can reach out personally and pray with you.</p>
+        <div class="field">
+          <label>Email or Phone</label>
+          <input name="contact" class="input">
         </div>
 
-        <div class="prayer-box">
-          <h3 style="margin-top:0;">During worship</h3>
-          <p>People can still use the Prayer tab on the watch page while services are live.</p>
+        <div class="field">
+          <label>Prayer Request</label>
+          <textarea name="request" class="textarea" required></textarea>
         </div>
 
-        <a class="btn btn-secondary" href="watch.html">Return to Worship</a>
-      </div>
+        <div class="check-row">
+          <input type="checkbox" name="privateOnly"> Keep private
+        </div>
+
+        <div class="check-row">
+          <input type="checkbox" name="followUp"> Request follow-up
+        </div>
+
+        <button class="btn btn-primary">Submit Prayer Request</button>
+        <div id="prayerStatus" class="status"></div>
+      </form>
     </div>
-  </section>
 
-  <footer class="footer">
-    <div class="wrap">
-      <div>
-        <strong style="display:block;font-size:20px;margin-bottom:6px;">VUMC Online</strong>
-        <div style="color:rgba(255,255,255,.85);font-size:14px;">A digital front door for worship, prayer, and belonging.</div>
+    <div class="card quote">
+      <div class="eyebrow" style="color:var(--accent);">Encouragement</div>
+      <h2>You are not praying alone</h2>
+
+      <div class="prayer-box">
+        <h3>Private requests</h3>
+        <p>Shared only with pastors or prayer team.</p>
       </div>
-      <div>Worship • Community • Prayer • Partner With Us</div>
+
+      <div class="prayer-box">
+        <h3>Follow-up</h3>
+        <p>We can reach out and pray with you personally.</p>
+      </div>
+
+      <div class="prayer-box">
+        <h3>During worship</h3>
+        <p>Prayer is always available during livestream.</p>
+      </div>
+
+      <a class="btn btn-secondary" href="/watch">Return to Worship</a>
     </div>
-  </footer>
 
-  <script>
-    (function () {
-      const formsEndpoint = "https://script.google.com/macros/s/AKfycbxyOSYQ7HjJlCWKuquZ47TpWvHfHwmLSqXPaDI9IIdvwkQgXp3ClDXd6U1UzdePOOGU/exec";
-      const form = document.getElementById("prayerPageForm");
-      const submitBtn = document.getElementById("prayerSubmit");
-      const status = document.getElementById("prayerStatus");
+  </div>
+</section>
 
-      function setStatus(type, message) {
-        status.className = "status " + type;
-        status.textContent = message;
-      }
+<footer class="footer">
+  <div class="wrap">
+    <div>
+      <strong>VUMC Online</strong><br>
+      A digital front door for worship, prayer, and belonging.
+    </div>
+    <div>Worship • Community • Prayer • Give</div>
+  </div>
+</footer>
 
-      function clearStatus() {
-        status.className = "status";
-        status.textContent = "";
-      }
-
-      async function postForm(payload) {
-        const res = await fetch(formsEndpoint, {
-          method: "POST",
-          headers: { "Content-Type": "text/plain;charset=utf-8" },
-          body: JSON.stringify(payload)
-        });
-
-        if (!res.ok) throw new Error("Request failed: " + res.status);
-        return await res.json();
-      }
-
-      form.addEventListener("submit", async function (e) {
-        e.preventDefault();
-        clearStatus();
-
-        const payload = {
-          type: "prayer",
-          name: form.name.value.trim(),
-          contact: form.contact.value.trim(),
-          request: form.request.value.trim(),
-          privateOnly: form.privateOnly.checked,
-          followUp: form.followUp.checked,
-          website: form.website.value.trim(),
-          source: "Prayer Page"
-        };
-
-        if (!payload.request) {
-          setStatus("error", "Please enter your prayer request.");
-          return;
-        }
-
-        submitBtn.disabled = true;
-        submitBtn.textContent = "Submitting...";
-
-        try {
-          const result = await postForm(payload);
-          if (result && result.ok) {
-            form.reset();
-            setStatus("success", "Your prayer request has been submitted.");
-          } else {
-            throw new Error((result && result.error) || "Unknown error");
-          }
-        } catch (err) {
-          setStatus("error", "Your prayer request could not be submitted right now. Please try again.");
-        } finally {
-          submitBtn.disabled = false;
-          submitBtn.textContent = "Submit Prayer Request";
-        }
-      });
-    })();
-  </script>
 </body>
 </html>
