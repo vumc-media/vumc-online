@@ -371,7 +371,7 @@ function isSundayServiceWindow() {
   const now = new Date();
   const day = now.getDay();
   const minutes = now.getHours() * 60 + now.getMinutes();
-  return day === 0 && minutes >= 555 && minutes <= 720; // 9:24 AM–12:00 PM
+  return day === 0 && minutes >= 555 && minutes <= 720; // 9:26 AM–12:00 PM
 }
 
 function shouldShowSermonNotes() {
