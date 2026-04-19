@@ -242,6 +242,79 @@ iframe{
   margin-top:0;
 }
 
+.vumcField{
+  margin-bottom:14px;
+}
+
+.vumcField label{
+  display:block;
+  font-size:13px;
+  font-weight:700;
+  margin-bottom:6px;
+  color:#fff;
+}
+
+.vumcInput,
+.vumcTextarea{
+  width:100%;
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:14px;
+  padding:14px;
+  font:inherit;
+  background:#1d2129;
+  color:#fff;
+}
+
+.vumcTextarea{
+  min-height:150px;
+  resize:vertical;
+}
+
+.vumcCheckRow{
+  display:flex;
+  gap:10px;
+  margin-bottom:12px;
+  color:rgba(255,255,255,.78);
+  align-items:flex-start;
+  font-size:14px;
+}
+
+.vumcCheckRow input{
+  margin-top:3px;
+}
+
+.vumcStatus{
+  display:none;
+  margin-top:14px;
+  padding:12px;
+  border-radius:12px;
+  font-size:14px;
+  line-height:1.5;
+}
+
+.vumcStatus.success{
+  display:block;
+  background:#e7f6ee;
+  color:#1d5e3a;
+}
+
+.vumcStatus.error{
+  display:block;
+  background:#fdeeee;
+  color:#8a2b2b;
+}
+
+.vumcHelp{
+  margin-top:12px;
+  color:rgba(255,255,255,.72);
+  font-size:13px;
+  line-height:1.5;
+}
+
+.vumcHidden{
+  display:none !important;
+}
+
 @media (max-width:980px){
   #vumcShell{
     grid-template-columns:1fr;
@@ -350,14 +423,45 @@ iframe{
       </div>
 
       <div id="tab-prayer" class="vumcTabPane">
-        <div class="vumcFormCard" style="text-align:center;">
+        <div class="vumcFormCard">
           <h3>Prayer Request</h3>
-          <p>You can share your prayer requests with us anytime.</p>
-          <a
-            href="/prayer"
-            class="vumcSubmitBtn">
-            Submit Prayer Request
-          </a>
+          <p>You do not have to carry this alone. Share your request and let us pray with you.</p>
+
+          <form id="watchPrayerForm">
+            <div class="vumcField">
+              <label for="watchPrayerName">Name</label>
+              <input id="watchPrayerName" name="name" class="vumcInput" type="text">
+            </div>
+
+            <div class="vumcField">
+              <label for="watchPrayerContact">Email or Phone</label>
+              <input id="watchPrayerContact" name="contact" class="vumcInput" type="text">
+            </div>
+
+            <div class="vumcField">
+              <label for="watchPrayerRequest">Prayer Request</label>
+              <textarea id="watchPrayerRequest" name="request" class="vumcTextarea" required></textarea>
+            </div>
+
+            <div class="vumcCheckRow">
+              <input id="watchPrayerPrivate" type="checkbox" name="privateOnly">
+              <label for="watchPrayerPrivate" style="margin:0;">Keep private</label>
+            </div>
+
+            <div class="vumcCheckRow">
+              <input id="watchPrayerFollowUp" type="checkbox" name="followUp">
+              <label for="watchPrayerFollowUp" style="margin:0;">Request follow-up</label>
+            </div>
+
+            <input type="text" name="website" class="vumcHidden" tabindex="-1" autocomplete="off">
+
+            <button type="submit" id="watchPrayerSubmit" class="vumcSubmitBtn">Submit Prayer Request</button>
+            <div id="watchPrayerStatus" class="vumcStatus"></div>
+
+            <div class="vumcHelp">
+              Private requests may be shared only with pastors or the prayer team.
+            </div>
+          </form>
         </div>
       </div>
 
@@ -367,11 +471,13 @@ iframe{
 </div>
 
 <script>
+const formsEndpoint = "https://script.google.com/macros/s/AKfycbxyOSYQ7HjJlCWKuquZ47TpWvHfHwmLSqXPaDI9IIdvwkQgXp3ClDXd6U1UzdePOOGU/exec";
+
 function isSundayServiceWindow() {
   const now = new Date();
   const day = now.getDay();
   const minutes = now.getHours() * 60 + now.getMinutes();
-  return day === 0 && minutes >= 555 && minutes <= 720; // 9:26 AM–12:00 PM
+  return day === 0 && minutes >= 555 && minutes <= 720; // 9:15 AM–12:00 PM
 }
 
 function shouldShowSermonNotes() {
@@ -415,11 +521,82 @@ function setupSermonNotesSchedule() {
   }
 }
 
+function setPrayerStatus(el, type, message) {
+  el.className = "vumcStatus " + type;
+  el.textContent = message;
+}
+
+function clearPrayerStatus(el) {
+  el.className = "vumcStatus";
+  el.textContent = "";
+}
+
+async function postPrayerForm(payload) {
+  const res = await fetch(formsEndpoint, {
+    method: "POST",
+    headers: {
+      "Content-Type": "text/plain;charset=utf-8"
+    },
+    body: JSON.stringify(payload)
+  });
+
+  if (!res.ok) {
+    throw new Error("Request failed: " + res.status);
+  }
+
+  return await res.json();
+}
+
 document.querySelectorAll(".vumcTabBtn").forEach(btn => {
   btn.addEventListener("click", function () {
     activateTab(this.dataset.tab);
   });
 });
+
+const watchPrayerForm = document.getElementById("watchPrayerForm");
+const watchPrayerSubmit = document.getElementById("watchPrayerSubmit");
+const watchPrayerStatus = document.getElementById("watchPrayerStatus");
+
+if (watchPrayerForm) {
+  watchPrayerForm.addEventListener("submit", async function (e) {
+    e.preventDefault();
+    clearPrayerStatus(watchPrayerStatus);
+
+    const payload = {
+      type: "prayer",
+      name: watchPrayerForm.name.value.trim(),
+      contact: watchPrayerForm.contact.value.trim(),
+      request: watchPrayerForm.request.value.trim(),
+      privateOnly: watchPrayerForm.privateOnly.checked,
+      followUp: watchPrayerForm.followUp.checked,
+      website: watchPrayerForm.website.value.trim(),
+      source: "Watch Page Prayer Tab"
+    };
+
+    if (!payload.request) {
+      setPrayerStatus(watchPrayerStatus, "error", "Please enter your prayer request.");
+      return;
+    }
+
+    watchPrayerSubmit.disabled = true;
+    watchPrayerSubmit.textContent = "Submitting...";
+
+    try {
+      const result = await postPrayerForm(payload);
+      if (result && result.ok) {
+        watchPrayerForm.reset();
+        setPrayerStatus(watchPrayerStatus, "success", "Your prayer request has been submitted.");
+      } else {
+        throw new Error((result && result.error) || "Unknown error");
+      }
+    } catch (err) {
+      setPrayerStatus(watchPrayerStatus, "error", "Your prayer request could not be submitted right now. Please try again.");
+    } finally {
+      watchPrayerSubmit.disabled = false;
+      watchPrayerSubmit.textContent = "Submit Prayer Request";
+    }
+  });
+}
 
 updateOverlay();
 setupSermonNotesSchedule();
