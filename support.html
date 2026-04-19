@@ -4,41 +4,232 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Partner With Us | VUMC Online</title>
+  <script src="https://js.churchcenter.com/modal/v1"></script>
   <style>
     :root{
-      --bg:#f4f6f8;--card:#ffffff;--text:#1f2933;--muted:#5b6875;--accent:#305f72;--accent2:#b57f50;--border:#d8e0e6;--shadow:0 10px 30px rgba(24,39,52,.08);--radius:20px;--max:1180px;
+      --bg:#f4f6f8;
+      --card:#ffffff;
+      --text:#1f2933;
+      --muted:#5b6875;
+      --accent:#305f72;
+      --accent2:#b57f50;
+      --border:#d8e0e6;
+      --shadow:0 10px 30px rgba(24,39,52,.08);
+      --radius:20px;
+      --max:1180px;
     }
+
     *{box-sizing:border-box}
-    body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+
+    html{
+      scroll-behavior:smooth;
+    }
+
+    body{
+      margin:0;
+      font-family:Arial,Helvetica,sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(48,95,114,.10), transparent 26%),
+        radial-gradient(circle at top right, rgba(181,127,80,.08), transparent 24%),
+        linear-gradient(180deg,#eef4f6 0%, #f4f6f8 34%, #f7f9fb 100%);
+      color:var(--text);
+      line-height:1.6;
+    }
+
     a{text-decoration:none;color:inherit}
-    .topbar{background:#17313d;color:#fff;padding:14px 20px;text-align:center;font-size:14px}
-    .wrap{max-width:var(--max);margin:0 auto}
-    .nav-shell{background:#fff;border-bottom:1px solid var(--border)}
-    .nav{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;padding:18px 20px}
-    .brand{font-size:24px;font-weight:700}
-    .nav-links{display:flex;gap:18px;flex-wrap:wrap;font-size:15px}
-    .nav-links a{color:var(--accent);font-weight:700}
-    .nav-links a.active{color:#17313d}
-    .hero{padding:54px 20px 28px;background:linear-gradient(180deg,#eef4f6 0%, #f4f6f8 100%)}
-    .hero h1{margin:0 0 14px;font-size:clamp(34px,5vw,58px);line-height:1.05}
-    .hero p{margin:0;max-width:760px;color:var(--muted);font-size:18px}
-    .section{padding:18px 20px 34px}
-    .grid{max-width:var(--max);margin:0 auto;display:grid;grid-template-columns:1fr 1fr 1fr;gap:22px}
-    .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:26px}
-    .eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:.8px;color:var(--accent);font-weight:700;margin-bottom:10px}
-    .card h2,.card h3{margin:0 0 10px}
-    .card p{margin:0 0 16px;color:var(--muted)}
-    .btn{display:inline-block;padding:14px 20px;border-radius:999px;font-weight:700;font-size:15px}
-    .btn-primary{background:var(--accent);color:#fff}
-    .btn-secondary{background:#fff;color:var(--accent);border:1px solid var(--border)}
-    .highlight{background:linear-gradient(180deg,#ffffff 0%, #f8fafb 100%)}
-    .full{max-width:var(--max);margin:0 auto;display:grid;grid-template-columns:1.2fr .8fr;gap:22px}
-    .band{max-width:var(--max);margin:0 auto;background:#17313d;color:#fff;border-radius:24px;padding:32px 26px;box-shadow:var(--shadow)}
-    .band p{color:rgba(255,255,255,.86)}
-    .footer{background:#17313d;color:#fff;padding:34px 20px;margin-top:8px}
-    .footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:center}
-    @media (max-width:950px){.grid,.full{grid-template-columns:1fr}}
-    @media (max-width:700px){.brand{font-size:20px}.hero p{font-size:16px}}
+
+    .topbar{
+      background:#17313d;
+      color:#fff;
+      padding:14px 20px;
+      text-align:center;
+      font-size:14px;
+    }
+
+    .wrap{
+      max-width:var(--max);
+      margin:0 auto;
+    }
+
+    .nav-shell{
+      background:rgba(255,255,255,.92);
+      border-bottom:1px solid var(--border);
+      backdrop-filter:blur(10px);
+      position:sticky;
+      top:0;
+      z-index:100;
+    }
+
+    .nav{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:20px;
+      flex-wrap:wrap;
+      padding:18px 20px;
+    }
+
+    .brand{
+      font-size:24px;
+      font-weight:700;
+    }
+
+    .nav-links{
+      display:flex;
+      gap:18px;
+      flex-wrap:wrap;
+      font-size:15px;
+    }
+
+    .nav-links a{
+      color:var(--accent);
+      font-weight:700;
+    }
+
+    .nav-links a.active{
+      color:#17313d;
+    }
+
+    .hero{
+      padding:54px 20px 28px;
+      background:
+        radial-gradient(circle at top left, rgba(48,95,114,.12), transparent 28%),
+        linear-gradient(180deg,#edf3f5 0%, rgba(244,246,248,0.88) 100%);
+    }
+
+    .hero h1{
+      margin:0 0 14px;
+      font-size:clamp(34px,5vw,58px);
+      line-height:1.05;
+    }
+
+    .hero p{
+      margin:0;
+      max-width:760px;
+      color:var(--muted);
+      font-size:18px;
+    }
+
+    .section{
+      padding:18px 20px 34px;
+    }
+
+    .grid{
+      max-width:var(--max);
+      margin:0 auto;
+      display:grid;
+      grid-template-columns:1fr 1fr 1fr;
+      gap:22px;
+    }
+
+    .card{
+      background:rgba(255,255,255,.92);
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:26px;
+      backdrop-filter:blur(6px);
+    }
+
+    .eyebrow{
+      font-size:12px;
+      text-transform:uppercase;
+      letter-spacing:.8px;
+      color:var(--accent);
+      font-weight:700;
+      margin-bottom:10px;
+    }
+
+    .card h2,.card h3{
+      margin:0 0 10px;
+    }
+
+    .card p{
+      margin:0 0 16px;
+      color:var(--muted);
+    }
+
+    .btn{
+      display:inline-block;
+      padding:14px 20px;
+      border-radius:999px;
+      font-weight:700;
+      font-size:15px;
+      transition:transform .2s ease, box-shadow .2s ease, background .2s ease;
+    }
+
+    .btn:hover{
+      transform:translateY(-2px);
+    }
+
+    .btn-primary{
+      background:var(--accent);
+      color:#fff;
+      box-shadow:0 10px 24px rgba(48,95,114,.22);
+    }
+
+    .btn-secondary{
+      background:#fff;
+      color:var(--accent);
+      border:1px solid var(--border);
+    }
+
+    .highlight{
+      background:linear-gradient(180deg,#ffffff 0%, #f8fafb 100%);
+    }
+
+    .full{
+      max-width:var(--max);
+      margin:0 auto;
+      display:grid;
+      grid-template-columns:1.2fr .8fr;
+      gap:22px;
+    }
+
+    .band{
+      max-width:var(--max);
+      margin:0 auto;
+      background:#17313d;
+      color:#fff;
+      border-radius:24px;
+      padding:32px 26px;
+      box-shadow:var(--shadow);
+    }
+
+    .band p{
+      color:rgba(255,255,255,.86);
+    }
+
+    .footer{
+      background:#17313d;
+      color:#fff;
+      padding:34px 20px;
+      margin-top:8px;
+    }
+
+    .footer .wrap{
+      display:flex;
+      justify-content:space-between;
+      gap:16px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+
+    @media (max-width:950px){
+      .grid,.full{
+        grid-template-columns:1fr;
+      }
+    }
+
+    @media (max-width:700px){
+      .brand{
+        font-size:20px;
+      }
+
+      .hero p{
+        font-size:16px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -46,12 +237,12 @@
 
   <div class="nav-shell">
     <div class="wrap nav">
-      <div class="brand"><a href="index.html">VUMC Online</a></div>
+      <div class="brand"><a href="/">VUMC Online</a></div>
       <div class="nav-links">
-        <a href="watch.html">Worship</a>
-<a href="prayer.html">Prayer</a>
-<a href="community.html">Community</a>
-<a class="active" href="support.html">Give</a>
+        <a href="/watch">Worship</a>
+        <a href="/prayer">Prayer</a>
+        <a href="/community">Community</a>
+        <a class="active" href="/support">Give</a>
       </div>
     </div>
   </div>
@@ -61,8 +252,8 @@
       <div class="eyebrow">Partner With Us</div>
       <h1>Invest in the mission.</h1>
       <p>
-        You do not have to live here to help make ministry happen here. Your generosity helps VUMC serve locally,
-        worship faithfully, and extend encouragement online.
+        You do not have to live here to help make ministry happen here. Your generosity helps VUMC worship faithfully,
+        serve locally, support ministry online, and stay connected through secure giving with Planning Center.
       </p>
     </div>
   </section>
@@ -72,22 +263,40 @@
       <div class="card">
         <div class="eyebrow">Worship</div>
         <h2>Support worship ministry</h2>
-        <p>Help sustain music, livestreaming, sermon resources, and the digital tools that connect people to worship each week.</p>
-        <a class="btn btn-primary" href="#" target="_blank" rel="noopener">Give via PayPal</a>
+        <p>
+          Help sustain music, livestreaming, sermon resources, and the worship tools that help people participate each week.
+        </p>
+        <a
+          class="btn btn-primary"
+          href="https://versaillesumc.churchcenter.com/giving"
+          data-open-in-church-center-modal="true"
+        >Give through PCO</a>
       </div>
 
       <div class="card">
         <div class="eyebrow">Mission</div>
         <h2>Support local outreach</h2>
-        <p>Help VUMC continue practical ministry through local care, generosity, and community outreach.</p>
-        <a class="btn btn-primary" href="#" target="_blank" rel="noopener">Give via PayPal</a>
+        <p>
+          Help VUMC continue practical ministry through generosity, care, local missions, and hands-on community support.
+        </p>
+        <a
+          class="btn btn-primary"
+          href="https://versaillesumc.churchcenter.com/giving"
+          data-open-in-church-center-modal="true"
+        >Give through PCO</a>
       </div>
 
       <div class="card">
         <div class="eyebrow">Digital Ministry</div>
         <h2>Support online ministry</h2>
-        <p>Help expand worship access, online connection tools, prayer support, and digital outreach beyond the building.</p>
-        <a class="btn btn-primary" href="#" target="_blank" rel="noopener">Give via PayPal</a>
+        <p>
+          Help expand worship access, sermon notes, prayer support, livestream tools, and digital connection beyond the building.
+        </p>
+        <a
+          class="btn btn-primary"
+          href="https://versaillesumc.churchcenter.com/giving"
+          data-open-in-church-center-modal="true"
+        >Give through PCO</a>
       </div>
     </div>
   </section>
@@ -99,19 +308,27 @@
         <h2>Ministry is bigger than one building</h2>
         <p>
           A smaller church can still have a wide reach. Online ministry allows people from home, from out of town,
-          and from other places entirely to stay connected, worship with you, and invest in what God is doing.
+          and from other places entirely to stay connected, worship with you, and support what God is doing through VUMC.
         </p>
         <p>
-          This page gives you a place to frame giving as partnership, not just payment.
+          This page frames giving as partnership in ministry through a secure Planning Center giving experience rather than a separate payment page.
         </p>
       </div>
 
       <div class="card">
-        <div class="eyebrow">Suggested next step</div>
-        <h2>Connect your PayPal categories</h2>
-        <p>Replace each placeholder button above with the correct PayPal giving link for each category you already use.</p>
-        <p>That gives you a clean, ministry-centered giving page without needing another giving platform right now.</p>
-        <a class="btn btn-secondary" href="watch.html">Return to Worship</a>
+        <div class="eyebrow">Secure online giving</div>
+        <h2>Give through Planning Center</h2>
+        <p>
+          Use the button above to open the Church Center giving modal and make a secure gift through VUMC’s Planning Center giving page.
+        </p>
+        <p>
+          This keeps giving simple, familiar, and connected to the same church system already in use.
+        </p>
+        <a
+          class="btn btn-secondary"
+          href="https://versaillesumc.churchcenter.com/giving"
+          data-open-in-church-center-modal="true"
+        >Open Giving</a>
       </div>
     </div>
   </section>
