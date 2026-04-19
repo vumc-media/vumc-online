@@ -115,6 +115,13 @@ iframe{
   background:
     linear-gradient(to top, rgba(0,0,0,0.88), rgba(0,0,0,0.72)),
     radial-gradient(circle at center, rgba(48,95,114,0.20), transparent 55%);
+  transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+
+.playerOverlay.hidden{
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
 }
 
 .overlayContent{
@@ -149,24 +156,13 @@ iframe{
   font-size:16px;
   line-height:1.6;
   opacity:.92;
-  margin-bottom:18px;
+  margin-bottom:12px;
 }
 
 .overlayTimes{
   font-size:15px;
   font-weight:700;
   opacity:.95;
-  margin-bottom:18px;
-}
-
-.overlayBtn{
-  display:inline-block;
-  background:#d4af37;
-  color:#111;
-  padding:12px 20px;
-  border-radius:999px;
-  text-decoration:none;
-  font-weight:800;
 }
 
 #vumcSidebar{
@@ -306,17 +302,16 @@ iframe{
         allowfullscreen>
       </iframe>
 
-      <div class="playerOverlay">
+      <div id="playerOverlay" class="playerOverlay">
         <div class="overlayContent">
-          <div class="overlayEyebrow">Worship Online</div>
-          <div class="overlayTitle">Join Us for Worship</div>
+          <div class="overlayEyebrow">VUMC eCampus</div>
+          <div class="overlayTitle">Worship With Us</div>
           <div class="overlayText">
-            Worship with us online each Sunday and join the VUMC community from wherever you are.
+            Join our online community and worship with us each Sunday.
           </div>
           <div class="overlayTimes">
-            Sundays • 9:30 AM Traditional • 10:30 AM Contemporary
+            Sundays • 9:30 AM & 10:30 AM
           </div>
-          <a class="overlayBtn" href="/plan-your-visit">Plan Your Visit</a>
         </div>
       </div>
     </div>
@@ -345,7 +340,6 @@ iframe{
         <div class="vumcFormCard" style="text-align:center;">
           <h3>Check In for Worship</h3>
           <p>Let us know you're here through Church Center.</p>
-
           <a
             href="https://versaillesumc.churchcenter.com/people/forms/859778"
             data-open-in-church-center-modal="true"
@@ -359,7 +353,6 @@ iframe{
         <div class="vumcFormCard" style="text-align:center;">
           <h3>Prayer Request</h3>
           <p>You can share your prayer requests with us anytime.</p>
-
           <a
             href="/prayer"
             class="vumcSubmitBtn">
@@ -374,11 +367,15 @@ iframe{
 </div>
 
 <script>
-function shouldShowSermonNotes() {
+function isSundayServiceWindow() {
   const now = new Date();
   const day = now.getDay();
   const minutes = now.getHours() * 60 + now.getMinutes();
-  return day === 0 && minutes >= 555 && minutes <= 720; // 9:15 AM–12:00 PM
+  return day === 0 && minutes >= 555 && minutes <= 720; // 9:24 AM–12:00 PM
+}
+
+function shouldShowSermonNotes() {
+  return isSundayServiceWindow();
 }
 
 function activateTab(tabName) {
@@ -392,13 +389,18 @@ function activateTab(tabName) {
   if (pane) pane.classList.add("active");
 }
 
-document.querySelectorAll(".vumcTabBtn").forEach(btn => {
-  btn.addEventListener("click", function () {
-    activateTab(this.dataset.tab);
-  });
-});
+function updateOverlay() {
+  const overlay = document.getElementById("playerOverlay");
+  if (!overlay) return;
 
-(function setupSermonNotesSchedule() {
+  if (isSundayServiceWindow()) {
+    overlay.classList.add("hidden");
+  } else {
+    overlay.classList.remove("hidden");
+  }
+}
+
+function setupSermonNotesSchedule() {
   const notesTabBtn = document.getElementById("notesTabBtn");
   const notesPane = document.getElementById("tab-notes");
 
@@ -407,9 +409,25 @@ document.querySelectorAll(".vumcTabBtn").forEach(btn => {
     if (notesPane) notesPane.style.display = "none";
     activateTab("checkin");
   } else {
+    if (notesTabBtn) notesTabBtn.style.display = "";
+    if (notesPane) notesPane.style.display = "";
     activateTab("notes");
   }
-})();
+}
+
+document.querySelectorAll(".vumcTabBtn").forEach(btn => {
+  btn.addEventListener("click", function () {
+    activateTab(this.dataset.tab);
+  });
+});
+
+updateOverlay();
+setupSermonNotesSchedule();
+
+setInterval(() => {
+  updateOverlay();
+  setupSermonNotesSchedule();
+}, 60000);
 </script>
 
 </body>
