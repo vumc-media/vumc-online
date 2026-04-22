@@ -8,7 +8,6 @@
 <script src="https://js.churchcenter.com/modal/v1"></script>
 
 <style>
-/* --- NO CHANGES TO YOUR DESIGN --- */
 :root{
   --bg:#f4f6f8;
   --card:#ffffff;
@@ -21,13 +20,21 @@
   --radius:20px;
   --max:1180px;
 }
+
 *{box-sizing:border-box}
 body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text);}
 a{text-decoration:none;color:inherit}
 
-/* (keeping all your styles exactly the same) */
-.topbar{background:#17313d;color:#fff;padding:14px;text-align:center;font-weight:700;}
+.topbar{
+  background:#17313d;
+  color:#fff;
+  padding:14px;
+  text-align:center;
+  font-weight:700;
+}
+
 .wrap{max-width:var(--max);margin:auto;}
+
 .hero{
   background:
     linear-gradient(rgba(18,31,39,.60),rgba(18,31,39,.78)),
@@ -35,16 +42,107 @@ a{text-decoration:none;color:inherit}
   color:#fff;
   padding:30px 20px 70px;
 }
-.nav{display:flex;justify-content:space-between;flex-wrap:wrap;gap:20px;margin-bottom:50px;}
+
+.nav{
+  display:flex;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  gap:20px;
+  margin-bottom:50px;
+}
+
 .nav-links{display:flex;gap:18px;flex-wrap:wrap;}
 .brand{font-size:24px;font-weight:700;}
-.hero-grid{display:grid;grid-template-columns:1.2fr .9fr;gap:28px;align-items:center;}
-h1{font-size:clamp(36px,6vw,60px);margin:0 0 12px;line-height:1.05;}
-.hero p{font-size:18px;margin-bottom:20px;max-width:720px;}
-.btn{padding:14px 20px;border-radius:999px;font-weight:700;display:inline-block;}
-.btn-primary{background:#fff;color:#17313d;}
-.btn-secondary{border:1px solid #fff;color:#fff;}
 
+.hero-grid{
+  display:grid;
+  grid-template-columns:1.2fr .9fr;
+  gap:28px;
+  align-items:center;
+}
+
+h1{
+  font-size:clamp(36px,6vw,60px);
+  margin:0 0 12px;
+  line-height:1.05;
+}
+
+.hero p{
+  font-size:18px;
+  margin-bottom:20px;
+  max-width:720px;
+}
+
+.btn{
+  padding:14px 20px;
+  border-radius:999px;
+  font-weight:700;
+  display:inline-block;
+}
+
+.btn-primary{
+  background:#fff;
+  color:#17313d;
+}
+
+.btn-secondary{
+  border:1px solid #fff;
+  color:#fff;
+}
+
+/* PLAYER */
+.player-shell{
+  position:relative;
+  aspect-ratio:16/9;
+  background:#000;
+  border-radius:18px;
+  overflow:hidden;
+  box-shadow:0 18px 40px rgba(0,0,0,.22);
+}
+
+.player-frame{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  border:0;
+  display:none;
+}
+
+.player-offline{
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:20px;
+  color:#fff;
+  background:
+    linear-gradient(rgba(0,0,0,.40), rgba(0,0,0,.40)),
+    radial-gradient(circle at bottom, rgba(212,175,55,.12), transparent 35%),
+    linear-gradient(180deg, #16394a 0%, #395f69 45%, #7a5f66 100%);
+}
+
+.player-inner{
+  max-width:420px;
+  background:rgba(16,18,24,.72);
+  border-radius:20px;
+  padding:20px;
+}
+
+.player-title{
+  font-size:22px;
+  font-weight:800;
+  margin-bottom:10px;
+}
+
+.service-times{
+  margin-top:10px;
+  font-size:14px;
+}
+
+/* CARDS */
 .cards{
   display:grid;
   grid-template-columns:repeat(4,1fr);
@@ -71,7 +169,6 @@ h1{font-size:clamp(36px,6vw,60px);margin:0 0 12px;line-height:1.05;}
   margin-bottom:8px;
 }
 
-/* responsive unchanged */
 @media(max-width:900px){
   .hero-grid{grid-template-columns:1fr;}
   .cards{grid-template-columns:1fr 1fr;}
@@ -99,10 +196,11 @@ h1{font-size:clamp(36px,6vw,60px);margin:0 0 12px;line-height:1.05;}
     </div>
 
     <div class="hero-grid">
+
       <div>
         <h1>Worship Anywhere.<br>Belong Everywhere.</h1>
         <p>
-          VUMC Online is the digital campus of Versailles United Methodist Church — an extension of our worship, prayer, care, and community beyond the walls of our physical campus.
+          VUMC Online is the digital campus of Versailles United Methodist Church.
         </p>
 
         <a class="btn btn-primary" href="/watch">Join Worship</a>
@@ -115,21 +213,39 @@ h1{font-size:clamp(36px,6vw,60px);margin:0 0 12px;line-height:1.05;}
           Check In
         </a>
       </div>
-    </div>
 
+      <!-- ✅ PLAYER RESTORED -->
+      <div>
+        <div class="player-shell">
+          <iframe
+            id="heroLiveFrame"
+            class="player-frame"
+            allowfullscreen>
+          </iframe>
+
+          <div class="player-offline">
+            <div class="player-inner">
+              <div class="player-title">Next Service</div>
+              <div class="service-times">
+                Sundays • 9:30 AM & 10:30 AM
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
   </div>
 </header>
 
 <section class="cards">
 
-  <!-- Watch -->
   <a class="card" href="/watch">
     <div class="eyebrow">Watch</div>
     <h3>Join worship</h3>
     <p>Gather with us live on Sundays or revisit worship throughout the week.</p>
   </a>
 
-  <!-- Check In -->
   <a
     class="card"
     href="https://versaillesumc.churchcenter.com/people/forms/859778"
@@ -137,10 +253,10 @@ h1{font-size:clamp(36px,6vw,60px);margin:0 0 12px;line-height:1.05;}
   >
     <div class="eyebrow">Belong</div>
     <h3>Check in</h3>
-    <p>Let us know you joined us and take your next step in the life of the church.</p>
+    <p>Let us know you joined us.</p>
   </a>
 
-  <!-- ✅ UPDATED PRAYER CARD -->
+  <!-- ✅ FIXED -->
   <a
     class="card"
     href="https://versaillesumc.churchcenter.com/people/forms/554033"
@@ -151,7 +267,6 @@ h1{font-size:clamp(36px,6vw,60px);margin:0 0 12px;line-height:1.05;}
     <p>Receive prayer and pastoral care wherever you are.</p>
   </a>
 
-  <!-- Give -->
   <a
     class="card"
     href="https://versaillesumc.churchcenter.com/giving"
@@ -159,7 +274,7 @@ h1{font-size:clamp(36px,6vw,60px);margin:0 0 12px;line-height:1.05;}
   >
     <div class="eyebrow">Give</div>
     <h3>Support ministry</h3>
-    <p>Invest in the mission of VUMC both online and on campus.</p>
+    <p>Invest in the mission of VUMC.</p>
   </a>
 
 </section>
