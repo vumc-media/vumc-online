@@ -9,14 +9,11 @@
 
 <style>
 :root{
-  --bg:#f4f6f8;
-  --card:#ffffff;
   --text:#1f2933;
   --muted:#5b6875;
   --accent:#305f72;
   --shadow:0 10px 30px rgba(24,39,52,.08);
   --max:1180px;
-  --nav-h:66px;
 }
 
 *{box-sizing:border-box}
@@ -29,8 +26,7 @@ html,body{
 body{
   font-family:Arial,Helvetica,sans-serif;
   color:var(--text);
-  background:
-    linear-gradient(180deg, #16394a 0%, #395f69 45%, #7a5f66 100%);
+  background:linear-gradient(180deg,#16394a 0%,#395f69 45%,#7a5f66 100%);
 }
 
 a{
@@ -38,19 +34,22 @@ a{
   color:inherit;
 }
 
-.site-header{
-  background:#ffffff;
-  border-bottom:1px solid rgba(31,41,51,.08);
-  position:sticky;
-  top:0;
-  z-index:1000;
-}
-
-.site-header .wrap{
+.wrap{
   max-width:var(--max);
   margin:auto;
-  min-height:var(--nav-h);
-  padding:0 20px;
+}
+
+/* WHITE NAV BAR */
+.site-header{
+  background:#ffffff;
+  border-bottom:1px solid rgba(31,41,51,.10);
+  width:100%;
+}
+
+.site-header-inner{
+  max-width:var(--max);
+  margin:auto;
+  padding:18px 20px;
   display:flex;
   align-items:center;
   justify-content:space-between;
@@ -65,16 +64,17 @@ a{
 
 .nav-links{
   display:flex;
+  align-items:center;
   gap:28px;
   flex-wrap:wrap;
+}
+
+.nav-links a{
   font-weight:700;
   color:#305165;
 }
 
-.nav-links a:hover{
-  opacity:.8;
-}
-
+/* TOP MESSAGE BAR */
 .topbar{
   background:#17313d;
   color:#fff;
@@ -84,20 +84,13 @@ a{
   font-size:14px;
 }
 
-.wrap{
-  max-width:var(--max);
-  margin:auto;
-}
-
+/* HERO */
 .hero{
   background:
     linear-gradient(rgba(18,31,39,.58),rgba(18,31,39,.76)),
     url('https://images.unsplash.com/photo-1504052434569-70ad5836ab65?auto=format&fit=crop&w=1600&q=80') center/cover;
   color:#fff;
-  min-height:calc(100vh - var(--nav-h) - 52px);
-  display:flex;
-  align-items:center;
-  padding:70px 20px 120px;
+  padding:48px 20px 90px;
 }
 
 .hero-grid{
@@ -105,6 +98,7 @@ a{
   grid-template-columns:1.15fr .95fr;
   gap:34px;
   align-items:center;
+  min-height:520px;
 }
 
 .hero-copy{
@@ -171,7 +165,7 @@ h1{
   color:#fff;
   background:
     linear-gradient(rgba(0,0,0,.40), rgba(0,0,0,.40)),
-    linear-gradient(180deg, #16394a 0%, #395f69 45%, #7a5f66 100%);
+    linear-gradient(180deg,#16394a 0%,#395f69 45%,#7a5f66 100%);
 }
 
 .player-inner{
@@ -196,7 +190,7 @@ h1{
 
 /* CARDS */
 .cards-wrap{
-  margin-top:-68px;
+  margin-top:-42px;
   position:relative;
   z-index:2;
 }
@@ -268,17 +262,12 @@ h1{
   color:rgba(255,255,255,.82);
 }
 
-/* Responsive */
-@media (max-width: 900px){
-  .site-header .wrap{
-    padding:12px 20px;
-    min-height:auto;
-    align-items:flex-start;
+/* MOBILE */
+@media (max-width:900px){
+  .site-header-inner{
     flex-direction:column;
-  }
-
-  .brand{
-    font-size:22px;
+    align-items:flex-start;
+    padding:16px 20px;
   }
 
   .nav-links{
@@ -286,12 +275,12 @@ h1{
   }
 
   .hero{
-    min-height:auto;
-    padding:56px 20px 100px;
+    padding:36px 20px 80px;
   }
 
   .hero-grid{
     grid-template-columns:1fr;
+    min-height:auto;
   }
 
   .cards{
@@ -299,7 +288,7 @@ h1{
   }
 }
 
-@media (max-width: 600px){
+@media (max-width:600px){
   .topbar{
     font-size:13px;
     padding:12px 14px;
@@ -318,7 +307,7 @@ h1{
   }
 
   .cards-wrap{
-    margin-top:-48px;
+    margin-top:-30px;
   }
 }
 </style>
@@ -327,7 +316,7 @@ h1{
 <body>
 
 <header class="site-header">
-  <div class="wrap">
+  <div class="site-header-inner">
     <div class="brand"><a href="/">VUMC Online</a></div>
     <nav class="nav-links">
       <a href="/watch">Worship</a>
@@ -351,7 +340,6 @@ h1{
 
       <div>
         <div class="player-shell">
-
           <iframe
             id="heroLiveFrame"
             class="player-frame"
@@ -367,7 +355,6 @@ h1{
               </div>
             </div>
           </div>
-
         </div>
       </div>
 
@@ -433,7 +420,6 @@ h1{
         liveFrame.style.display = "none";
         offlinePanel.style.display = "flex";
       }
-
     } catch (e) {
       liveFrame.style.display = "none";
       offlinePanel.style.display = "flex";
