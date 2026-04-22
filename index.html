@@ -123,7 +123,7 @@ h1{
   border-radius:999px;
   font-weight:700;
   display:inline-block;
-  transition:transform .2s ease, opacity .2s ease;
+  transition:transform .2s ease, opacity .2s ease, box-shadow .2s ease, background .2s ease, color .2s ease;
 }
 
 .btn:hover{
@@ -133,6 +133,19 @@ h1{
 .btn-primary{
   background:#fff;
   color:#17313d;
+}
+
+.btn-live{
+  background:#d94b3d;
+  color:#fff;
+  box-shadow:0 0 0 0 rgba(217,75,61,.5);
+  animation:livePulse 1.8s infinite;
+}
+
+@keyframes livePulse{
+  0%{box-shadow:0 0 0 0 rgba(217,75,61,.45);}
+  70%{box-shadow:0 0 0 14px rgba(217,75,61,0);}
+  100%{box-shadow:0 0 0 0 rgba(217,75,61,0);}
 }
 
 /* PLAYER */
@@ -335,7 +348,7 @@ h1{
       <div class="hero-copy">
         <h1>Worship Anywhere.<br>Belong Everywhere.</h1>
         <p>VUMC Online is the digital campus of Versailles United Methodist Church.</p>
-        <a class="btn btn-primary" href="/watch">Join Worship</a>
+        <a id="joinWorshipBtn" class="btn btn-primary" href="/watch">Join Worship</a>
       </div>
 
       <div>
@@ -351,7 +364,7 @@ h1{
             <div class="player-inner">
               <div class="player-title">Next Service</div>
               <div class="service-times">
-                Sundays • 9:30 AM &amp; 10:30 AM
+                Sundays • 10:30 AM
               </div>
             </div>
           </div>
@@ -400,8 +413,25 @@ h1{
 
   const liveFrame = document.getElementById("heroLiveFrame");
   const offlinePanel = document.getElementById("heroOffline");
+  const joinBtn = document.getElementById("joinWorshipBtn");
 
   let currentVideo = "";
+
+  function setButtonLive(isLive) {
+    if (!joinBtn) return;
+
+    if (isLive) {
+      joinBtn.textContent = "Watch Live";
+      joinBtn.href = "/watch";
+      joinBtn.classList.add("btn-live");
+      joinBtn.classList.remove("btn-primary");
+    } else {
+      joinBtn.textContent = "Join Worship";
+      joinBtn.href = "/watch";
+      joinBtn.classList.remove("btn-live");
+      joinBtn.classList.add("btn-primary");
+    }
+  }
 
   async function checkLive() {
     try {
@@ -416,13 +446,16 @@ h1{
 
         liveFrame.style.display = "block";
         offlinePanel.style.display = "none";
+        setButtonLive(true);
       } else {
         liveFrame.style.display = "none";
         offlinePanel.style.display = "flex";
+        setButtonLive(false);
       }
     } catch (e) {
       liveFrame.style.display = "none";
       offlinePanel.style.display = "flex";
+      setButtonLive(false);
     }
   }
 
