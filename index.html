@@ -14,22 +14,12 @@
   --text:#1f2933;
   --muted:#5b6875;
   --accent:#305f72;
-  --accent2:#b57f50;
-  --border:#d8e0e6;
   --shadow:0 10px 30px rgba(24,39,52,.08);
-  --radius:20px;
   --max:1180px;
 }
 
 *{box-sizing:border-box}
-
-body{
-  margin:0;
-  font-family:Arial,Helvetica,sans-serif;
-  background:var(--bg);
-  color:var(--text);
-}
-
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text);}
 a{text-decoration:none;color:inherit}
 
 .topbar{
@@ -40,10 +30,7 @@ a{text-decoration:none;color:inherit}
   font-weight:700;
 }
 
-.wrap{
-  max-width:var(--max);
-  margin:auto;
-}
+.wrap{max-width:var(--max);margin:auto;}
 
 .hero{
   background:
@@ -61,16 +48,8 @@ a{text-decoration:none;color:inherit}
   margin-bottom:50px;
 }
 
-.nav-links{
-  display:flex;
-  gap:18px;
-  flex-wrap:wrap;
-}
-
-.brand{
-  font-size:24px;
-  font-weight:700;
-}
+.nav-links{display:flex;gap:18px;flex-wrap:wrap;}
+.brand{font-size:24px;font-weight:700;}
 
 .hero-grid{
   display:grid;
@@ -82,13 +61,11 @@ a{text-decoration:none;color:inherit}
 h1{
   font-size:clamp(36px,6vw,60px);
   margin:0 0 12px;
-  line-height:1.05;
 }
 
 .hero p{
   font-size:18px;
   margin-bottom:20px;
-  max-width:720px;
 }
 
 .btn{
@@ -115,7 +92,6 @@ h1{
   background:#000;
   border-radius:18px;
   overflow:hidden;
-  box-shadow:0 18px 40px rgba(0,0,0,.22);
 }
 
 .player-frame{
@@ -138,7 +114,6 @@ h1{
   color:#fff;
   background:
     linear-gradient(rgba(0,0,0,.40), rgba(0,0,0,.40)),
-    radial-gradient(circle at bottom, rgba(212,175,55,.12), transparent 35%),
     linear-gradient(180deg, #16394a 0%, #395f69 45%, #7a5f66 100%);
 }
 
@@ -163,7 +138,7 @@ h1{
 /* CARDS */
 .cards{
   display:grid;
-  grid-template-columns:repeat(3,1fr); /* adjusted automatically */
+  grid-template-columns:repeat(3,1fr);
   gap:18px;
   max-width:var(--max);
   margin:-40px auto 0;
@@ -177,15 +152,8 @@ h1{
   box-shadow:var(--shadow);
 }
 
-.card h3{
-  margin:0 0 8px;
-}
-
-.card p{
-  margin:0;
-  color:var(--muted);
-  line-height:1.5;
-}
+.card h3{margin:0 0 8px;}
+.card p{margin:0;color:var(--muted);}
 
 .eyebrow{
   font-size:12px;
@@ -195,19 +163,11 @@ h1{
 }
 
 @media(max-width:900px){
-  .hero-grid{
-    grid-template-columns:1fr;
-  }
-
-  .cards{
-    grid-template-columns:1fr 1fr;
-  }
+  .hero-grid{grid-template-columns:1fr;}
+  .cards{grid-template-columns:1fr 1fr;}
 }
-
 @media(max-width:600px){
-  .cards{
-    grid-template-columns:1fr;
-  }
+  .cards{grid-template-columns:1fr;}
 }
 </style>
 </head>
@@ -232,9 +192,7 @@ h1{
 
       <div>
         <h1>Worship Anywhere.<br>Belong Everywhere.</h1>
-        <p>
-          VUMC Online is the digital campus of Versailles United Methodist Church.
-        </p>
+        <p>VUMC Online is the digital campus of Versailles United Methodist Church.</p>
 
         <a class="btn btn-primary" href="/watch">Join Worship</a>
 
@@ -247,11 +205,18 @@ h1{
         </a>
       </div>
 
+      <!-- PLAYER -->
       <div>
         <div class="player-shell">
-          <iframe id="heroLiveFrame" class="player-frame" allowfullscreen></iframe>
 
-          <div class="player-offline">
+          <iframe
+            id="heroLiveFrame"
+            class="player-frame"
+            allow="autoplay; encrypted-media; picture-in-picture"
+            allowfullscreen>
+          </iframe>
+
+          <div id="heroOffline" class="player-offline">
             <div class="player-inner">
               <div class="player-title">Next Service</div>
               <div class="service-times">
@@ -259,6 +224,7 @@ h1{
               </div>
             </div>
           </div>
+
         </div>
       </div>
 
@@ -268,14 +234,12 @@ h1{
 
 <section class="cards">
 
-  <!-- Watch -->
   <a class="card" href="/watch">
     <div class="eyebrow">Watch</div>
     <h3>Join worship</h3>
     <p>Gather with us live on Sundays or revisit worship throughout the week.</p>
   </a>
 
-  <!-- Prayer -->
   <a
     class="card"
     href="https://versaillesumc.churchcenter.com/people/forms/554033"
@@ -286,7 +250,6 @@ h1{
     <p>Receive prayer and pastoral care wherever you are.</p>
   </a>
 
-  <!-- Give -->
   <a
     class="card"
     href="https://versaillesumc.churchcenter.com/giving"
@@ -298,6 +261,44 @@ h1{
   </a>
 
 </section>
+
+<script>
+(async function () {
+  const endpoint = "https://script.google.com/macros/s/AKfycbxClNiX6jIT7ykEIox3Qw-dzynO4TgGhqbdTTzOzESS9C8ZxCRNiLLAuc3bSYFKVbg/exec";
+
+  const liveFrame = document.getElementById("heroLiveFrame");
+  const offlinePanel = document.getElementById("heroOffline");
+
+  let currentVideo = "";
+
+  async function checkLive() {
+    try {
+      const res = await fetch(endpoint + "?t=" + Date.now());
+      const data = await res.json();
+
+      if (data.live && data.videoId) {
+        if (currentVideo !== data.videoId) {
+          currentVideo = data.videoId;
+          liveFrame.src = "https://www.youtube.com/embed/" + data.videoId + "?autoplay=1&mute=1";
+        }
+
+        liveFrame.style.display = "block";
+        offlinePanel.style.display = "none";
+      } else {
+        liveFrame.style.display = "none";
+        offlinePanel.style.display = "flex";
+      }
+
+    } catch (e) {
+      liveFrame.style.display = "none";
+      offlinePanel.style.display = "flex";
+    }
+  }
+
+  await checkLive();
+  setInterval(checkLive, 30000);
+})();
+</script>
 
 </body>
 </html>
