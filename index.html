@@ -19,7 +19,13 @@
 }
 
 *{box-sizing:border-box}
-body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text);}
+body{
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  color:var(--text);
+  background:
+    linear-gradient(180deg, #16394a 0%, #395f69 45%, #7a5f66 100%);
+}
 a{text-decoration:none;color:inherit}
 
 .topbar{
@@ -92,6 +98,7 @@ h1{
   background:#000;
   border-radius:18px;
   overflow:hidden;
+  box-shadow:0 16px 40px rgba(0,0,0,.18);
 }
 
 .player-frame{
@@ -122,6 +129,7 @@ h1{
   background:rgba(16,18,24,.72);
   border-radius:20px;
   padding:20px;
+  box-shadow:0 10px 24px rgba(0,0,0,.18);
 }
 
 .player-title{
@@ -142,24 +150,58 @@ h1{
   gap:18px;
   max-width:var(--max);
   margin:-40px auto 0;
-  padding:0 20px;
+  padding:0 20px 40px;
 }
 
 .card{
-  background:#fff;
   padding:22px;
   border-radius:20px;
   box-shadow:var(--shadow);
+  transition:transform .2s ease, box-shadow .2s ease;
+}
+
+.card:hover{
+  transform:translateY(-4px);
+  box-shadow:0 14px 40px rgba(0,0,0,.15);
 }
 
 .card h3{margin:0 0 8px;}
-.card p{margin:0;color:var(--muted);}
+.card p{margin:0;}
 
 .eyebrow{
   font-size:12px;
-  color:var(--accent);
   font-weight:700;
   margin-bottom:8px;
+  letter-spacing:.04em;
+  text-transform:uppercase;
+}
+
+/* Card colors */
+.card.watch{
+  background:linear-gradient(135deg,#305f72,#3f7f8f);
+  color:#fff;
+}
+
+.card.prayer{
+  background:linear-gradient(135deg,#8aa64b,#6f8e3b);
+  color:#fff;
+}
+
+.card.give{
+  background:linear-gradient(135deg,#d94b3d,#b63a2e);
+  color:#fff;
+}
+
+.card.watch p,
+.card.prayer p,
+.card.give p{
+  color:rgba(255,255,255,.92);
+}
+
+.card.watch .eyebrow,
+.card.prayer .eyebrow,
+.card.give .eyebrow{
+  color:rgba(255,255,255,.82);
 }
 
 @media(max-width:900px){
@@ -193,7 +235,6 @@ h1{
       <div>
         <h1>Worship Anywhere.<br>Belong Everywhere.</h1>
         <p>VUMC Online is the digital campus of Versailles United Methodist Church.</p>
-
         <a class="btn btn-primary" href="/watch">Join Worship</a>
       </div>
 
@@ -226,14 +267,14 @@ h1{
 
 <section class="cards">
 
-  <a class="card" href="/watch">
+  <a class="card watch" href="/watch">
     <div class="eyebrow">Watch</div>
     <h3>Join worship</h3>
     <p>Gather with us live on Sundays or revisit worship throughout the week.</p>
   </a>
 
   <a
-    class="card"
+    class="card prayer"
     href="https://versaillesumc.churchcenter.com/people/forms/554033"
     data-open-in-church-center-modal="true"
   >
@@ -243,7 +284,7 @@ h1{
   </a>
 
   <a
-    class="card"
+    class="card give"
     href="https://versaillesumc.churchcenter.com/giving"
     data-open-in-church-center-modal="true"
   >
