@@ -22,7 +22,14 @@
 }
 
 *{box-sizing:border-box}
-body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text);}
+
+body{
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+}
+
 a{text-decoration:none;color:inherit}
 
 .topbar{
@@ -33,7 +40,10 @@ a{text-decoration:none;color:inherit}
   font-weight:700;
 }
 
-.wrap{max-width:var(--max);margin:auto;}
+.wrap{
+  max-width:var(--max);
+  margin:auto;
+}
 
 .hero{
   background:
@@ -51,8 +61,16 @@ a{text-decoration:none;color:inherit}
   margin-bottom:50px;
 }
 
-.nav-links{display:flex;gap:18px;flex-wrap:wrap;}
-.brand{font-size:24px;font-weight:700;}
+.nav-links{
+  display:flex;
+  gap:18px;
+  flex-wrap:wrap;
+}
+
+.brand{
+  font-size:24px;
+  font-weight:700;
+}
 
 .hero-grid{
   display:grid;
@@ -145,7 +163,7 @@ h1{
 /* CARDS */
 .cards{
   display:grid;
-  grid-template-columns:repeat(4,1fr);
+  grid-template-columns:repeat(3,1fr); /* adjusted automatically */
   gap:18px;
   max-width:var(--max);
   margin:-40px auto 0;
@@ -159,8 +177,15 @@ h1{
   box-shadow:var(--shadow);
 }
 
-.card h3{margin:0 0 8px;}
-.card p{margin:0;color:var(--muted);line-height:1.5;}
+.card h3{
+  margin:0 0 8px;
+}
+
+.card p{
+  margin:0;
+  color:var(--muted);
+  line-height:1.5;
+}
 
 .eyebrow{
   font-size:12px;
@@ -170,11 +195,19 @@ h1{
 }
 
 @media(max-width:900px){
-  .hero-grid{grid-template-columns:1fr;}
-  .cards{grid-template-columns:1fr 1fr;}
+  .hero-grid{
+    grid-template-columns:1fr;
+  }
+
+  .cards{
+    grid-template-columns:1fr 1fr;
+  }
 }
+
 @media(max-width:600px){
-  .cards{grid-template-columns:1fr;}
+  .cards{
+    grid-template-columns:1fr;
+  }
 }
 </style>
 </head>
@@ -214,14 +247,9 @@ h1{
         </a>
       </div>
 
-      <!-- ✅ PLAYER RESTORED -->
       <div>
         <div class="player-shell">
-          <iframe
-            id="heroLiveFrame"
-            class="player-frame"
-            allowfullscreen>
-          </iframe>
+          <iframe id="heroLiveFrame" class="player-frame" allowfullscreen></iframe>
 
           <div class="player-offline">
             <div class="player-inner">
@@ -240,23 +268,14 @@ h1{
 
 <section class="cards">
 
+  <!-- Watch -->
   <a class="card" href="/watch">
     <div class="eyebrow">Watch</div>
     <h3>Join worship</h3>
     <p>Gather with us live on Sundays or revisit worship throughout the week.</p>
   </a>
 
-  <a
-    class="card"
-    href="https://versaillesumc.churchcenter.com/people/forms/859778"
-    data-open-in-church-center-modal="true"
-  >
-    <div class="eyebrow">Belong</div>
-    <h3>Check in</h3>
-    <p>Let us know you joined us.</p>
-  </a>
-
-  <!-- ✅ FIXED -->
+  <!-- Prayer -->
   <a
     class="card"
     href="https://versaillesumc.churchcenter.com/people/forms/554033"
@@ -267,6 +286,7 @@ h1{
     <p>Receive prayer and pastoral care wherever you are.</p>
   </a>
 
+  <!-- Give -->
   <a
     class="card"
     href="https://versaillesumc.churchcenter.com/giving"
@@ -274,7 +294,7 @@ h1{
   >
     <div class="eyebrow">Give</div>
     <h3>Support ministry</h3>
-    <p>Invest in the mission of VUMC.</p>
+    <p>Invest in the mission of VUMC both online and on campus.</p>
   </a>
 
 </section>
