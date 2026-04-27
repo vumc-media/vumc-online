@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -229,6 +230,62 @@ iframe{
   background:#fff;
 }
 
+.vumcLiveChatCard{
+  background:#262a33;
+  border-radius:16px;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.08);
+}
+
+.vumcLiveChatHeader{
+  padding:14px 16px;
+  background:#1d222b;
+  border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+.vumcLiveChatHeader h3{
+  margin:0;
+  font-size:17px;
+}
+
+.vumcLiveChatHeader p{
+  margin:5px 0 0;
+  color:rgba(255,255,255,.72);
+  font-size:13px;
+  line-height:1.4;
+}
+
+.vumcLiveChatFrame{
+  width:100%;
+  height:560px;
+  border:0;
+  background:#fff;
+  display:block;
+}
+
+.vumcLiveBadge{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  margin-bottom:8px;
+  color:#111;
+  background:#d4af37;
+  padding:5px 9px;
+  border-radius:999px;
+  font-size:11px;
+  font-weight:800;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+}
+
+.vumcLiveDot{
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:#c62828;
+  box-shadow:0 0 0 4px rgba(198,40,40,.18);
+}
+
 .vumcFormCard{
   padding:16px;
   background:#262a33;
@@ -344,6 +401,7 @@ iframe{
       <div class="vumcTabs">
         <button id="notesTabBtn" class="vumcTabBtn active" data-tab="notes">Sermon Notes</button>
         <button id="checkinTabBtn" class="vumcTabBtn" data-tab="checkin">Check In</button>
+        <button id="chatTabBtn" class="vumcTabBtn" data-tab="chat">Live Chat</button>
         <button id="prayerTabBtn" class="vumcTabBtn" data-tab="prayer">Prayer</button>
         <button id="giveTabBtn" class="vumcTabBtn" data-tab="give">Give</button>
       </div>
@@ -371,6 +429,23 @@ iframe{
           <div class="vumcHelp">
             Available during Sunday worship from 9:30 AM to 12:00 PM.
           </div>
+        </div>
+      </div>
+
+      <div id="tab-chat" class="vumcTabPane">
+        <div class="vumcLiveChatCard">
+          <div class="vumcLiveChatHeader">
+            <div class="vumcLiveBadge"><span class="vumcLiveDot"></span> Live Now</div>
+            <h3>VUMC Live Chat</h3>
+            <p>Say hello, share where you are worshiping from, and connect with others during worship.</p>
+          </div>
+
+          <iframe
+            id="vumcLiveChatFrame"
+            class="vumcLiveChatFrame"
+            src="https://tlk.io/vumc-online-worship"
+            title="VUMC Live Chat">
+          </iframe>
         </div>
       </div>
 
@@ -445,29 +520,68 @@ function updateOverlay() {
   }
 }
 
+function shouldShowLiveChat() {
+  return isSundayServiceWindow();
+}
+
 function getDefaultVisibleTab() {
   const notesVisible = shouldShowSermonNotes();
+  const chatVisible = shouldShowLiveChat();
   const checkinVisible = isSundayServiceWindow();
 
   if (notesVisible) return "notes";
+  if (chatVisible) return "chat";
   if (checkinVisible) return "checkin";
   return "prayer";
 }
+
+let vumcLiveChatAutoFocused = false;
 
 function setupScheduledVisibility() {
   const notesTabBtn = document.getElementById("notesTabBtn");
   const notesPane = document.getElementById("tab-notes");
   const checkinTabBtn = document.getElementById("checkinTabBtn");
   const checkinPane = document.getElementById("tab-checkin");
+  const chatTabBtn = document.getElementById("chatTabBtn");
+  const chatPane = document.getElementById("tab-chat");
+  const chatFrame = document.getElementById("vumcLiveChatFrame");
 
   const showNotes = shouldShowSermonNotes();
   const showCheckin = isSundayServiceWindow();
+  const showChat = shouldShowLiveChat();
 
   if (notesTabBtn) notesTabBtn.style.display = showNotes ? "" : "none";
   if (notesPane) notesPane.style.display = showNotes ? "" : "none";
 
   if (checkinTabBtn) checkinTabBtn.style.display = showCheckin ? "" : "none";
   if (checkinPane) checkinPane.style.display = showCheckin ? "" : "none";
+
+  if (chatTabBtn) chatTabBtn.style.display = showChat ? "" : "none";
+  if (chatPane) chatPane.style.display = showChat ? "" : "none";
+
+  if (chatFrame) {
+    const liveChatUrl = "https://tlk.io/vumc-online-worship";
+    if (showChat && chatFrame.src !== liveChatUrl) {
+      chatFrame.src = liveChatUrl;
+    }
+    if (!showChat && chatFrame.src !== "about:blank") {
+      chatFrame.src = "about:blank";
+    }
+  }
+
+  /*
+    Auto-focus Live Chat once when the worship window opens.
+    After it focuses once, the viewer can click Sermon Notes, Check In, Prayer, or Give
+    without the page switching them back to chat every minute.
+  */
+  if (showChat && !vumcLiveChatAutoFocused) {
+    activateTab("chat");
+    vumcLiveChatAutoFocused = true;
+  }
+
+  if (!showChat) {
+    vumcLiveChatAutoFocused = false;
+  }
 
   const activeBtn = document.querySelector(".vumcTabBtn.active");
   const activePane = document.querySelector(".vumcTabPane.active");
