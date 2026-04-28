@@ -1,20 +1,16 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>VUMC Watch Live</title>
-  <link rel="icon" href="/favicon.ico">
 
+<link rel="icon" href="/favicon.ico">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-
 <link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png">
 <link rel="icon" type="image/png" sizes="512x512" href="/android-chrome-512x512.png">
-
 <link rel="manifest" href="/site.webmanifest">
 
 <script src="https://js.churchcenter.com/modal/v1"></script>
@@ -23,16 +19,20 @@
 :root{
   --border:#d8e0e6;
   --accent:#305f72;
+  --gold:#d4af37;
+  --navy:#17313d;
+  --panel:#262a33;
+  --dark:#15181f;
 }
 
-* { box-sizing: border-box; }
+*{box-sizing:border-box;}
 
-html, body {
-  margin: 0;
-  padding: 0;
-  background: #0f1115;
-  color: #fff;
-  font-family: Arial, Helvetica, sans-serif;
+html,body{
+  margin:0;
+  padding:0;
+  background:#0f1115;
+  color:#fff;
+  font-family:Arial,Helvetica,sans-serif;
 }
 
 .topbar{
@@ -96,7 +96,7 @@ html, body {
   color:#17313d;
 }
 
-#vumcShell {
+#vumcShell{
   display:grid;
   grid-template-columns:1fr 420px;
   min-height:calc(100vh - 95px);
@@ -125,9 +125,9 @@ iframe{
   pointer-events:auto;
   z-index:2;
   background:
-    linear-gradient(to top, rgba(0,0,0,0.88), rgba(0,0,0,0.72)),
-    radial-gradient(circle at center, rgba(48,95,114,0.20), transparent 55%);
-  transition: opacity 0.6s ease, visibility 0.6s ease;
+    linear-gradient(to top,rgba(0,0,0,.88),rgba(0,0,0,.72)),
+    radial-gradient(circle at center,rgba(48,95,114,.20),transparent 55%);
+  transition:opacity .6s ease,visibility .6s ease;
 }
 
 .playerOverlay.hidden{
@@ -141,9 +141,9 @@ iframe{
   max-width:540px;
   padding:28px 24px;
   border-radius:20px;
-  background:rgba(10,14,22,0.72);
-  border:1px solid rgba(255,255,255,0.10);
-  box-shadow:0 18px 40px rgba(0,0,0,0.35);
+  background:rgba(10,14,22,.72);
+  border:1px solid rgba(255,255,255,.10);
+  box-shadow:0 18px 40px rgba(0,0,0,.35);
   backdrop-filter:blur(8px);
 }
 
@@ -230,6 +230,42 @@ iframe{
   background:#fff;
 }
 
+.vumcFormCard{
+  padding:16px;
+  background:#262a33;
+  border-radius:16px;
+}
+
+.vumcFormCard h3{
+  margin-top:0;
+}
+
+.vumcSubmitBtn{
+  width:100%;
+  background:#d4af37;
+  color:#111;
+  padding:12px;
+  border-radius:12px;
+  font-weight:800;
+  border:0;
+  cursor:pointer;
+  text-align:center;
+  display:inline-block;
+  text-decoration:none;
+}
+
+.vumcHelp{
+  margin-top:12px;
+  color:rgba(255,255,255,.72);
+  font-size:13px;
+  line-height:1.5;
+}
+
+.vumcHidden{
+  display:none!important;
+}
+
+/* CHAT */
 .vumcLiveChatCard{
   background:#262a33;
   border-radius:16px;
@@ -255,16 +291,8 @@ iframe{
   line-height:1.4;
 }
 
-.vumcLiveChatFrame{
-  width:100%;
-  height:560px;
-  border:0;
-  background:#fff;
-  display:block;
-}
-
 .vumcLiveBadge{
-  display:inline-flex;
+  display:none;
   align-items:center;
   gap:7px;
   margin-bottom:8px;
@@ -278,6 +306,10 @@ iframe{
   letter-spacing:.08em;
 }
 
+.vumcLiveBadge.show{
+  display:inline-flex;
+}
+
 .vumcLiveDot{
   width:8px;
   height:8px;
@@ -286,42 +318,82 @@ iframe{
   box-shadow:0 0 0 4px rgba(198,40,40,.18);
 }
 
-.vumcFormCard{
-  padding:16px;
-  background:#262a33;
-  border-radius:16px;
+.chatMessages{
+  height:360px;
+  overflow:auto;
+  padding:14px;
+  background:#10131a;
 }
 
-.vumcSubmitBtn{
-  width:100%;
-  background:#d4af37;
+.chatBubble{
+  padding:10px 12px;
+  border-radius:14px;
+  margin-bottom:10px;
+  line-height:1.4;
+  font-size:14px;
   color:#111;
+  word-wrap:break-word;
+}
+
+.chatBubble.guest{
+  background:#f5f5f5;
+}
+
+.chatBubble.host{
+  background:#e7f0ff;
+}
+
+.chatBubble.prayer{
+  background:#fff2cc;
+  border-left:5px solid #d4af37;
+}
+
+.chatBubble.care{
+  background:#fdecea;
+  border-left:5px solid #c62828;
+}
+
+.chatBubble.guestType{
+  background:#eaf7ea;
+  border-left:5px solid #2e7d32;
+}
+
+.chatMeta{
+  font-size:11px;
+  opacity:.75;
+  font-weight:700;
+  margin-bottom:4px;
+}
+
+.chatInputArea{
   padding:12px;
-  border-radius:12px;
-  font-weight:800;
+  background:#1d222b;
+  border-top:1px solid rgba(255,255,255,.08);
+}
+
+.chatInputArea input,
+.chatInputArea textarea{
+  width:100%;
   border:0;
-  cursor:pointer;
-  text-align:center;
-  display:inline-block;
-  text-decoration:none;
+  border-radius:10px;
+  padding:10px;
+  margin-bottom:8px;
+  font-family:inherit;
 }
 
-.vumcFormCard h3{
-  margin-top:0;
+.chatInputArea textarea{
+  resize:vertical;
+  min-height:72px;
 }
 
-.vumcHelp{
-  margin-top:12px;
-  color:rgba(255,255,255,.72);
-  font-size:13px;
-  line-height:1.5;
+.chatSmall{
+  font-size:12px;
+  color:rgba(255,255,255,.7);
+  line-height:1.4;
+  margin-top:8px;
 }
 
-.vumcHidden{
-  display:none !important;
-}
-
-@media (max-width:980px){
+@media(max-width:980px){
   #vumcShell{
     grid-template-columns:1fr;
   }
@@ -331,7 +403,7 @@ iframe{
   }
 }
 
-@media (max-width:767px){
+@media(max-width:767px){
   .overlayContent{
     max-width:90%;
     padding:22px 18px;
@@ -427,25 +499,50 @@ iframe{
             Check In Now
           </a>
           <div class="vumcHelp">
-            Available during Sunday worship from 9:30 AM to 12:00 PM.
+            Available during Sunday worship.
           </div>
         </div>
       </div>
 
       <div id="tab-chat" class="vumcTabPane">
-        <div class="vumcLiveChatCard">
+        <div id="chatLiveWrap" class="vumcLiveChatCard">
           <div class="vumcLiveChatHeader">
-            <div class="vumcLiveBadge"><span class="vumcLiveDot"></span> Live Now</div>
-            <h3>VUMC Live Chat</h3>
-            <p>Say hello, share where you are worshiping from, and connect with others during worship.</p>
+            <div id="liveBadge" class="vumcLiveBadge">
+              <span class="vumcLiveDot"></span> Live Now
+            </div>
+            <h3 id="chatTitle">VUMC Live Chat</h3>
+            <p id="chatSubtitle">
+              Say hello, share where you are worshiping from, and connect with others during worship.
+            </p>
           </div>
 
-          <iframe
-            id="vumcLiveChatFrame"
-            class="vumcLiveChatFrame"
-            src="https://tlk.io/vumc-online-worship"
-            title="VUMC Live Chat">
-          </iframe>
+          <div id="chatMessages" class="chatMessages"></div>
+
+          <div id="chatInputArea" class="chatInputArea">
+            <input id="chatName" type="text" placeholder="Your name" />
+            <textarea id="chatMessage" placeholder="Type your message..."></textarea>
+            <button id="sendChatBtn" class="vumcSubmitBtn" type="button">Send Message</button>
+            <div class="chatSmall">
+              Chat is recorded for pastoral care, follow-up, protection, and connection.
+            </div>
+          </div>
+        </div>
+
+        <div id="chatClosedWrap" class="vumcFormCard vumcHidden" style="text-align:center;">
+          <h3>Live Chat Opens During Worship</h3>
+          <p>
+            Our Digital Campus chat is available during Sunday livestreams, usually from 9:30 AM to Noon.
+          </p>
+          <p>
+            Outside of worship, you can still send a prayer request or email the church office at
+            <strong>vumcsecretary@gmail.com</strong>.
+          </p>
+          <a
+            href="https://versaillesumc.churchcenter.com/people/forms/554033"
+            data-open-in-church-center-modal="true"
+            class="vumcSubmitBtn">
+            Submit a Prayer Request
+          </a>
         </div>
       </div>
 
@@ -487,18 +584,53 @@ iframe{
 </div>
 
 <script>
-function isSundayServiceWindow() {
+const CHAT_BACKEND_URL = "https://script.google.com/macros/s/AKfycbzWN8Xi7xUFa_gjg4XHuD_yEEkaKLwrnXFI8d_XQMW4-KQRUlVPVmxcjfcgC0gMNMewsg/exec";
+
+/*
+  For testing only:
+  Change this to true if you need to test chat while not live.
+  Change back to false before Sunday.
+*/
+const FORCE_CHAT_OPEN_FOR_TESTING = false;
+
+let isActuallyLive = false;
+let vumcLiveChatAutoFocused = false;
+let exportAlreadyRequested = false;
+
+function isSundayServiceWindow(){
   const now = new Date();
   const day = now.getDay();
   const minutes = now.getHours() * 60 + now.getMinutes();
-  return day === 0 && minutes >= 570 && minutes <= 720; // Sunday 9:30 AM–12:00 PM
+  return day === 0 && minutes >= 570 && minutes <= 720;
 }
 
-function shouldShowSermonNotes() {
-  return isSundayServiceWindow();
+function isAutoExportWindow(){
+  const now = new Date();
+  const day = now.getDay();
+  const minutes = now.getHours() * 60 + now.getMinutes();
+  return day === 0 && minutes >= 720 && minutes <= 725;
 }
 
-function activateTab(tabName) {
+function shouldOpenLiveFeatures(){
+  return FORCE_CHAT_OPEN_FOR_TESTING || isActuallyLive;
+}
+
+async function checkYouTubeLiveStatus(){
+  if (FORCE_CHAT_OPEN_FOR_TESTING) {
+    isActuallyLive = true;
+    return;
+  }
+
+  try{
+    const res = await fetch(CHAT_BACKEND_URL + "?action=status&cacheBust=" + Date.now());
+    const data = await res.json();
+    isActuallyLive = !!data.isLive;
+  }catch(err){
+    isActuallyLive = isSundayServiceWindow();
+  }
+}
+
+function activateTab(tabName){
   document.querySelectorAll(".vumcTabBtn").forEach(b => b.classList.remove("active"));
   document.querySelectorAll(".vumcTabPane").forEach(p => p.classList.remove("active"));
 
@@ -509,106 +641,222 @@ function activateTab(tabName) {
   if (pane && pane.style.display !== "none") pane.classList.add("active");
 }
 
-function updateOverlay() {
+function updateOverlay(){
   const overlay = document.getElementById("playerOverlay");
   if (!overlay) return;
 
-  if (isSundayServiceWindow()) {
+  if (shouldOpenLiveFeatures()) {
     overlay.classList.add("hidden");
   } else {
     overlay.classList.remove("hidden");
   }
 }
 
-function shouldShowLiveChat() {
-  return isSundayServiceWindow();
+function getDefaultVisibleTab(){
+  if (shouldOpenLiveFeatures()) return "chat";
+  return "chat";
 }
 
-function getDefaultVisibleTab() {
-  const notesVisible = shouldShowSermonNotes();
-  const chatVisible = shouldShowLiveChat();
-  const checkinVisible = isSundayServiceWindow();
+function setupScheduledVisibility(){
+  const showLive = shouldOpenLiveFeatures();
 
-  if (notesVisible) return "notes";
-  if (chatVisible) return "chat";
-  if (checkinVisible) return "checkin";
-  return "prayer";
-}
-
-let vumcLiveChatAutoFocused = false;
-
-function setupScheduledVisibility() {
   const notesTabBtn = document.getElementById("notesTabBtn");
   const notesPane = document.getElementById("tab-notes");
   const checkinTabBtn = document.getElementById("checkinTabBtn");
   const checkinPane = document.getElementById("tab-checkin");
-  const chatTabBtn = document.getElementById("chatTabBtn");
-  const chatPane = document.getElementById("tab-chat");
-  const chatFrame = document.getElementById("vumcLiveChatFrame");
 
-  const showNotes = shouldShowSermonNotes();
-  const showCheckin = isSundayServiceWindow();
-  const showChat = shouldShowLiveChat();
+  const chatLiveWrap = document.getElementById("chatLiveWrap");
+  const chatClosedWrap = document.getElementById("chatClosedWrap");
+  const liveBadge = document.getElementById("liveBadge");
+  const chatTitle = document.getElementById("chatTitle");
+  const chatSubtitle = document.getElementById("chatSubtitle");
+  const chatInputArea = document.getElementById("chatInputArea");
 
-  if (notesTabBtn) notesTabBtn.style.display = showNotes ? "" : "none";
-  if (notesPane) notesPane.style.display = showNotes ? "" : "none";
+  if (notesTabBtn) notesTabBtn.style.display = showLive ? "" : "none";
+  if (notesPane) notesPane.style.display = showLive ? "" : "none";
 
-  if (checkinTabBtn) checkinTabBtn.style.display = showCheckin ? "" : "none";
-  if (checkinPane) checkinPane.style.display = showCheckin ? "" : "none";
+  if (checkinTabBtn) checkinTabBtn.style.display = showLive ? "" : "none";
+  if (checkinPane) checkinPane.style.display = showLive ? "" : "none";
 
-  if (chatTabBtn) chatTabBtn.style.display = showChat ? "" : "none";
-  if (chatPane) chatPane.style.display = showChat ? "" : "none";
+  if (chatLiveWrap) chatLiveWrap.classList.toggle("vumcHidden", !showLive);
+  if (chatClosedWrap) chatClosedWrap.classList.toggle("vumcHidden", showLive);
 
-  if (chatFrame) {
-    const liveChatUrl = "https://tlk.io/vumc-online-worship";
-    if (showChat && chatFrame.src !== liveChatUrl) {
-      chatFrame.src = liveChatUrl;
-    }
-    if (!showChat && chatFrame.src !== "about:blank") {
-      chatFrame.src = "about:blank";
-    }
+  if (liveBadge) liveBadge.classList.toggle("show", showLive);
+  if (chatInputArea) chatInputArea.classList.toggle("vumcHidden", !showLive);
+
+  if (chatTitle) {
+    chatTitle.textContent = showLive ? "VUMC Live Chat" : "Live Chat Opens During Worship";
   }
 
-  /*
-    Auto-focus Live Chat once when the worship window opens.
-    After it focuses once, the viewer can click Sermon Notes, Check In, Prayer, or Give
-    without the page switching them back to chat every minute.
-  */
-  if (showChat && !vumcLiveChatAutoFocused) {
+  if (chatSubtitle) {
+    chatSubtitle.textContent = showLive
+      ? "Say hello, share where you are worshiping from, and connect with others during worship."
+      : "Our Digital Campus chat is available during Sunday livestreams.";
+  }
+
+  if (showLive && !vumcLiveChatAutoFocused) {
     activateTab("chat");
     vumcLiveChatAutoFocused = true;
   }
 
-  if (!showChat) {
+  if (!showLive) {
     vumcLiveChatAutoFocused = false;
   }
 
   const activeBtn = document.querySelector(".vumcTabBtn.active");
   const activePane = document.querySelector(".vumcTabPane.active");
 
-  const activeTabName = activeBtn ? activeBtn.dataset.tab : null;
   const activePaneVisible = activePane && activePane.style.display !== "none";
   const activeBtnVisible = activeBtn && activeBtn.style.display !== "none";
 
-  if (!activeTabName || !activePaneVisible || !activeBtnVisible) {
+  if (!activeBtn || !activePaneVisible || !activeBtnVisible) {
     activateTab(getDefaultVisibleTab());
   }
 }
 
+function detectMessageType(message){
+  const m = String(message || "").toLowerCase();
+
+  if (m.includes("pray") || m.includes("prayer") || m.includes("praying")) return "prayer";
+  if (m.includes("first time") || m.includes("first-time") || m.includes("new here") || m.includes("visitor")) return "guest";
+  if (m.includes("struggling") || m.includes("suicide") || m.includes("hurt myself") || m.includes("can't go on") || m.includes("depressed") || m.includes("abuse")) return "care";
+
+  return "normal";
+}
+
+function renderMessages(messages){
+  const box = document.getElementById("chatMessages");
+  if (!box) return;
+
+  box.innerHTML = "";
+
+  (messages || []).forEach(entry => {
+    const type = entry.type || "normal";
+    const role = entry.role || "guest";
+
+    const div = document.createElement("div");
+
+    if (type === "prayer") {
+      div.className = "chatBubble prayer";
+    } else if (type === "care") {
+      div.className = "chatBubble care";
+    } else if (type === "guest") {
+      div.className = "chatBubble guestType";
+    } else {
+      div.className = "chatBubble " + role;
+    }
+
+    div.innerHTML =
+      '<div class="chatMeta">' +
+      escapeHtml(entry.time || "") + " • " +
+      escapeHtml(entry.name || "Guest") +
+      '</div>' +
+      escapeHtml(entry.message || "");
+
+    box.appendChild(div);
+  });
+
+  box.scrollTop = box.scrollHeight;
+}
+
+function escapeHtml(str){
+  return String(str || "")
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+}
+
+async function sendChatMessage(){
+  if (!shouldOpenLiveFeatures()) return;
+
+  const nameEl = document.getElementById("chatName");
+  const msgEl = document.getElementById("chatMessage");
+
+  const name = (nameEl.value || "Guest").trim();
+  const message = (msgEl.value || "").trim();
+
+  if (!message) return;
+
+  const payload = {
+    action:"postMessage",
+    name,
+    message,
+    role:"guest",
+    type:detectMessageType(message),
+    page:"VUMC Watch Live",
+    timestamp:new Date().toISOString()
+  };
+
+  msgEl.value = "";
+
+  await fetch(CHAT_BACKEND_URL, {
+    method:"POST",
+    mode:"no-cors",
+    headers:{"Content-Type":"text/plain;charset=utf-8"},
+    body:JSON.stringify(payload)
+  });
+
+  setTimeout(loadChatMessages, 800);
+}
+
+async function loadChatMessages(){
+  if (!shouldOpenLiveFeatures()) return;
+
+  try{
+    const res = await fetch(CHAT_BACKEND_URL + "?action=getMessages&cacheBust=" + Date.now());
+    const data = await res.json();
+    renderMessages(data.messages || []);
+  }catch(err){}
+}
+
+async function requestAutoExport(){
+  if (exportAlreadyRequested) return;
+  if (!isAutoExportWindow()) return;
+
+  exportAlreadyRequested = true;
+
+  await fetch(CHAT_BACKEND_URL, {
+    method:"POST",
+    mode:"no-cors",
+    headers:{"Content-Type":"text/plain;charset=utf-8"},
+    body:JSON.stringify({
+      action:"exportChat",
+      reason:"Browser auto-export at noon",
+      timestamp:new Date().toISOString()
+    })
+  });
+}
+
 document.querySelectorAll(".vumcTabBtn").forEach(btn => {
-  btn.addEventListener("click", function () {
+  btn.addEventListener("click", function(){
     if (this.style.display === "none") return;
     activateTab(this.dataset.tab);
   });
 });
 
-updateOverlay();
-setupScheduledVisibility();
+document.getElementById("sendChatBtn").addEventListener("click", sendChatMessage);
 
-setInterval(() => {
+document.getElementById("chatMessage").addEventListener("keydown", function(e){
+  if (e.key === "Enter" && !e.shiftKey) {
+    e.preventDefault();
+    sendChatMessage();
+  }
+});
+
+async function refreshAll(){
+  await checkYouTubeLiveStatus();
   updateOverlay();
   setupScheduledVisibility();
-}, 60000);
+  await loadChatMessages();
+  await requestAutoExport();
+}
+
+refreshAll();
+
+setInterval(refreshAll, 60000);
+setInterval(loadChatMessages, 10000);
 </script>
 
 </body>
