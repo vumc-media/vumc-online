@@ -4,176 +4,134 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>eCampus Admin Login | VUMC Online</title>
-  <link rel="icon" href="/favicon.ico">
-
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-
-<link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png">
-<link rel="icon" type="image/png" sizes="512x512" href="/android-chrome-512x512.png">
-
-<link rel="manifest" href="/site.webmanifest">
+<link rel="icon" href="/favicon.ico">
 
 <style>
-  body {
-    margin:0;
-    font-family: Arial, Helvetica, sans-serif;
-    background:#f4f6f8;
-    color:#1f2933;
-  }
-
-  .wrap {
-    max-width:700px;
-    margin:40px auto;
-    padding:20px;
-  }
-
-  .card {
-    background:#fff;
-    border-radius:18px;
-    padding:24px;
-    box-shadow:0 10px 30px rgba(0,0,0,.08);
-  }
-
-  h1 {
-    margin-top:0;
-  }
-
-  .subtext {
-    color:#52606d;
-    font-size:14px;
-    margin-bottom:18px;
-  }
-
-  .field {
-    margin-bottom:14px;
-  }
-
-  label {
-    display:block;
-    font-weight:700;
-    margin-bottom:6px;
-    font-size:14px;
-  }
-
-  input, select, textarea {
-    width:100%;
-    padding:12px;
-    border-radius:10px;
-    border:1px solid #d8e0e6;
-    font-size:14px;
-    box-sizing:border-box;
-  }
-
-  textarea {
-    min-height:120px;
-  }
-
-  .loginBtn {
-    width:100%;
-    padding:14px;
-    border-radius:999px;
-    border:none;
-    background:#305f72;
-    color:#fff;
-    font-weight:700;
-    font-size:15px;
-    cursor:pointer;
-  }
-
-  .submitWrap {
-    text-align:center;
-    margin-top:18px;
-  }
-
-  .submitBtn {
-    width:auto;
-    min-width:180px;
-    padding:12px 24px;
-    border-radius:999px;
-    border:none;
-    background:#ffd65a;
-    color:#1f2933;
-    font-weight:700;
-    font-size:15px;
-    cursor:pointer;
-    box-shadow:0 8px 20px rgba(255, 214, 90, .35);
-  }
-
-  .status {
-    margin-top:12px;
-    padding:12px;
-    border-radius:10px;
-    display:none;
-  }
-
-  .success {
-    background:#e6f7ef;
-    color:#1b7a46;
-  }
-
-  .error {
-    background:#fdecea;
-    color:#a33a3a;
-  }
-
-  #adminPanel {
-    display:none;
-  }
-
-  .topBar {
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:12px;
-    margin-bottom:18px;
-    flex-wrap:wrap;
-  }
-
-  .topBarTitle {
-    margin:0;
-  }
-
-  .logoutBtn {
-    width:auto;
-    padding:10px 18px;
-    border-radius:999px;
-    border:none;
-    background:#dfe7ec;
-    color:#243b53;
-    font-weight:700;
-    cursor:pointer;
-  }
-
-  .smallNote {
-    font-size:13px;
-    color:#7b8794;
-    margin-top:6px;
-  }
+body {
+  margin:0;
+  font-family:Arial, Helvetica, sans-serif;
+  background:#f4f6f8;
+  color:#1f2933;
+}
+.wrap {
+  max-width:700px;
+  margin:40px auto;
+  padding:20px;
+}
+.card {
+  background:#fff;
+  border-radius:18px;
+  padding:24px;
+  box-shadow:0 10px 30px rgba(0,0,0,.08);
+}
+h1 { margin-top:0; }
+.subtext {
+  color:#52606d;
+  font-size:14px;
+  margin-bottom:18px;
+}
+.field { margin-bottom:14px; }
+label {
+  display:block;
+  font-weight:700;
+  margin-bottom:6px;
+  font-size:14px;
+}
+input, select, textarea {
+  width:100%;
+  padding:12px;
+  border-radius:10px;
+  border:1px solid #d8e0e6;
+  font-size:14px;
+  box-sizing:border-box;
+}
+textarea {
+  min-height:140px;
+  resize:vertical;
+}
+.loginBtn, .submitBtn {
+  border-radius:999px;
+  border:none;
+  font-weight:700;
+  font-size:15px;
+  cursor:pointer;
+}
+.loginBtn {
+  width:100%;
+  padding:14px;
+  background:#305f72;
+  color:#fff;
+}
+.submitWrap {
+  text-align:center;
+  margin-top:18px;
+}
+.submitBtn {
+  min-width:180px;
+  padding:12px 24px;
+  background:#ffd65a;
+  color:#1f2933;
+  box-shadow:0 8px 20px rgba(255,214,90,.35);
+}
+.logoutBtn {
+  width:auto;
+  padding:10px 18px;
+  border-radius:999px;
+  border:none;
+  background:#dfe7ec;
+  color:#243b53;
+  font-weight:700;
+  cursor:pointer;
+}
+.status {
+  margin-top:12px;
+  padding:12px;
+  border-radius:10px;
+  display:none;
+}
+.success {
+  background:#e6f7ef;
+  color:#1b7a46;
+}
+.error {
+  background:#fdecea;
+  color:#a33a3a;
+}
+#adminPanel { display:none; }
+.topBar {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  margin-bottom:18px;
+  flex-wrap:wrap;
+}
+.topBarTitle { margin:0; }
+.smallNote {
+  font-size:13px;
+  color:#7b8794;
+  margin-top:6px;
+}
 </style>
 </head>
+
 <body>
 
 <div class="wrap">
 
-  <!-- LOGIN CARD -->
   <div class="card" id="loginCard">
     <h1>eCampus Admin Login</h1>
     <div class="subtext">Staff access only</div>
 
     <div class="field">
       <label for="adminPassword">Password</label>
-      <input type="#LoveLikeJesus" id="adminPassword" placeholder="Enter admin password">
+      <input type="password" id="adminPassword" placeholder="Enter admin password">
     </div>
 
     <button class="loginBtn" id="loginBtn">Login</button>
-
     <div id="loginMsg" class="status"></div>
   </div>
 
-  <!-- ADMIN PANEL -->
   <div class="card" id="adminPanel">
     <div class="topBar">
       <div>
@@ -245,133 +203,158 @@
 </div>
 
 <script>
-  // LOGIN SCRIPT URL
-  const LOGIN_ENDPOINT = "https://script.google.com/macros/s/AKfycbzJjFgPvDAiuRusNyYkW5ShO35QWsnIOBcku3lgeJK1-OQp3i70ZXjfxGiE5_M39S0YSg/exec";
+const ENDPOINT = "https://script.google.com/macros/s/AKfycbwDGjG3nxgmxnGhxB-q26WShFmBXGkxQI-9pT6q7UzcgLI5Xi6oet2CPkXlu0feZpWX/exec";
 
-  // EXISTING POST ENDPOINT
-  const POST_ENDPOINT = "https://script.google.com/macros/s/AKfycbzJjFgPvDAiuRusNyYkW5ShO35QWsnIOBcku3lgeJK1-OQp3i70ZXjfxGiE5_M39S0YSg/exec";
+const loginCard = document.getElementById("loginCard");
+const adminPanel = document.getElementById("adminPanel");
+const loginBtn = document.getElementById("loginBtn");
+const logoutBtn = document.getElementById("logoutBtn");
+const loginMsg = document.getElementById("loginMsg");
 
-  const loginCard = document.getElementById("loginCard");
-  const adminPanel = document.getElementById("adminPanel");
-  const loginBtn = document.getElementById("loginBtn");
-  const logoutBtn = document.getElementById("logoutBtn");
-  const loginMsg = document.getElementById("loginMsg");
+const form = document.getElementById("postForm");
+const statusSelect = document.getElementById("status");
+const scheduleField = document.getElementById("scheduleField");
+const publishAtInput = document.getElementById("publish_at");
+const statusMsg = document.getElementById("statusMsg");
 
-  const form = document.getElementById("postForm");
-  const statusSelect = document.getElementById("status");
-  const scheduleField = document.getElementById("scheduleField");
-  const statusMsg = document.getElementById("statusMsg");
+function showMessage(el, type, message) {
+  el.className = "status " + type;
+  el.innerText = message;
+  el.style.display = "block";
+}
 
-  // show scheduled date field only when needed
-  statusSelect.addEventListener("change", () => {
-    if (statusSelect.value === "scheduled") {
-      scheduleField.style.display = "block";
-    } else {
-      scheduleField.style.display = "none";
-    }
+function jsonp(url) {
+  return new Promise((resolve, reject) => {
+    const callbackName = "jsonp_" + Date.now() + "_" + Math.floor(Math.random() * 100000);
+
+    window[callbackName] = function(data) {
+      delete window[callbackName];
+      script.remove();
+      resolve(data);
+    };
+
+    const script = document.createElement("script");
+    script.src = url + "&callback=" + callbackName;
+    script.onerror = function() {
+      delete window[callbackName];
+      script.remove();
+      reject(new Error("Request failed."));
+    };
+
+    document.body.appendChild(script);
   });
+}
 
-  // restore session if already logged in
-  if (sessionStorage.getItem("vumcAdminLoggedIn") === "true") {
-    loginCard.style.display = "none";
-    adminPanel.style.display = "block";
+function showAdmin() {
+  loginCard.style.display = "none";
+  adminPanel.style.display = "block";
+}
+
+function showLogin() {
+  loginCard.style.display = "block";
+  adminPanel.style.display = "none";
+}
+
+const storedToken = sessionStorage.getItem("vumcAdminToken");
+if (storedToken) {
+  showAdmin();
+}
+
+statusSelect.addEventListener("change", () => {
+  if (statusSelect.value === "scheduled") {
+    scheduleField.style.display = "block";
+    publishAtInput.required = true;
+  } else {
+    scheduleField.style.display = "none";
+    publishAtInput.required = false;
+    publishAtInput.value = "";
+  }
+});
+
+loginBtn.addEventListener("click", async () => {
+  loginMsg.style.display = "none";
+
+  const password = document.getElementById("adminPassword").value.trim();
+
+  if (!password) {
+    showMessage(loginMsg, "error", "Please enter the password.");
+    return;
   }
 
-  loginBtn.addEventListener("click", async () => {
-    loginMsg.style.display = "none";
-
-    const password = document.getElementById("adminPassword").value.trim();
-
-    if (!password) {
-      loginMsg.className = "status error";
-      loginMsg.innerText = "Please enter the password.";
-      loginMsg.style.display = "block";
-      return;
-    }
-
-    try {
-      const res = await fetch(LOGIN_ENDPOINT, {
-        method: "POST",
-        headers: {
-          "Content-Type": "text/plain;charset=utf-8"
-        },
-        body: JSON.stringify({
-          action: "login",
-          password: password
-        })
-      });
-
-      const data = await res.json();
-
-      if (data.ok) {
-        sessionStorage.setItem("vumcAdminLoggedIn", "true");
-        loginCard.style.display = "none";
-        adminPanel.style.display = "block";
-      } else {
-        loginMsg.className = "status error";
-        loginMsg.innerText = "Incorrect password.";
-        loginMsg.style.display = "block";
-      }
-    } catch (err) {
-      loginMsg.className = "status error";
-      loginMsg.innerText = "Login could not be completed.";
-      loginMsg.style.display = "block";
-    }
+  const params = new URLSearchParams({
+    action: "login",
+    password: password
   });
 
-  logoutBtn.addEventListener("click", () => {
-  sessionStorage.removeItem("vumcAdminLoggedIn");
+  try {
+    const data = await jsonp(ENDPOINT + "?" + params.toString());
 
-  // Redirect to Online Campus homepage
+    if (data.ok && data.token) {
+      sessionStorage.setItem("vumcAdminToken", data.token);
+      document.getElementById("adminPassword").value = "";
+      showAdmin();
+    } else {
+      showMessage(loginMsg, "error", data.error || "Incorrect password.");
+    }
+  } catch (err) {
+    showMessage(loginMsg, "error", "Login could not be completed.");
+  }
+});
+
+logoutBtn.addEventListener("click", () => {
+  sessionStorage.removeItem("vumcAdminToken");
   window.location.href = "https://online.versaillesumc.org/";
 });
 
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
 
-    statusMsg.style.display = "none";
+  statusMsg.style.display = "none";
 
-    const payload = {
-      status: document.getElementById("status").value,
-      date: new Date(),
-      publish_at: document.getElementById("publish_at").value,
-      title: document.getElementById("title").value,
-      content: document.getElementById("content").value,
-      type: document.getElementById("type").value,
-      author: document.getElementById("author").value,
-      image: document.getElementById("image").value,
-      link: document.getElementById("link").value
-    };
+  const token = sessionStorage.getItem("vumcAdminToken");
 
-    try {
-      const res = await fetch(POST_ENDPOINT, {
-        method: "POST",
-        headers: {
-          "Content-Type": "text/plain;charset=utf-8"
-        },
-        body: JSON.stringify(payload)
-      });
+  if (!token) {
+    showMessage(statusMsg, "error", "You are not logged in.");
+    showLogin();
+    return;
+  }
 
-      const data = await res.json();
+  if (statusSelect.value === "scheduled" && !publishAtInput.value) {
+    showMessage(statusMsg, "error", "Please choose a schedule date and time.");
+    return;
+  }
 
-      if (data.ok) {
-        form.reset();
-        scheduleField.style.display = "none";
-        document.getElementById("author").value = "VUMC Online";
-
-        statusMsg.className = "status success";
-        statusMsg.innerText = "Post submitted successfully!";
-        statusMsg.style.display = "block";
-      } else {
-        throw new Error(data.error || "Error");
-      }
-
-    } catch (err) {
-      statusMsg.className = "status error";
-      statusMsg.innerText = "Something went wrong. Try again.";
-      statusMsg.style.display = "block";
-    }
+  const params = new URLSearchParams({
+    action: "create",
+    token: token,
+    status: statusSelect.value,
+    date: new Date().toISOString(),
+    publish_at: publishAtInput.value || "",
+    title: document.getElementById("title").value.trim(),
+    content: document.getElementById("content").value.trim(),
+    type: document.getElementById("type").value,
+    author: document.getElementById("author").value.trim() || "VUMC Online",
+    image: document.getElementById("image").value.trim(),
+    link: document.getElementById("link").value.trim()
   });
+
+  try {
+    const data = await jsonp(ENDPOINT + "?" + params.toString());
+
+    if (data.ok) {
+      form.reset();
+      document.getElementById("author").value = "VUMC Online";
+      scheduleField.style.display = "none";
+      publishAtInput.required = false;
+
+      showMessage(statusMsg, "success", "Post submitted successfully!");
+    } else {
+      showMessage(statusMsg, "error", data.error || "Something went wrong.");
+    }
+  } catch (err) {
+    showMessage(statusMsg, "error", "Something went wrong. Try again.");
+  }
+});
 </script>
 
 </body>
