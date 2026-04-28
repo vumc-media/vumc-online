@@ -4,16 +4,13 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Admin Post | VUMC Online</title>
-  <link rel="icon" href="/favicon.ico">
 
+<link rel="icon" href="/favicon.ico">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-
 <link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png">
 <link rel="icon" type="image/png" sizes="512x512" href="/android-chrome-512x512.png">
-
 <link rel="manifest" href="/site.webmanifest">
 
 <style>
@@ -37,13 +34,9 @@
     box-shadow:0 10px 30px rgba(0,0,0,.08);
   }
 
-  h1 {
-    margin-top:0;
-  }
+  h1 { margin-top:0; }
 
-  .field {
-    margin-bottom:14px;
-  }
+  .field { margin-bottom:14px; }
 
   label {
     display:block;
@@ -54,6 +47,7 @@
 
   input, select, textarea {
     width:100%;
+    box-sizing:border-box;
     padding:12px;
     border-radius:10px;
     border:1px solid #d8e0e6;
@@ -61,7 +55,8 @@
   }
 
   textarea {
-    min-height:120px;
+    min-height:160px;
+    resize:vertical;
   }
 
   button {
@@ -76,11 +71,18 @@
     cursor:pointer;
   }
 
+  button:disabled {
+    opacity:.65;
+    cursor:not-allowed;
+  }
+
   .status {
     margin-top:12px;
     padding:12px;
     border-radius:10px;
     display:none;
+    white-space:pre-wrap;
+    font-size:14px;
   }
 
   .success {
@@ -92,9 +94,9 @@
     background:#fdecea;
     color:#a33a3a;
   }
-
 </style>
 </head>
+
 <body>
 
 <div class="wrap">
@@ -105,7 +107,7 @@
     <form id="postForm">
 
       <div class="field">
-        <label>Status</label>
+        <label for="status">Status</label>
         <select id="status">
           <option value="publish">Publish Now</option>
           <option value="scheduled">Schedule</option>
@@ -114,22 +116,22 @@
       </div>
 
       <div class="field" id="scheduleField" style="display:none;">
-        <label>Schedule Date & Time</label>
+        <label for="publish_at">Schedule Date & Time</label>
         <input type="datetime-local" id="publish_at">
       </div>
 
       <div class="field">
-        <label>Title</label>
+        <label for="title">Title</label>
         <input type="text" id="title" required>
       </div>
 
       <div class="field">
-        <label>Content</label>
+        <label for="content">Content</label>
         <textarea id="content" required></textarea>
       </div>
 
       <div class="field">
-        <label>Type</label>
+        <label for="type">Type</label>
         <select id="type">
           <option value="update">Update</option>
           <option value="prayer">Prayer Prompt</option>
@@ -139,21 +141,21 @@
       </div>
 
       <div class="field">
-        <label>Author</label>
+        <label for="author">Author</label>
         <input type="text" id="author" value="VUMC Online">
       </div>
 
       <div class="field">
-        <label>Image URL (optional)</label>
-        <input type="text" id="image">
+        <label for="image">Image URL (optional)</label>
+        <input type="url" id="image">
       </div>
 
       <div class="field">
-        <label>Link (optional)</label>
-        <input type="text" id="link">
+        <label for="link">Link (optional)</label>
+        <input type="url" id="link">
       </div>
 
-      <button type="submit">Post</button>
+      <button id="submitBtn" type="submit">Post</button>
 
       <div id="statusMsg" class="status"></div>
 
@@ -163,19 +165,29 @@
 </div>
 
 <script>
-
 const endpoint = "https://script.google.com/macros/s/AKfycbwDGjG3nxgmxnGhxB-q26WShFmBXGkxQI-9pT6q7UzcgLI5Xi6oet2CPkXlu0feZpWX/exec";
 
 const form = document.getElementById("postForm");
 const statusSelect = document.getElementById("status");
 const scheduleField = document.getElementById("scheduleField");
+const publishAtInput = document.getElementById("publish_at");
 const statusMsg = document.getElementById("statusMsg");
+const submitBtn = document.getElementById("submitBtn");
+
+function showMessage(type, message) {
+  statusMsg.className = "status " + type;
+  statusMsg.innerText = message;
+  statusMsg.style.display = "block";
+}
 
 statusSelect.addEventListener("change", () => {
   if (statusSelect.value === "scheduled") {
     scheduleField.style.display = "block";
+    publishAtInput.required = true;
   } else {
     scheduleField.style.display = "none";
+    publishAtInput.required = false;
+    publishAtInput.value = "";
   }
 });
 
@@ -184,17 +196,25 @@ form.addEventListener("submit", async (e) => {
 
   statusMsg.style.display = "none";
 
+  if (statusSelect.value === "scheduled" && !publishAtInput.value) {
+    showMessage("error", "Please choose a schedule date and time.");
+    return;
+  }
+
   const payload = {
-    status: document.getElementById("status").value,
-    date: new Date(), // AUTO DATE
-    publish_at: document.getElementById("publish_at").value,
-    title: document.getElementById("title").value,
-    content: document.getElementById("content").value,
+    status: statusSelect.value,
+    date: new Date().toISOString(),
+    publish_at: publishAtInput.value || "",
+    title: document.getElementById("title").value.trim(),
+    content: document.getElementById("content").value.trim(),
     type: document.getElementById("type").value,
-    author: document.getElementById("author").value,
-    image: document.getElementById("image").value,
-    link: document.getElementById("link").value
+    author: document.getElementById("author").value.trim() || "VUMC Online",
+    image: document.getElementById("image").value.trim(),
+    link: document.getElementById("link").value.trim()
   };
+
+  submitBtn.disabled = true;
+  submitBtn.innerText = "Submitting...";
 
   try {
     const res = await fetch(endpoint, {
@@ -205,25 +225,33 @@ form.addEventListener("submit", async (e) => {
       body: JSON.stringify(payload)
     });
 
-    const data = await res.json();
+    const rawText = await res.text();
 
-    if (data.ok) {
+    let data;
+    try {
+      data = JSON.parse(rawText);
+    } catch (jsonError) {
+      throw new Error("The Google Apps Script did not return JSON.\n\nResponse received:\n" + rawText.substring(0, 500));
+    }
+
+    if (data.ok === true) {
       form.reset();
-      statusMsg.className = "status success";
-      statusMsg.innerText = "Post submitted successfully!";
-      statusMsg.style.display = "block";
+      document.getElementById("author").value = "VUMC Online";
+      scheduleField.style.display = "none";
+      publishAtInput.required = false;
+
+      showMessage("success", "Post submitted successfully!");
     } else {
-      throw new Error(data.error || "Error");
+      throw new Error(data.error || "Google Apps Script returned an error.");
     }
 
   } catch (err) {
-    statusMsg.className = "status error";
-    statusMsg.innerText = "Something went wrong. Try again.";
-    statusMsg.style.display = "block";
+    showMessage("error", "Something went wrong:\n\n" + err.message);
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.innerText = "Post";
   }
-
 });
-
 </script>
 
 </body>
