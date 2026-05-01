@@ -508,6 +508,7 @@ const CHAT_BACKEND_URL = "https://script.google.com/macros/s/AKfycbzWN8Xi7xUFa_g
 const FORCE_CHAT_OPEN_FOR_TESTING = false;
 
 let isActuallyLive = false;
+let vumcViewerCount = null;
 let vumcLiveChatAutoFocused = false;
 let exportAlreadyRequested = false;
 
@@ -542,9 +543,15 @@ async function checkYouTubeLiveStatus(){
   try{
     const res = await fetch(CHAT_BACKEND_URL + "?action=status&cacheBust=" + Date.now());
     const data = await res.json();
-    isActuallyLive = !!data.isLive;
+
+    isActuallyLive = !!data.live;
+    vumcViewerCount = data.viewers || null;
+    window.vumcViewerCount = vumcViewerCount;
+
   }catch(err){
     isActuallyLive = isSundayServiceWindow();
+    vumcViewerCount = null;
+    window.vumcViewerCount = null;
   }
 }
 
