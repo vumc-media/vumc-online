@@ -16,55 +16,34 @@ body{
 }
 
 #playerWrap{
-  position:relative;
   width:100%;
   aspect-ratio:16/9;
   background:#000;
-  overflow:hidden;
 }
 
-#playerWrap iframe{
+/* PLAYER */
+iframe{
   width:100%;
   height:100%;
   border:0;
-  display:block;
 }
 
-/* EMERGENCY: KILL ANY OVERLAY INSIDE PLAYER */
-#playerOverlay,
-.playerOverlay,
-#playerWrap > div,
-#playerWrap [id*="overlay" i],
-#playerWrap [class*="overlay" i]{
-  display:none!important;
-  opacity:0!important;
-  visibility:hidden!important;
-  pointer-events:none!important;
-  z-index:-1!important;
-}
-
-.vumcHidden{display:none!important;}
-
+/* SIDEBAR */
 #chatLiveWrap,
 #chatClosedWrap{
   padding:20px;
 }
 
-input, textarea{
-  width:100%;
-  padding:10px;
-  margin:8px 0;
-  border-radius:8px;
-  border:0;
+.vumcHidden{
+  display:none!important;
 }
 
 button{
   background:#d4af37;
-  color:#111;
   border:0;
-  padding:12px;
+  padding:10px;
   border-radius:8px;
-  font-weight:800;
+  font-weight:bold;
   cursor:pointer;
 }
 </style>
@@ -72,41 +51,70 @@ button{
 
 <body>
 
+<!-- VIDEO PLAYER (NO OVERLAY AT ALL) -->
 <div id="playerWrap">
   <iframe
-    src="https://www.youtube.com/embed/live_stream?channel=UC_svgodM3blLqWEBQ5yNjmA&autoplay=1&mute=1&rel=0&playsinline=1"
-    title="Versailles UMC Live"
-    allow="autoplay; encrypted-media; picture-in-picture; web-share"
+    src="https://www.youtube.com/embed/live_stream?channel=UC_svgodM3blLqWEBQ5yNjmA&autoplay=1&mute=1&rel=0"
+    allow="autoplay; encrypted-media; picture-in-picture"
     allowfullscreen>
   </iframe>
 </div>
 
-<div id="chatLiveWrap">
+<!-- CHAT -->
+<div id="chatLiveWrap" class="vumcHidden">
   <h2>Live Chat</h2>
   <div id="chatMessages"></div>
 
-  <input id="chatName" type="text" placeholder="Your name">
-  <textarea id="chatMessage" placeholder="Type your message..."></textarea>
-  <button id="sendChatBtn" type="button">Send Message</button>
+  <input id="chatName" placeholder="Your name" style="width:100%;margin-top:10px;padding:8px;">
+  <textarea id="chatMessage" placeholder="Type message..." style="width:100%;margin-top:10px;padding:8px;"></textarea>
+  <button onclick="sendChat()">Send</button>
 </div>
 
-<div id="chatClosedWrap" class="vumcHidden">
+<div id="chatClosedWrap">
   <h2>Chat Opens During Worship</h2>
 </div>
 
 <script>
 const CHAT_BACKEND_URL = "https://script.google.com/macros/s/AKfycbzWN8Xi7xUFa_gjg4XHuD_yEEkaKLwrnXFI8d_XQMW4-KQRUlVPVmxcjfcgC0gMNMewsg/exec";
 
-function escapeHtml(str){
-  return String(str || "")
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#039;");
+let isActuallyLive = false;
+
+/* SUNDAY FALLBACK */
+function isSundayServiceWindow(){
+  const now = new Date();
+  const day = now.getDay();
+  const minutes = now.getHours()*60 + now.getMinutes();
+  return day === 0 && minutes >= 570 && minutes <= 720;
 }
 
-async function loadChatMessages(){
+/* ALWAYS WORK */
+function shouldOpenLiveChat(){
+  return isActuallyLive || isSundayServiceWindow();
+}
+
+/* CHECK LIVE */
+async function checkLive(){
+  try{
+    const res = await fetch(CHAT_BACKEND_URL + "?action=status&t=" + Date.now());
+    const data = await res.json();
+    isActuallyLive = !!data.live;
+  }catch(e){
+    isActuallyLive = false;
+  }
+}
+
+/* CHAT UI */
+function updateUI(){
+  const open = shouldOpenLiveChat();
+
+  document.getElementById("chatLiveWrap").classList.toggle("vumcHidden", !open);
+  document.getElementById("chatClosedWrap").classList.toggle("vumcHidden", open);
+}
+
+/* LOAD MESSAGES */
+async function loadChat(){
+  if(!shouldOpenLiveChat()) return;
+
   try{
     const res = await fetch(CHAT_BACKEND_URL + "?action=getMessages&t=" + Date.now());
     const data = await res.json();
@@ -114,24 +122,20 @@ async function loadChatMessages(){
     const box = document.getElementById("chatMessages");
     box.innerHTML = "";
 
-    (data.messages || []).forEach(entry=>{
+    (data.messages || []).forEach(m=>{
       const div = document.createElement("div");
-      div.style.background = "#f5f5f5";
-      div.style.color = "#111";
-      div.style.padding = "10px";
-      div.style.borderRadius = "10px";
       div.style.marginBottom = "10px";
-      div.innerHTML =
-        "<strong>" + escapeHtml(entry.name || "Guest") + "</strong><br>" +
-        escapeHtml(entry.message || "");
+      div.innerHTML = "<strong>"+(m.name||"Guest")+"</strong>: "+(m.message||"");
       box.appendChild(div);
     });
-  }catch(err){}
+
+  }catch(e){}
 }
 
-async function sendChatMessage(){
-  const name = document.getElementById("chatName").value.trim() || "Guest";
-  const message = document.getElementById("chatMessage").value.trim();
+/* SEND MESSAGE */
+async function sendChat(){
+  const name = document.getElementById("chatName").value || "Guest";
+  const message = document.getElementById("chatMessage").value;
 
   if(!message) return;
 
@@ -140,31 +144,26 @@ async function sendChatMessage(){
   await fetch(CHAT_BACKEND_URL,{
     method:"POST",
     mode:"no-cors",
-    headers:{"Content-Type":"text/plain;charset=utf-8"},
     body:JSON.stringify({
       action:"postMessage",
       name,
-      message,
-      role:"guest",
-      page:"VUMC Watch Live",
-      timestamp:new Date().toISOString()
+      message
     })
   });
 
-  setTimeout(loadChatMessages,700);
+  setTimeout(loadChat,500);
 }
 
-document.getElementById("sendChatBtn").addEventListener("click",sendChatMessage);
+/* LOOP */
+async function refresh(){
+  await checkLive();
+  updateUI();
+  loadChat();
+}
 
-document.getElementById("chatMessage").addEventListener("keydown",function(e){
-  if(e.key === "Enter" && !e.shiftKey){
-    e.preventDefault();
-    sendChatMessage();
-  }
-});
-
-loadChatMessages();
-setInterval(loadChatMessages,10000);
+refresh();
+setInterval(refresh,60000);
+setInterval(loadChat,10000);
 </script>
 
 </body>
