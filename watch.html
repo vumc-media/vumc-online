@@ -8,46 +8,47 @@
 <script src="https://js.churchcenter.com/modal/v1"></script>
 
 <style>
-/* === YOUR ORIGINAL STYLES (UNCHANGED) === */
-body{margin:0;background:#0f1115;color:#fff;font-family:Arial;}
-#playerWrap{position:relative;width:100%;aspect-ratio:16/9;background:#000;}
-iframe{width:100%;height:100%;border:0;}
-
-.playerOverlay{
-  position:absolute;inset:0;
-  display:flex;align-items:center;justify-content:center;
-  background:rgba(0,0,0,.85);
-  z-index:2;
-  transition:.5s;
-}
-.playerOverlay.hidden{
-  opacity:0;
-  visibility:hidden;
-  pointer-events:none;
+body{
+  margin:0;
+  background:#0f1115;
+  color:#fff;
+  font-family:Arial, Helvetica, sans-serif;
 }
 
-/* Chat hidden state */
-.vumcHidden{display:none!important;}
+#playerWrap{
+  position:relative;
+  width:100%;
+  aspect-ratio:16/9;
+  background:#000;
+}
+
+iframe{
+  width:100%;
+  height:100%;
+  border:0;
+  display:block;
+}
+
+.vumcHidden{
+  display:none!important;
+}
+
+#chatLiveWrap,
+#chatClosedWrap{
+  padding:20px;
+}
 </style>
 </head>
 
 <body>
 
 <div id="playerWrap">
-
   <iframe
-    src="https://www.youtube.com/embed/live_stream?channel=UC_svgodM3blLqWEBQ5yNjmA&autoplay=1&mute=1"
-    allow="autoplay; encrypted-media"
+    src="https://www.youtube.com/embed/live_stream?channel=UC_svgodM3blLqWEBQ5yNjmA&autoplay=1&mute=1&rel=0&playsinline=1"
+    title="Versailles UMC Live"
+    allow="autoplay; encrypted-media; picture-in-picture; web-share"
     allowfullscreen>
   </iframe>
-
-  <div id="playerOverlay" class="playerOverlay">
-    <div style="text-align:center">
-      <h2>Worship With Us</h2>
-      <p>Sundays • 9:30 AM & 10:30 AM</p>
-    </div>
-  </div>
-
 </div>
 
 <div id="chatLiveWrap" class="vumcHidden">
@@ -62,46 +63,36 @@ iframe{width:100%;height:100%;border:0;}
 <script>
 const CHAT_BACKEND_URL = "https://script.google.com/macros/s/AKfycbzWN8Xi7xUFa_gjg4XHuD_yEEkaKLwrnXFI8d_XQMW4-KQRUlVPVmxcjfcgC0gMNMewsg/exec";
 
-/* 🔥 SAFETY SWITCH */
 const FORCE_CHAT_OPEN_FOR_TESTING = false;
 
 let isActuallyLive = false;
 
-/* === TIME WINDOW FALLBACK === */
 function isSundayServiceWindow(){
   const now = new Date();
   const day = now.getDay();
-  const minutes = now.getHours()*60 + now.getMinutes();
-  return day === 0 && minutes >= 570 && minutes <= 720; // 9:30–12:00
+  const minutes = now.getHours() * 60 + now.getMinutes();
+  return day === 0 && minutes >= 570 && minutes <= 720;
 }
 
-/* 🔥 FIXED LOGIC */
 function shouldOpenLiveChat(){
   return FORCE_CHAT_OPEN_FOR_TESTING || isActuallyLive || isSundayServiceWindow();
 }
 
-/* === YOUTUBE CHECK === */
 async function checkYouTubeLiveStatus(){
+  if(FORCE_CHAT_OPEN_FOR_TESTING){
+    isActuallyLive = true;
+    return;
+  }
+
   try{
     const res = await fetch(CHAT_BACKEND_URL + "?action=status&t=" + Date.now());
     const data = await res.json();
     isActuallyLive = !!data.live;
-  }catch(e){
-    isActuallyLive = false;
+  }catch(err){
+    isActuallyLive = isSundayServiceWindow();
   }
 }
 
-/* === OVERLAY CONTROL === */
-function updateOverlay(){
-  const overlay = document.getElementById("playerOverlay");
-  if(shouldOpenLiveChat()){
-    overlay.classList.add("hidden");
-  } else {
-    overlay.classList.remove("hidden");
-  }
-}
-
-/* === CHAT VISIBILITY === */
 function updateChat(){
   const open = shouldOpenLiveChat();
 
@@ -109,10 +100,8 @@ function updateChat(){
   document.getElementById("chatClosedWrap").classList.toggle("vumcHidden", open);
 }
 
-/* === MAIN LOOP === */
 async function refresh(){
   await checkYouTubeLiveStatus();
-  updateOverlay();
   updateChat();
 }
 
