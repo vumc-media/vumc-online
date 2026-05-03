@@ -101,67 +101,6 @@ iframe{
   border:0;
 }
 
-.playerOverlay{
-  position:absolute;
-  inset:0;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  pointer-events:auto;
-  z-index:2;
-  background:
-    linear-gradient(to top,rgba(0,0,0,.88),rgba(0,0,0,.72)),
-    radial-gradient(circle at center,rgba(48,95,114,.20),transparent 55%);
-  transition:opacity .6s ease,visibility .6s ease;
-}
-
-.playerOverlay.hidden{
-  opacity:0;
-  visibility:hidden;
-  pointer-events:none;
-}
-
-.overlayContent{
-  text-align:center;
-  max-width:540px;
-  padding:28px 24px;
-  border-radius:20px;
-  background:rgba(10,14,22,.72);
-  border:1px solid rgba(255,255,255,.10);
-  box-shadow:0 18px 40px rgba(0,0,0,.35);
-  backdrop-filter:blur(8px);
-}
-
-.overlayEyebrow{
-  font-size:12px;
-  text-transform:uppercase;
-  letter-spacing:.14em;
-  opacity:.82;
-  margin-bottom:10px;
-  color:#d4af37;
-  font-weight:700;
-}
-
-.overlayTitle{
-  font-size:30px;
-  font-weight:800;
-  line-height:1.1;
-  margin-bottom:10px;
-}
-
-.overlayText{
-  font-size:16px;
-  line-height:1.6;
-  opacity:.92;
-  margin-bottom:12px;
-}
-
-.overlayTimes{
-  font-size:15px;
-  font-weight:700;
-  opacity:.95;
-}
-
 #vumcSidebar{
   background:#15181f;
   border-left:1px solid rgba(255,255,255,.08);
@@ -363,13 +302,6 @@ iframe{
   #vumcShell{grid-template-columns:1fr;}
   #vumcSidebar{display:none;}
 }
-
-@media(max-width:767px){
-  .overlayContent{max-width:90%;padding:22px 18px;}
-  .overlayTitle{font-size:24px;}
-  .overlayText{font-size:14px;}
-  .overlayTimes{font-size:14px;}
-}
 </style>
 </head>
 
@@ -400,15 +332,6 @@ iframe{
       allow="autoplay; encrypted-media; picture-in-picture; web-share"
       allowfullscreen>
     </iframe>
-
-    <div id="playerOverlay" class="playerOverlay">
-      <div class="overlayContent">
-        <div class="overlayEyebrow">VUMC eCampus</div>
-        <div class="overlayTitle">Worship With Us</div>
-        <div class="overlayText">Join our online community and worship with us each Sunday.</div>
-        <div class="overlayTimes">Sundays • 9:30 AM & 10:30 AM</div>
-      </div>
-    </div>
   </div>
 </main>
 
@@ -504,7 +427,6 @@ iframe{
 <script>
 const CHAT_BACKEND_URL = "https://script.google.com/macros/s/AKfycbzWN8Xi7xUFa_gjg4XHuD_yEEkaKLwrnXFI8d_XQMW4-KQRUlVPVmxcjfcgC0gMNMewsg/exec";
 
-/* Turn this on only if you need to test chat while not live. */
 const FORCE_CHAT_OPEN_FOR_TESTING = false;
 
 let isActuallyLive = false;
@@ -527,7 +449,7 @@ function isAutoExportWindow(){
 }
 
 function shouldOpenLiveChat(){
-  return FORCE_CHAT_OPEN_FOR_TESTING || isActuallyLive;
+  return FORCE_CHAT_OPEN_FOR_TESTING || isActuallyLive || isSundayServiceWindow();
 }
 
 function shouldShowSundayTools(){
@@ -564,17 +486,6 @@ function activateTab(tabName){
 
   if(btn && btn.style.display !== "none") btn.classList.add("active");
   if(pane && pane.style.display !== "none") pane.classList.add("active");
-}
-
-function updateOverlay(){
-  const overlay = document.getElementById("playerOverlay");
-  if(!overlay) return;
-
-  if(shouldOpenLiveChat()){
-    overlay.classList.add("hidden");
-  }else{
-    overlay.classList.remove("hidden");
-  }
 }
 
 function setupVisibility(){
@@ -751,7 +662,6 @@ document.getElementById("chatMessage").addEventListener("keydown",function(e){
 
 async function refreshAll(){
   await checkYouTubeLiveStatus();
-  updateOverlay();
   setupVisibility();
   await loadChatMessages();
   await requestAutoExport();
