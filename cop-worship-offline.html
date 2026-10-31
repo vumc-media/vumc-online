@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VUMC Upcoming Worship</title>
+<style>
+*{box-sizing:border-box}html,body{width:100%;height:100%;margin:0}body{font-family:Arial,Helvetica,sans-serif;color:white;background:#310b20}
+#screen{position:relative;min-height:100%;display:flex;align-items:center;justify-content:center;text-align:center;padding:clamp(12px,3vw,32px);overflow:hidden;background:linear-gradient(105deg,rgba(34,6,20,.94),rgba(96,24,49,.83) 54%,rgba(34,6,20,.90)),url('https://online.versaillesumc.org/ecampus-assets/vumc-building.jpg') center/cover no-repeat}
+#screen:before{content:"";position:absolute;inset:12px;border:1px solid rgba(240,203,139,.28);pointer-events:none}
+.content{position:relative;width:min(100%,850px)}.logo{display:block;max-width:clamp(110px,19vw,190px);max-height:clamp(48px,8vw,84px);object-fit:contain;margin:0 auto 12px;padding:5px 12px;background:rgba(255,255,255,.96);border-radius:5px}.eyebrow{font-size:clamp(10px,1.4vw,15px);font-weight:800;letter-spacing:.19em;color:#efc884;text-transform:uppercase}.heading{font:normal clamp(28px,5.5vw,66px)/1.06 Georgia,serif;margin:12px 0 10px}.rule{width:68px;height:2px;background:#e5b968;margin:0 auto 15px}.date{font-size:clamp(14px,2vw,22px);font-weight:700;color:#ffe2b0;margin:0 0 12px}.events{max-width:650px;margin:auto;padding:8px clamp(12px,3vw,26px);background:rgba(25,8,19,.57);border:1px solid rgba(240,203,139,.35);border-radius:16px;backdrop-filter:blur(5px)}.event{display:flex;align-items:center;justify-content:space-between;gap:18px;text-align:left;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.15);font-size:clamp(13px,1.8vw,19px)}.event:last-child{border-bottom:0}.event-name{font-weight:700}.event-time{color:#ffe0a4;font-weight:800;white-space:nowrap}.message{font-size:clamp(12px,1.5vw,17px);line-height:1.5}.countdown-label{margin:18px 0 9px;color:#ffe2b0;font-size:clamp(11px,1.4vw,15px);font-weight:800;letter-spacing:.08em;text-transform:uppercase}.timer{display:flex;justify-content:center;gap:9px}.timer-box{min-width:clamp(55px,9vw,78px);padding:8px 6px;background:rgba(255,255,255,.94);color:#321222;border-radius:10px}.timer-box strong{display:block;font-size:clamp(20px,3.1vw,32px);font-variant-numeric:tabular-nums}.timer-box small{font-size:10px;font-weight:800;letter-spacing:.05em}.footer{font-size:clamp(11px,1.3vw,15px);opacity:.88;margin:16px 0 0}.visit{display:inline-block;margin-top:14px;padding:11px 20px;background:#e5bb70;color:#29101c;text-decoration:none;border-radius:99px;font-size:13px;font-weight:900}
+@media(max-width:540px){#screen{padding:14px}.logo{max-height:46px;margin-bottom:6px}.heading{margin:7px 0}.rule{margin-bottom:8px}.events{padding:5px 12px}.event{padding:9px 0}.countdown-label{margin:12px 0 7px}.timer-box{padding:5px 4px}.footer{margin-top:10px}.visit{margin-top:9px}}
+</style>
+</head>
+<body>
+<main id="screen"><div class="content">
+<img class="logo" src="https://online.versaillesumc.org/ecampus-assets/vumc-logo.jpg" alt="Versailles United Methodist Church logo" onerror="this.style.display='none'">
+<div class="eyebrow">Versailles United Methodist Church</div>
+<h1 class="heading">Worship With Us</h1><div class="rule"></div>
+<p class="date" id="date">Upcoming Worship</p>
+<div class="events" id="events" aria-live="polite"><p class="message">Loading the worship schedule…</p></div>
+<div id="countdownArea" hidden><p class="countdown-label" id="countdownLabel">Next Worship Begins In</p><div class="timer">
+<div class="timer-box"><strong id="days">0</strong><small>DAYS</small></div><div class="timer-box"><strong id="hours">00</strong><small>HOURS</small></div><div class="timer-box"><strong id="minutes">00</strong><small>MINUTES</small></div><div class="timer-box"><strong id="seconds">00</strong><small>SECONDS</small></div>
+</div></div>
+<p class="footer">Join us online or in person</p><a class="visit" href="https://www.versaillesumc.org/plan-your-visit" target="_blank" rel="noopener">PLAN YOUR VISIT</a>
+</div></main>
+<script>
+(()=>{'use strict';
+const ENDPOINT='https://script.google.com/macros/s/AKfycbzOXN6-dZe3yL4xuCXL-gcUkj9clpFSjn5h1nrmwHh6vSMDxX4Dgf75ya47FnYYCxX6/exec';
+const TZ='America/New_York';const $=id=>document.getElementById(id);let nextStart=null;
+const dateFmt=new Intl.DateTimeFormat('en-CA',{timeZone:TZ,year:'numeric',month:'2-digit',day:'2-digit'});
+const dayFmt=new Intl.DateTimeFormat('en-US',{timeZone:TZ,weekday:'long',month:'long',day:'numeric',year:'numeric'});
+const timeFmt=new Intl.DateTimeFormat('en-US',{timeZone:TZ,hour:'numeric',minute:'2-digit'});
+function keyFromDate(d){const parts=dateFmt.formatToParts(d);const get=k=>parts.find(p=>p.type===k)?.value||'';return `${get('year')}-${get('month')}-${get('day')}`;}
+function localDateParts(d){const p=new Intl.DateTimeFormat('en-US',{timeZone:TZ,year:'numeric',month:'numeric',day:'numeric',hour:'numeric',minute:'numeric',second:'numeric',hour12:false}).formatToParts(d);const get=k=>Number(p.find(x=>x.type===k)?.value||0);return{y:get('year'),m:get('month'),d:get('day'),h:get('hour')%24,min:get('minute'),s:get('second')};}
+function wallToInstant(y,m,d,h,min){let guess=Date.UTC(y,m-1,d,h,min);for(let i=0;i<3;i++){const p=localDateParts(new Date(guess));const difference=Date.UTC(y,m-1,d,h,min)-Date.UTC(p.y,p.m-1,p.d,p.h,p.min);guess+=difference;if(!difference)break;}return new Date(guess);}
+function extractDate(e){const a=e.attributes||{};const v=e.date||e.startDate||e.start_date||e.starts_at||e.startsAt||e.start||e.start_time||e.startTime||a.starts_at||a.start_time||'';const s=String(v);const m=s.match(/^\d{4}-\d{2}-\d{2}/);if(m)return m[0];const d=new Date(s);return Number.isFinite(d.getTime())?keyFromDate(d):'';}
+function extractTime(e){const a=e.attributes||{};const v=e.time||e.startTime||e.start_time||e.starts_at||e.startsAt||a.starts_at||a.start_time||a.startTime||'';if(!v)return{label:'See Calendar',hour:null,minute:null,instant:null};const s=String(v).trim();if(/^\d{4}-\d{2}-\d{2}T/.test(s)){const d=new Date(s);if(Number.isFinite(d.getTime())){const p=localDateParts(d);return{label:timeFmt.format(d),hour:p.h,minute:p.min,instant:d};}}
+let m=s.match(/^(\d{1,2}):(\d{2})(?::\d{2})?$/);if(m){const h=Number(m[1]),mi=Number(m[2]);return{label:`${h%12||12}:${String(mi).padStart(2,'0')} ${h>=12?'PM':'AM'}`,hour:h,minute:mi,instant:null};}
+m=s.match(/^(\d{1,2})(?::(\d{2}))?\s*(AM|PM)$/i);if(m){let h=Number(m[1])%12;if(m[3].toUpperCase()==='PM')h+=12;const mi=Number(m[2]||0);return{label:`${h%12||12}:${String(mi).padStart(2,'0')} ${h>=12?'PM':'AM'}`,hour:h,minute:mi,instant:null};}return{label:s,hour:null,minute:null,instant:null};}
+function normalize(e){if(!e||typeof e!=='object')return null;const a=e.attributes||{};const title=String(e.title||e.name||e.summary||a.name||a.title||e.label||'Worship Service');const date=extractDate(e);const time=extractTime(e);let start=time.instant;if(!start&&date&&time.hour!==null){const [y,m,d]=date.split('-').map(Number);start=wallToInstant(y,m,d,time.hour,time.minute);}return{title,date,time:time.label,start};}
+function render(data){if(data?.ok===false)throw Error('PCO returned an error');let raw=Array.isArray(data)?data:(data.events||data.services||data.items||data.data||[]);if(!Array.isArray(raw)&&Array.isArray(raw?.events))raw=raw.events;if(!Array.isArray(raw))raw=[];
+const all=raw.map(normalize).filter(Boolean);const today=keyFromDate(new Date());const dates=[...new Set(all.map(e=>e.date).filter(d=>d&&d>=today))].sort();const target=dates[0]||(data.date&&String(data.date).slice(0,10))||all[0]?.date||'';const selected=target?all.filter(e=>!e.date||e.date===target):all;
+$('date').textContent=target?dayFmt.format(new Date(target+'T12:00:00Z')):(data.label||'Upcoming Worship');const box=$('events');box.replaceChildren();if(!selected.length){const p=document.createElement('p');p.className='message';p.textContent='Worship schedule is not available right now. Please check back soon.';box.append(p);nextStart=null;return;}
+selected.slice(0,5).forEach(e=>{const row=document.createElement('div');row.className='event';const name=document.createElement('span');name.className='event-name';name.textContent=e.title;const time=document.createElement('span');time.className='event-time';time.textContent=e.time;row.append(name,time);box.append(row);});
+const upcoming=all.map(e=>e.start).filter(d=>d&&d.getTime()>Date.now()).sort((a,b)=>a-b);nextStart=upcoming[0]||null;tick();}
+function tick(){if(!nextStart){$('countdownArea').hidden=true;return;}const secs=Math.max(0,Math.floor((nextStart-Date.now())/1000));if(!secs){$('countdownArea').hidden=true;return;}$('countdownArea').hidden=false;$('days').textContent=Math.floor(secs/86400);$('hours').textContent=String(Math.floor(secs%86400/3600)).padStart(2,'0');$('minutes').textContent=String(Math.floor(secs%3600/60)).padStart(2,'0');$('seconds').textContent=String(secs%60).padStart(2,'0');}
+async function refresh(){try{const r=await fetch(ENDPOINT+'?action=worship&t='+Date.now(),{cache:'no-store'});if(!r.ok)throw Error('Calendar request failed');render(await r.json());}catch(err){console.warn('Unable to load worship schedule',err);if(!$('events').querySelector('.event')){$('date').textContent='Upcoming Worship';$('events').innerHTML='<p class="message">Schedule temporarily unavailable. Visit versaillesumc.org for worship details.</p>';nextStart=null;tick();}}}
+refresh();setInterval(refresh,5*60*1000);setInterval(tick,1000);
+})();
+</script>
+</body></html>
