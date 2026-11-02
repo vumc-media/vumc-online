@@ -16,11 +16,10 @@
 :root{--gold:#e9c878;--burgundy:#5b1b32;--ink:#11141a;--panel:#252933;--line:rgba(255,255,255,.12)}
 *{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:Arial,Helvetica,sans-serif;background:#0f1115;color:#fff}button,input,textarea{font:inherit}button{cursor:pointer}a{color:inherit}
 .topbar{background:#17313d;text-align:center;padding:12px 18px;font-size:13px;font-weight:700;line-height:1.5}.nav-shell{background:#f7f8fa;color:#20313b;border-bottom:1px solid #d8e0e6}.nav{max-width:1400px;margin:auto;padding:17px 22px;display:flex;align-items:center;justify-content:space-between;gap:18px}.brand{font-size:24px;font-weight:800}.brand a,.nav-links a{text-decoration:none}.nav-links{display:flex;gap:22px;flex-wrap:wrap}.nav-links a{font-weight:700;color:#305f72}.nav-links a.active{color:#17313d}
-#vumcShell{display:grid;grid-template-columns:minmax(0,1fr) 410px;max-width:1700px;margin:auto;min-height:calc(100vh - 116px)}main{min-width:0;background:#090a0e}.player-area{padding:clamp(0px,2vw,24px)}#playerWrap{width:100%;aspect-ratio:16/9;position:relative;overflow:hidden;background:#160812;isolation:isolate;border-radius:clamp(0px,1vw,12px)}#livePlayer{position:absolute;inset:0;width:100%;height:100%;border:0;display:none;z-index:2}
-#scheduleScreen{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden;padding:clamp(16px,4vw,48px);background:linear-gradient(110deg,rgba(34,6,20,.92),rgba(91,22,47,.80) 55%,rgba(34,6,20,.86)),url("/ecampus-assets/vumc-building.jpg") center center/cover no-repeat}#scheduleScreen:before{content:"";position:absolute;inset:12px;border:1px solid rgba(239,206,145,.24);pointer-events:none}#scheduleScreen:after{content:"";position:absolute;width:62%;height:130%;right:-29%;top:-10%;transform:rotate(25deg);background:linear-gradient(90deg,transparent,rgba(255,255,255,.045),transparent);pointer-events:none}
-.schedule-logo{display:block;width:clamp(95px,15vw,170px);max-height:clamp(38px,6.5vw,75px);object-fit:contain;margin:0 auto clamp(4px,.8vw,10px);background:rgba(255,255,255,.96);padding:4px 10px;border-radius:5px}.schedule-content{position:relative;z-index:1;width:100%;max-width:850px}.schedule-eyebrow{font-size:clamp(10px,1.2vw,15px);font-weight:800;letter-spacing:.26em;text-transform:uppercase;color:var(--gold)}.schedule-title{font-family:Georgia,serif;font-size:clamp(26px,5.1vw,68px);font-weight:400;line-height:1.07;margin:clamp(7px,1.4vw,16px) 0}.schedule-rule{width:65px;height:2px;background:var(--gold);margin:clamp(9px,1.5vw,20px) auto}.schedule-date{font-size:clamp(13px,2vw,24px);font-weight:700;color:#fff0d9;margin:0 0 clamp(10px,1.8vw,24px)}.schedule-events{display:flex;flex-direction:column;gap:clamp(5px,.8vw,11px);max-width:700px;margin:auto}.schedule-event{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:clamp(7px,1.1vw,14px) clamp(12px,2vw,25px);border:1px solid rgba(240,210,160,.28);border-radius:8px;background:rgba(18,5,14,.28);text-align:left;backdrop-filter:blur(4px)}.event-name{font-size:clamp(12px,1.55vw,20px);font-weight:700}.event-time{font-size:clamp(12px,1.55vw,20px);font-weight:800;color:#f6d68f;white-space:nowrap}.schedule-footer{font-size:clamp(10px,1.2vw,15px);margin:clamp(10px,2vw,25px) 0 0;color:#f6e7e9}.schedule-footer strong{color:#f6d68f}.schedule-message{font-size:clamp(12px,1.7vw,20px);line-height:1.5;margin:10px auto;max-width:570px}
+#vumcShell{display:grid;grid-template-columns:minmax(0,1fr) 410px;max-width:1700px;margin:auto;min-height:calc(100vh - 116px)}main{min-width:0;background:#090a0e}.player-area{padding:clamp(0px,2vw,24px)}#playerWrap{width:100%;aspect-ratio:16/9;position:relative;overflow:hidden;background:#160812;isolation:isolate;border-radius:clamp(0px,1vw,12px)}#livePlayer{position:absolute;inset:0;width:100%;height:100%;border:0;display:block;z-index:2}
+
 .below-player{padding:10px 24px 24px;color:#cdd2dc;font-size:14px;line-height:1.5}.below-player a{color:var(--gold)}#vumcSidebar{background:#15181f;border-left:1px solid var(--line);min-width:0}#vumcSidebarInner{padding:16px}.vumcTabs{display:flex;gap:7px;margin-bottom:12px;flex-wrap:wrap}.vumcTabBtn{flex:1 1 auto;min-width:75px;background:#262a33;border:1px solid var(--line);color:#fff;padding:11px 9px;border-radius:10px;font-size:13px;font-weight:700}.vumcTabBtn.active{background:#d4af37;color:#111}.vumcTabBtn[hidden],.vumcTabPane[hidden]{display:none!important}.vumcCard,.vumcFormCard,.vumcLiveChatCard{background:var(--panel);border-radius:15px;overflow:hidden}.vumcFormCard{padding:22px 17px;text-align:center}.vumcFormCard h3{margin:0 0 10px}.vumcFormCard p{line-height:1.55}.vumcSubmitBtn{width:100%;background:#d4af37;color:#111;padding:12px;border-radius:11px;font-weight:800;border:0;text-align:center;display:inline-block;text-decoration:none}.vumcHelp{margin-top:12px;color:#bfc3cc;font-size:13px;line-height:1.5}#vumcNotesFrame{width:100%;height:650px;border:0;background:#fff}.vumcLiveChatHeader{padding:15px;background:#1d222b;border-bottom:1px solid var(--line)}.vumcLiveChatHeader h3{margin:5px 0;font-size:17px}.vumcLiveChatHeader p{margin:6px 0 0;color:#c2c6ce;font-size:13px;line-height:1.5}.vumcLiveBadge{display:inline-flex;align-items:center;gap:8px;background:#d4af37;color:#111;padding:5px 10px;border-radius:100px;font-size:11px;font-weight:800;letter-spacing:.05em}.vumcLiveDot{height:8px;width:8px;border-radius:50%;background:#c62828}.chatMessages{height:350px;overflow:auto;padding:14px;background:#10131a}.chatBubble{padding:10px 12px;border-radius:12px;margin-bottom:10px;line-height:1.45;font-size:14px;color:#111;overflow-wrap:anywhere}.chatBubble.guest{background:#f5f5f5}.chatBubble.host{background:#e7f0ff}.chatBubble.prayer{background:#fff2cc;border-left:5px solid #d4af37}.chatBubble.care{background:#fdecea;border-left:5px solid #c62828}.chatBubble.guestType{background:#eaf7ea;border-left:5px solid #2e7d32}.chatMeta{font-size:11px;opacity:.75;font-weight:700;margin-bottom:4px}.chatInputArea{padding:13px;background:#1d222b}.chatInputArea input,.chatInputArea textarea{width:100%;border:0;border-radius:9px;padding:11px;margin-bottom:9px}.chatInputArea textarea{resize:vertical;min-height:75px}.chatSmall{font-size:12px;color:#c2c6ce;line-height:1.5;margin-top:10px}.chatStatus{font-size:12px;color:#f4dca8;margin:5px 0}
-@media(max-width:1050px){#vumcShell{grid-template-columns:minmax(0,1fr) 350px}}@media(max-width:850px){#vumcShell{grid-template-columns:1fr}#vumcSidebar{border-left:0;border-top:1px solid var(--line)}#vumcSidebarInner{padding:14px}#vumcNotesFrame{height:520px}.player-area{padding:0}#playerWrap{border-radius:0}.below-player{padding:12px 16px 18px}}@media(max-width:480px){.nav{padding:13px 14px;align-items:flex-start;flex-direction:column;gap:9px}.brand{font-size:21px}.nav-links{gap:16px;font-size:14px}#scheduleScreen{padding:12px}#scheduleScreen:before{inset:6px}.schedule-eyebrow{letter-spacing:.14em}.schedule-event{gap:8px;padding:6px 9px}.schedule-events{gap:5px}.schedule-rule{margin:7px auto}.schedule-date{margin-bottom:8px}.schedule-footer{margin-top:8px}.vumcTabBtn{min-width:65px}}
+@media(max-width:1050px){#vumcShell{grid-template-columns:minmax(0,1fr) 350px}}@media(max-width:850px){#vumcShell{grid-template-columns:1fr}#vumcSidebar{border-left:0;border-top:1px solid var(--line)}#vumcSidebarInner{padding:14px}#vumcNotesFrame{height:520px}.player-area{padding:0}#playerWrap{border-radius:0}.below-player{padding:12px 16px 18px}}@media(max-width:480px){.nav{padding:13px 14px;align-items:flex-start;flex-direction:column;gap:9px}.brand{font-size:21px}.nav-links{gap:16px;font-size:14px}.vumcTabBtn{min-width:65px}}
 </style>
 </head>
 <body>
@@ -29,16 +28,9 @@
 <div id="vumcShell">
 <main>
 <div class="player-area"><div id="playerWrap">
-<section id="scheduleScreen" aria-label="Upcoming worship schedule"><div class="schedule-content">
-<img class="schedule-logo" src="/ecampus-assets/vumc-logo.jpg" alt="Versailles United Methodist Church logo"><div class="schedule-eyebrow">Versailles United Methodist Church</div>
-<h1 class="schedule-title">Worship With Us</h1><div class="schedule-rule"></div>
-<p id="scheduleDate" class="schedule-date">Upcoming Worship</p>
-<div id="scheduleEvents" class="schedule-events" aria-live="polite"><p class="schedule-message">Loading the worship schedule…</p></div>
-<p class="schedule-footer">Join us online or in person at <strong>Versailles UMC</strong></p>
-</div></section>
-<iframe id="livePlayer" title="Versailles UMC Live Worship" data-src="https://www.youtube.com/embed/live_stream?channel=UC_svgodM3blLqWEBQ5yNjmA&amp;autoplay=1&amp;mute=1&amp;rel=0&amp;playsinline=1" allow="autoplay; encrypted-media; picture-in-picture; web-share" allowfullscreen></iframe>
+<iframe id="livePlayer" title="Versailles UMC Scheduled and Live Worship" src="https://www.youtube.com/embed/0Q5Ofl0StuY?rel=0&playsinline=1" allow="autoplay; encrypted-media; picture-in-picture; web-share" allowfullscreen></iframe>
 </div></div>
-<div class="below-player">Welcome to worship at Versailles United Methodist Church. Our upcoming schedule is updated from Planning Center. Need prayer? Use the Prayer tab. <a href="https://www.versaillesumc.org/">Visit our church website</a>.</div>
+<div class="below-player">Welcome to worship at Versailles United Methodist Church. The next scheduled YouTube worship broadcast appears above, and the player updates automatically when a livestream begins. Need prayer? Use the Prayer tab. <a href="https://www.versaillesumc.org/">Visit our church website</a>.</div>
 </main>
 <aside id="vumcSidebar"><div id="vumcSidebarInner">
 <div class="vumcTabs" role="tablist" aria-label="Worship tools">
@@ -58,7 +50,8 @@
 <script>
 'use strict';
 const CHAT_BACKEND_URL='https://script.google.com/macros/s/AKfycbzWN8Xi7xUFa_gjg4XHuD_yEEkaKLwrnXFI8d_XQMW4-KQRUlVPVmxcjfcgC0gMNMewsg/exec';
-const PCO_WORSHIP_URL='https://script.google.com/macros/s/AKfycbzOXN6-dZe3yL4xuCXL-gcUkj9clpFSjn5h1nrmwHh6vSMDxX4Dgf75ya47FnYYCxX6/exec';
+const YOUTUBE_DISCOVERY_URL='https://script.google.com/macros/s/AKfycbz7uxgtPT0UTDuFPEY3YoZyTgmOO1x5cDyc1Y4LaaztBAR9t0tNCp6bmb5hoWX819Cx/exec';
+const FALLBACK_VIDEO_ID='0Q5Ofl0StuY';
 const FORCE_CHAT_OPEN_FOR_TESTING=false;
 const CHURCH_TIME_ZONE='America/New_York';
 let isActuallyLive=false;
@@ -67,28 +60,59 @@ const el=id=>document.getElementById(id);
 function churchNow(){const p=new Intl.DateTimeFormat('en-US',{timeZone:CHURCH_TIME_ZONE,weekday:'short',hour:'2-digit',minute:'2-digit',hour12:false}).formatToParts(new Date());const v=k=>p.find(x=>x.type===k)?.value||'';return{day:v('weekday'),minutes:(Number(v('hour'))%24)*60+Number(v('minute'))};}
 function isSundayServiceWindow(){const t=churchNow();return t.day==='Sun'&&t.minutes>=570&&t.minutes<=720;}
 function shouldShowSundayTools(){return FORCE_CHAT_OPEN_FOR_TESTING||isActuallyLive||isSundayServiceWindow();}
-function shouldShowLivePlayer(){return FORCE_CHAT_OPEN_FOR_TESTING||isActuallyLive||isSundayServiceWindow();}
 async function getJSON(url){const r=await fetch(url,{cache:'no-store'});if(!r.ok)throw new Error('Request failed');return r.json();}
 async function checkYouTubeLiveStatus(){if(FORCE_CHAT_OPEN_FOR_TESTING){isActuallyLive=true;return;}try{const d=await getJSON(CHAT_BACKEND_URL+'?action=status&cacheBust='+Date.now());isActuallyLive=!!d.live;}catch(e){isActuallyLive=false;}}
-function updatePlayer(){const live=shouldShowLivePlayer(),player=el('livePlayer');el('scheduleScreen').hidden=live;el('scheduleScreen').style.display=live?'none':'flex';player.style.display=live?'block':'none';if(live&&!player.src)player.src=player.dataset.src;if(!live&&player.src){player.removeAttribute('src');}}
+let currentVideoId=FALLBACK_VIDEO_ID;
+function validVideoId(id){return typeof id==='string'&&/^[A-Za-z0-9_-]{11}$/.test(id);}
+function chooseBroadcast(data){
+  if(!data||data.ok===false)return null;
+  const streams=Array.isArray(data.streams)?data.streams:[];
+  const now=Date.now();
+  const live=streams.find(s=>s.broadcastStatus==='live'||s.live===true);
+  const upcoming=streams.filter(s=>s.broadcastStatus==='upcoming'||(s.scheduledStartTime&&Date.parse(s.scheduledStartTime)>now))
+    .sort((a,b)=>Date.parse(a.scheduledStartTime||'')-Date.parse(b.scheduledStartTime||''))[0];
+  const selected=live||upcoming||data.selected;
+  const id=selected?.videoId||data.videoId;
+  return validVideoId(id)?id:null;
+}
+function setBroadcast(id){
+  if(!validVideoId(id)||id===currentVideoId)return;
+  currentVideoId=id;
+  el('livePlayer').src='https://www.youtube.com/embed/'+encodeURIComponent(id)+'?rel=0&playsinline=1';
+}
+function discoverViaJSONP(){
+  return new Promise((resolve,reject)=>{
+    const callback='vumcEcampusYouTube_'+Date.now()+'_'+Math.floor(Math.random()*10000);
+    const script=document.createElement('script');
+    let done=false;
+    const finish=(err,value)=>{if(done)return;done=true;clearTimeout(timeout);delete window[callback];script.remove();err?reject(err):resolve(value);};
+    window[callback]=data=>finish(null,data);
+    script.onerror=()=>finish(new Error('YouTube discovery JSONP unavailable'));
+    const timeout=setTimeout(()=>finish(new Error('YouTube discovery timed out')),9000);
+    script.src=YOUTUBE_DISCOVERY_URL+'?callback='+encodeURIComponent(callback)+'&t='+Date.now();
+    document.head.appendChild(script);
+  });
+}
+async function refreshYouTubeBroadcast(){
+  try{
+    let data;
+    try{data=await getJSON(YOUTUBE_DISCOVERY_URL+'?t='+Date.now());}
+    catch(e){data=await discoverViaJSONP();}
+    const next=chooseBroadcast(data);
+    if(next)setBroadcast(next);
+  }catch(e){console.warn('VUMC YouTube discovery unavailable; retaining current video.',e);}
+}
 function activateTab(tab){document.querySelectorAll('.vumcTabBtn').forEach(b=>{const active=b.dataset.tab===tab&&!b.hidden;b.classList.toggle('active',active);b.setAttribute('aria-selected',String(active));});document.querySelectorAll('.vumcTabPane').forEach(p=>{p.hidden=p.id!=='tab-'+tab;});}
 function setupVisibility(){const show=shouldShowSundayTools();for(const tab of ['notes','checkin','chat'])el(tab+'TabBtn').hidden=!show;const active=document.querySelector('.vumcTabBtn.active');if(!active||active.hidden)activateTab(show?'chat':'prayer');}
 function detectMessageType(s){const m=String(s||'').toLowerCase();if(/struggling|suicide|hurt myself|can't go on|depressed|abuse/.test(m))return'care';if(/pray|prayer|praying/.test(m))return'prayer';if(/first time|first-time|new here|visitor/.test(m))return'guest';return'normal';}
 function renderMessages(messages){const box=el('chatMessages');box.replaceChildren();(Array.isArray(messages)?messages:[]).forEach(entry=>{const d=document.createElement('div'),meta=document.createElement('div');const type=['prayer','care','guest'].includes(entry.type)?entry.type:'normal';d.className='chatBubble '+(type==='guest'?'guestType':type==='normal'?(entry.role==='host'?'host':'guest'):type);meta.className='chatMeta';meta.textContent=(entry.time||'')+' • '+(entry.name||'Guest');d.append(meta,document.createTextNode(String(entry.message||'')));box.append(d);});box.scrollTop=box.scrollHeight;}
 async function loadChatMessages(){if(!shouldShowSundayTools())return;try{const d=await getJSON(CHAT_BACKEND_URL+'?action=getMessages&cacheBust='+Date.now());renderMessages(d.messages||[]);}catch(e){}}
 async function sendChatMessage(){if(!shouldShowSundayTools()||chatBusy)return;const message=el('chatMessage').value.trim();if(!message)return;chatBusy=true;el('sendChatBtn').disabled=true;el('chatStatus').textContent='Sending…';try{await fetch(CHAT_BACKEND_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({action:'postMessage',name:el('chatName').value.trim()||'Guest',message,role:'guest',type:detectMessageType(message),page:'VUMC Watch Live',timestamp:new Date().toISOString()})});el('chatMessage').value='';el('chatStatus').textContent='Message submitted. It may take a moment to appear.';setTimeout(loadChatMessages,1200);}catch(e){el('chatStatus').textContent='Unable to send. Please try again.';}finally{chatBusy=false;el('sendChatBtn').disabled=false;}}
-function parseEventDate(raw){if(!raw)return null;const s=String(raw);const d=new Date(s);if(!Number.isNaN(d.getTime()))return d;return null;}
-function eventDateKey(event){const raw=event.date||event.startDate||event.start_date||event.starts_at||event.startsAt||event.start||event.start_time||event.startTime||'';const m=String(raw).match(/^\d{4}-\d{2}-\d{2}/);if(m)return m[0];const d=parseEventDate(raw);return d?new Intl.DateTimeFormat('en-CA',{timeZone:CHURCH_TIME_ZONE,year:'numeric',month:'2-digit',day:'2-digit'}).format(d):'';}
-function formatDay(key){if(!key)return'Upcoming Worship';const d=new Date(key+'T12:00:00');return Number.isNaN(d.getTime())?'Upcoming Worship':new Intl.DateTimeFormat('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric',timeZone:CHURCH_TIME_ZONE}).format(d);}
-function formatTime(raw){if(raw===null||raw===undefined)return'';const s=String(raw).trim();if(!s)return'';if(/\b(am|pm)\b/i.test(s))return s.replace(/\s+/g,' ').toUpperCase();const clock=s.match(/(?:^|T)(\d{1,2}):(\d{2})(?::\d{2})?(?:$|[Z+-])/);if(clock&&s.includes('T')){const d=parseEventDate(s);if(d)return new Intl.DateTimeFormat('en-US',{hour:'numeric',minute:'2-digit',timeZone:CHURCH_TIME_ZONE}).format(d);}const m=s.match(/^(\d{1,2}):(\d{2})(?::\d{2})?$/);if(m){const h=Number(m[1]);return (h%12||12)+':'+m[2]+' '+(h>=12?'PM':'AM');}return s;}
-function normalizeEvent(event){if(!event||typeof event!=='object')return null;const a=event.attributes||{};const title=event.title||event.name||event.summary||a.name||a.title||event.label||'Worship Service';const rawTime=event.time||event.startTime||event.start_time||event.starts_at||event.startsAt||a.starts_at||a.start_time||a.startTime||'';return{title:String(title),time:formatTime(rawTime),date:eventDateKey({...a,...event})};}
-function renderSchedule(data){const box=el('scheduleEvents');box.replaceChildren();if(data&&data.ok===false)throw new Error('Calendar returned an error');let raw=Array.isArray(data)?data:(data.events||data.services||data.items||data.data||[]);if(!Array.isArray(raw)&&raw&&Array.isArray(raw.events))raw=raw.events;if(!Array.isArray(raw))raw=[];const all=raw.map(normalizeEvent).filter(Boolean);const today=new Intl.DateTimeFormat('en-CA',{timeZone:CHURCH_TIME_ZONE,year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());const dates=all.map(e=>e.date).filter(x=>x&&x>=today).sort();const target=dates[0]||(data.date&&String(data.date).slice(0,10))||all[0]?.date||'';const events=target?all.filter(e=>!e.date||e.date===target):all;el('scheduleDate').textContent=target?formatDay(target):(data.label||'Upcoming Worship');if(!events.length){const p=document.createElement('p');p.className='schedule-message';p.textContent='Worship times will be posted here soon. Please check back for the next service.';box.append(p);return;}events.slice(0,5).forEach(event=>{const row=document.createElement('div');row.className='schedule-event';const name=document.createElement('span');name.className='event-name';name.textContent=event.title;const time=document.createElement('span');time.className='event-time';time.textContent=event.time||'See Calendar';row.append(name,time);box.append(row);});}
-async function loadWorshipSchedule(){try{const data=await getJSON(PCO_WORSHIP_URL+'?action=worship&cacheBust='+Date.now());renderSchedule(data);}catch(e){el('scheduleDate').textContent='Upcoming Worship';el('scheduleEvents').replaceChildren();const p=document.createElement('p');p.className='schedule-message';p.textContent='The worship calendar is temporarily unavailable. Please visit versaillesumc.org for the latest service times.';el('scheduleEvents').append(p);}}
-async function refreshAll(){await checkYouTubeLiveStatus();updatePlayer();setupVisibility();await loadChatMessages();}
+async function refreshAll(){await checkYouTubeLiveStatus();setupVisibility();await loadChatMessages();}
 document.querySelectorAll('.vumcTabBtn').forEach(b=>b.addEventListener('click',()=>{if(!b.hidden)activateTab(b.dataset.tab);}));
 el('sendChatBtn').addEventListener('click',sendChatMessage);
 el('chatMessage').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendChatMessage();}});
-activateTab('prayer');loadWorshipSchedule();refreshAll();setInterval(refreshAll,60000);setInterval(loadChatMessages,10000);setInterval(loadWorshipSchedule,300000);
+activateTab('prayer');refreshAll();refreshYouTubeBroadcast();setInterval(refreshAll,60000);setInterval(loadChatMessages,10000);setInterval(refreshYouTubeBroadcast,45000);
 </script>
 </body>
 </html>
