@@ -20,6 +20,13 @@
 
 .below-player{padding:10px 24px 24px;color:#cdd2dc;font-size:14px;line-height:1.5}.below-player a{color:var(--gold)}#vumcSidebar{background:#15181f;border-left:1px solid var(--line);min-width:0}#vumcSidebarInner{padding:16px}.vumcTabs{display:flex;gap:7px;margin-bottom:12px;flex-wrap:wrap}.vumcTabBtn{flex:1 1 auto;min-width:75px;background:#262a33;border:1px solid var(--line);color:#fff;padding:11px 9px;border-radius:10px;font-size:13px;font-weight:700}.vumcTabBtn.active{background:#d4af37;color:#111}.vumcTabBtn[hidden],.vumcTabPane[hidden]{display:none!important}.vumcCard,.vumcFormCard,.vumcLiveChatCard{background:var(--panel);border-radius:15px;overflow:hidden}.vumcFormCard{padding:22px 17px;text-align:center}.vumcFormCard h3{margin:0 0 10px}.vumcFormCard p{line-height:1.55}.vumcSubmitBtn{width:100%;background:#d4af37;color:#111;padding:12px;border-radius:11px;font-weight:800;border:0;text-align:center;display:inline-block;text-decoration:none}.vumcHelp{margin-top:12px;color:#bfc3cc;font-size:13px;line-height:1.5}#vumcNotesFrame{width:100%;height:650px;border:0;background:#fff}.vumcLiveChatHeader{padding:15px;background:#1d222b;border-bottom:1px solid var(--line)}.vumcLiveChatHeader h3{margin:5px 0;font-size:17px}.vumcLiveChatHeader p{margin:6px 0 0;color:#c2c6ce;font-size:13px;line-height:1.5}.vumcLiveBadge{display:inline-flex;align-items:center;gap:8px;background:#d4af37;color:#111;padding:5px 10px;border-radius:100px;font-size:11px;font-weight:800;letter-spacing:.05em}.vumcLiveDot{height:8px;width:8px;border-radius:50%;background:#c62828}.chatMessages{height:350px;overflow:auto;padding:14px;background:#10131a}.chatBubble{padding:10px 12px;border-radius:12px;margin-bottom:10px;line-height:1.45;font-size:14px;color:#111;overflow-wrap:anywhere}.chatBubble.guest{background:#f5f5f5}.chatBubble.host{background:#e7f0ff}.chatBubble.prayer{background:#fff2cc;border-left:5px solid #d4af37}.chatBubble.care{background:#fdecea;border-left:5px solid #c62828}.chatBubble.guestType{background:#eaf7ea;border-left:5px solid #2e7d32}.chatMeta{font-size:11px;opacity:.75;font-weight:700;margin-bottom:4px}.chatInputArea{padding:13px;background:#1d222b}.chatInputArea input,.chatInputArea textarea{width:100%;border:0;border-radius:9px;padding:11px;margin-bottom:9px}.chatInputArea textarea{resize:vertical;min-height:75px}.chatSmall{font-size:12px;color:#c2c6ce;line-height:1.5;margin-top:10px}.chatStatus{font-size:12px;color:#f4dca8;margin:5px 0}
 @media(max-width:1050px){#vumcShell{grid-template-columns:minmax(0,1fr) 350px}}@media(max-width:850px){#vumcShell{grid-template-columns:1fr}#vumcSidebar{border-left:0;border-top:1px solid var(--line)}#vumcSidebarInner{padding:14px}#vumcNotesFrame{height:520px}.player-area{padding:0}#playerWrap{border-radius:0}.below-player{padding:12px 16px 18px}}@media(max-width:480px){.nav{padding:13px 14px;align-items:flex-start;flex-direction:column;gap:9px}.brand{font-size:21px}.nav-links{gap:16px;font-size:14px}.vumcTabBtn{min-width:65px}}
+/* Service selection sidebar */
+.service-list{padding:16px;display:grid;gap:11px}
+.service-intro{font-size:13px;color:#c8cbd3;line-height:1.5;margin:0 0 3px}
+.service-choice{width:100%;background:#191d25;color:#fff;border:1px solid rgba(255,255,255,.18);border-radius:12px;text-align:left;padding:14px;display:flex;align-items:center;justify-content:space-between;gap:10px;transition:border-color .15s,background .15s}
+.service-choice:hover{border-color:#e9c878}.service-choice[aria-pressed="true"]{background:#35301e;border:2px solid #e9c878;padding:13px}
+.service-choice:disabled{opacity:.6;cursor:default}.service-choice strong{display:block;font-size:14px}.service-choice small{display:block;margin-top:5px;color:#cbd0d7;font-size:12px}.service-choice .service-time{font-size:13px;font-weight:800;color:#f5d68c;white-space:nowrap}
+.service-status{color:#c9cdd6;font-size:12px;line-height:1.5;padding:0 16px 16px}
 </style>
 </head>
 <body>
@@ -34,12 +41,19 @@
 </main>
 <aside id="vumcSidebar"><div id="vumcSidebarInner">
 <div class="vumcTabs" role="tablist" aria-label="Worship tools">
+<button id="servicesTabBtn" class="vumcTabBtn active" data-tab="services">Services</button>
 <button id="notesTabBtn" class="vumcTabBtn" data-tab="notes" hidden>Sermon Notes</button>
 <button id="checkinTabBtn" class="vumcTabBtn" data-tab="checkin" hidden>Check In</button>
 <button id="chatTabBtn" class="vumcTabBtn" data-tab="chat" hidden>Live Chat</button>
-<button id="prayerTabBtn" class="vumcTabBtn active" data-tab="prayer">Prayer</button>
+<button id="prayerTabBtn" class="vumcTabBtn" data-tab="prayer">Prayer</button>
 <button id="giveTabBtn" class="vumcTabBtn" data-tab="give">Give</button>
 </div>
+<section id="tab-services" class="vumcTabPane"><div class="vumcCard">
+<div class="vumcLiveChatHeader"><h3>Choose a Worship Service</h3><p>Switch between the upcoming Traditional and Contemporary broadcasts.</p></div>
+<div id="serviceChoices" class="service-list" aria-label="Upcoming worship broadcasts">
+<p class="service-intro">Loading scheduled broadcasts…</p>
+</div><div id="serviceStatus" class="service-status" role="status">Choose either service to keep it selected. Otherwise, the player follows the next or live broadcast.</div>
+</div></section>
 <section id="tab-notes" class="vumcTabPane" hidden><div class="vumcCard"><iframe id="vumcNotesFrame" loading="lazy" src="https://sermon.versaillesumc.org" title="Sermon Notes"></iframe></div></section>
 <section id="tab-checkin" class="vumcTabPane" hidden><div class="vumcFormCard"><h3>Check In for Worship</h3><p>Let us know you're here through Church Center.</p><a class="vumcSubmitBtn" href="https://versaillesumc.churchcenter.com/people/forms/859778" data-open-in-church-center-modal="true">Check In Now</a><div class="vumcHelp">Available during worship.</div></div></section>
 <section id="tab-chat" class="vumcTabPane" hidden><div class="vumcLiveChatCard"><div class="vumcLiveChatHeader"><div class="vumcLiveBadge"><span class="vumcLiveDot"></span>Worship Chat</div><h3>VUMC Live Chat</h3><p>Say hello, share where you're worshiping from, and connect with others.</p></div><div id="chatMessages" class="chatMessages" aria-live="polite"></div><div class="chatInputArea"><input id="chatName" type="text" maxlength="80" placeholder="Your name" aria-label="Your name"><textarea id="chatMessage" maxlength="2000" placeholder="Type your message..." aria-label="Your message"></textarea><button id="sendChatBtn" class="vumcSubmitBtn" type="button">Send Message</button><div id="chatStatus" class="chatStatus" role="status"></div><div class="chatSmall">Chat is recorded for pastoral care, follow-up, protection, and connection.</div></div></div></section>
@@ -63,22 +77,64 @@ function shouldShowSundayTools(){return FORCE_CHAT_OPEN_FOR_TESTING||isActuallyL
 async function getJSON(url){const r=await fetch(url,{cache:'no-store'});if(!r.ok)throw new Error('Request failed');return r.json();}
 async function checkYouTubeLiveStatus(){if(FORCE_CHAT_OPEN_FOR_TESTING){isActuallyLive=true;return;}try{const d=await getJSON(CHAT_BACKEND_URL+'?action=status&cacheBust='+Date.now());isActuallyLive=!!d.live;}catch(e){isActuallyLive=false;}}
 let currentVideoId=FALLBACK_VIDEO_ID;
+let manualVideoId=null;
+let discoveredStreams=[];
+let discoveryReady=false;
 function validVideoId(id){return typeof id==='string'&&/^[A-Za-z0-9_-]{11}$/.test(id);}
+function streamId(stream){return stream?.videoId||stream?.id||'';}
+function streamIsLive(stream){return stream?.broadcastStatus==='live'||stream?.live===true;}
+function streamTime(stream){return Date.parse(stream?.scheduledStartTime||stream?.actualStartTime||'')||0;}
+function formatServiceDate(stream){const time=streamTime(stream);return time?new Intl.DateTimeFormat('en-US',{timeZone:CHURCH_TIME_ZONE,weekday:'short',month:'short',day:'numeric'}).format(new Date(time)):'';}
+function formatServiceTime(stream){const time=streamTime(stream);return time?new Intl.DateTimeFormat('en-US',{timeZone:CHURCH_TIME_ZONE,hour:'numeric',minute:'2-digit'}).format(new Date(time)):'';}
 function chooseBroadcast(data){
   if(!data||data.ok===false)return null;
   const streams=Array.isArray(data.streams)?data.streams:[];
-  const now=Date.now();
-  const live=streams.find(s=>s.broadcastStatus==='live'||s.live===true);
-  const upcoming=streams.filter(s=>s.broadcastStatus==='upcoming'||(s.scheduledStartTime&&Date.parse(s.scheduledStartTime)>now))
-    .sort((a,b)=>Date.parse(a.scheduledStartTime||'')-Date.parse(b.scheduledStartTime||''))[0];
+  const live=streams.find(streamIsLive);
+  const upcoming=streams.filter(s=>s.broadcastStatus==='upcoming'||(streamTime(s)>Date.now()))
+    .sort((a,b)=>streamTime(a)-streamTime(b))[0];
   const selected=live||upcoming||data.selected;
-  const id=selected?.videoId||data.videoId;
+  const id=streamId(selected)||data.videoId;
   return validVideoId(id)?id:null;
 }
 function setBroadcast(id){
   if(!validVideoId(id)||id===currentVideoId)return;
   currentVideoId=id;
   el('livePlayer').src='https://www.youtube.com/embed/'+encodeURIComponent(id)+'?rel=0&playsinline=1';
+}
+function serviceKind(stream){
+  const text=String(stream?.title||'').toLowerCase();
+  if(/traditional|9[:.]?30/.test(text))return 'traditional';
+  if(/contemporary|10[:.]?30/.test(text))return 'contemporary';
+  const d=streamTime(stream);
+  if(d){const parts=new Intl.DateTimeFormat('en-US',{timeZone:CHURCH_TIME_ZONE,hour:'numeric',minute:'2-digit',hour12:false}).formatToParts(new Date(d));const get=k=>parts.find(p=>p.type===k)?.value||'';const mins=(Number(get('hour'))%24)*60+Number(get('minute'));if(mins===570)return 'traditional';if(mins===630)return 'contemporary';}
+  return null;
+}
+function serviceOptions(streams){
+  const usable=streams.filter(s=>validVideoId(streamId(s))&&(streamIsLive(s)||s.broadcastStatus==='upcoming'||streamTime(s)>Date.now()));
+  const byKind={};
+  for(const s of usable.sort((a,b)=>streamTime(a)-streamTime(b))){const kind=serviceKind(s);if(kind&&(!byKind[kind]||streamIsLive(s)&&!streamIsLive(byKind[kind])))byKind[kind]=s;}
+  return ['traditional','contemporary'].map(kind=>({kind,stream:byKind[kind]}));
+}
+function renderServiceChoices(){
+  const root=el('serviceChoices');root.replaceChildren();
+  const options=serviceOptions(discoveredStreams);
+  for(const {kind,stream} of options){
+    const btn=document.createElement('button');btn.type='button';btn.className='service-choice';
+    const id=streamId(stream);const active=id===currentVideoId;
+    btn.setAttribute('aria-pressed',String(active));btn.disabled=!stream;
+    const left=document.createElement('span'),name=document.createElement('strong'),date=document.createElement('small'),time=document.createElement('span');
+    name.textContent=kind==='traditional'?'Traditional Worship':'Contemporary Worship';
+    date.textContent=stream?(streamIsLive(stream)?'Live now · ':'')+formatServiceDate(stream):discoveryReady?'No upcoming broadcast found':'Checking YouTube schedule…';
+    time.className='service-time';time.textContent=stream?formatServiceTime(stream):(kind==='traditional'?'9:30 AM':'10:30 AM');
+    left.append(name,date);btn.append(left,time);
+    if(stream)btn.addEventListener('click',()=>{
+      manualVideoId=id;
+      setBroadcast(id);
+      renderServiceChoices();
+      el('serviceStatus').textContent='Showing '+name.textContent+'. Select another service to switch videos.';
+    });
+    root.append(btn);
+  }
 }
 function discoverViaJSONP(){
   return new Promise((resolve,reject)=>{
@@ -98,9 +154,19 @@ async function refreshYouTubeBroadcast(){
     let data;
     try{data=await getJSON(YOUTUBE_DISCOVERY_URL+'?t='+Date.now());}
     catch(e){data=await discoverViaJSONP();}
-    const next=chooseBroadcast(data);
+    if(!data||data.ok===false)throw new Error('YouTube discovery response unavailable');
+    discoveredStreams=Array.isArray(data.streams)?data.streams:[];
+    discoveryReady=true;
+    const validIds=new Set(discoveredStreams.map(streamId).filter(validVideoId));
+    if(manualVideoId&&!validIds.has(manualVideoId))manualVideoId=null;
+    const next=manualVideoId||chooseBroadcast(data);
     if(next)setBroadcast(next);
-  }catch(e){console.warn('VUMC YouTube discovery unavailable; retaining current video.',e);}
+    renderServiceChoices();
+  }catch(e){
+    console.warn('VUMC YouTube discovery unavailable; retaining current video.',e);
+    renderServiceChoices();
+    el('serviceStatus').textContent='Unable to refresh the schedule right now. The current video remains available.';
+  }
 }
 function activateTab(tab){document.querySelectorAll('.vumcTabBtn').forEach(b=>{const active=b.dataset.tab===tab&&!b.hidden;b.classList.toggle('active',active);b.setAttribute('aria-selected',String(active));});document.querySelectorAll('.vumcTabPane').forEach(p=>{p.hidden=p.id!=='tab-'+tab;});}
 function setupVisibility(){const show=shouldShowSundayTools();for(const tab of ['notes','checkin','chat'])el(tab+'TabBtn').hidden=!show;const active=document.querySelector('.vumcTabBtn.active');if(!active||active.hidden)activateTab(show?'chat':'prayer');}
@@ -112,7 +178,7 @@ async function refreshAll(){await checkYouTubeLiveStatus();setupVisibility();awa
 document.querySelectorAll('.vumcTabBtn').forEach(b=>b.addEventListener('click',()=>{if(!b.hidden)activateTab(b.dataset.tab);}));
 el('sendChatBtn').addEventListener('click',sendChatMessage);
 el('chatMessage').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendChatMessage();}});
-activateTab('prayer');refreshAll();refreshYouTubeBroadcast();setInterval(refreshAll,60000);setInterval(loadChatMessages,10000);setInterval(refreshYouTubeBroadcast,45000);
+activateTab('services');renderServiceChoices();refreshAll();refreshYouTubeBroadcast();setInterval(refreshAll,60000);setInterval(loadChatMessages,10000);setInterval(refreshYouTubeBroadcast,45000);
 </script>
 </body>
 </html>
